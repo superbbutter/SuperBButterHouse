@@ -125,8 +125,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     width: 22px; 
     height: 22px;
     border-radius: 50%;
-    /* ปรับ margin จากขวาไปซ้ายแทนเพื่อไว้หลังชื่อ */
-    margin-left: 6px; 
+    /* นำ margin ออกและใช้ gap ในการจัดระยะห่างแทน */
     flex-shrink: 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.15);
     transition: transform 0.2s ease;
@@ -282,32 +281,32 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
             <div style="border-top: 1px dashed var(--main); margin: 8px 0;"></div>
             
             <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 5px; align-items: center;">
-                <span style="display:flex; align-items:center;">
+                <span style="display:flex; align-items:center; gap: 6px;">
                     <span class="usage-badge usage-personal"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
-                    Personal
+                    <span>Personal</span>
                 </span>
-                <span style="display:flex; align-items:center;">
+                <span style="display:flex; align-items:center; gap: 6px;">
                     <span class="usage-badge usage-commercial"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span>
-                    Commercial
+                    <span>Commercial</span>
                 </span>
-                <span style="display:flex; align-items:center;">
+                <span style="display:flex; align-items:center; gap: 6px;">
                     <span class="usage-badge usage-full"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-                    สิทธิ์ขาด
+                    <span>สิทธิ์ขาด</span>
                 </span>
             </div>
             
             <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; align-items: center;">
-                <span style="display:flex; align-items:center;">
+                <span style="display:flex; align-items:center; gap: 6px;">
                     <span class="usage-badge love-taken"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
-                    มีคู่
+                    <span>มีคู่</span>
                 </span>
-                <span style="display:flex; align-items:center;">
+                <span style="display:flex; align-items:center; gap: 6px;">
                     <span class="usage-badge love-single"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
-                    โสด
+                    <span>โสด</span>
                 </span>
-                <span style="display:flex; align-items:center;">
+                <span style="display:flex; align-items:center; gap: 6px;">
                     <span class="usage-badge love-none"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg></span>
-                    ไม่มีความรัก
+                    <span>ไม่มีความรัก</span>
                 </span>
             </div>
         </div>
@@ -419,7 +418,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 </div>
 
 <script>
-// 📌 นำ URL ของ APPS SCRIPT มาวางในบรรทัดด้านล่างนี้ 📌
+// 📌 1. นำ URL ของ APPS SCRIPT มาวางในบรรทัดด้านล่างนี้ 📌
 const API_URL = 'https://script.google.com/macros/s/AKfycbxQf6kADkDT0Xz_LSVyfiGo_z4ntyRUlJzLJ1l5BhMYlEJCVFsaHDbYc9UEu3NPcFo/exec';
 
 let allData = []; 
@@ -596,7 +595,7 @@ function displayData(data) {
         usageIcon = `<span class="usage-badge usage-full" title="สิทธิ์ขาด (Full Rights)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>`;
     }
 
-    // ไอคอนความรัก (วงกลมสีพร้อม SVG) 
+    // ไอคอนความรัก (วงกลมสีพร้อม SVG)
     let loveIcon = '';
     if(loveStatus == '1') {
         loveIcon = `<span class="usage-badge love-taken" title="มีคู่"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>`;
@@ -635,7 +634,7 @@ function displayData(data) {
                 <div class="menu-title" style="align-items:center;">
                     <span class="status-light ${lightClass}"></span>
                     <span>${name}</span>
-                    <span style="display:inline-flex; align-items:center;">${usageIcon}${loveIcon}</span>
+                    <span style="display:inline-flex; align-items:center; gap: 6px; margin-left: 5px;">${usageIcon}${loveIcon}</span>
                 </div>
                 ${!isEditMode ? '<div class="menu-icon">▼</div>' : ''}
             </div>
