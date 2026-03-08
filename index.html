@@ -28,7 +28,7 @@ button, input, select, textarea {
 
 select {
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2378350F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; padding-right: 35px !important; 
+    background-repeat: no-repeat; background-position: right 15px center; background-size: 16px; padding-right: 40px !important; 
 }
 
 body { background: var(--bg); background-image: linear-gradient(135deg, #FFFDF5 0%, #FFF8D6 100%); display: flex; flex-direction: column; align-items: center; color: var(--dark); min-height: 100vh; }
@@ -106,28 +106,76 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .status-tent { background: #eab308; box-shadow: 0 0 8px #eab308; }
 .status-forever { background: #94a3b8; }
 
-/* 🌟 Modal Styles 🌟 */
+/* 🌟 Modal & Modern Inputs 🌟 */
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); overflow-y: auto; }
-.modal-content { background: var(--bg); margin: 5% auto; padding: 25px; border-radius: 25px; width: 90%; max-width: 450px; border: 2px solid var(--main); animation: fadeIn 0.3s ease; text-align: center; }
-.modal-input, .modal-select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 15px; border: 1px solid var(--main); font-size: 14px; text-align: left; background: #fff; }
-.modal-label { display: block; text-align: left; font-size: 12px; font-weight: 600; margin-top: 5px; color: var(--dark); }
-.btn-confirm { background: var(--main); color: var(--darker); margin-top: 15px; padding: 12px; width: 100%; border-radius: 15px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; }
-.btn-close-modal { color: var(--dark); font-size: 12px; cursor: pointer; text-decoration: underline; margin-top: 10px; display: block; text-align: center; }
+.modal-content { background: var(--bg); margin: 5% auto; padding: 30px 25px; border-radius: 25px; width: 90%; max-width: 450px; border: 2px solid var(--main); animation: fadeIn 0.3s ease; text-align: center; }
 
-/* 🌟 Inline Edit Styles 🌟 */
-.btn-edit-inline, .btn-delete-inline, .btn-move-inline { background: #fff; border: 1px solid var(--main); border-radius: 15px; padding: 8px 12px; font-size: 12px; cursor: pointer; color: var(--dark); font-weight: 500; transition: 0.2s; flex: 1; }
-.btn-edit-inline:hover, .btn-move-inline:hover { background: var(--main); color: var(--darker); }
-.btn-delete-inline { border-color: #ef4444; color: #ef4444; }
+/* ดีไซน์ Input ทันสมัยขึ้น */
+.modal-input, .modal-select { 
+    width: 100%; 
+    padding: 14px 16px; 
+    margin: 6px 0 18px; 
+    border-radius: 12px; 
+    border: 1px solid #e5e7eb; 
+    background-color: #f9fafb;
+    font-size: 14px; 
+    text-align: left; 
+    color: var(--dark);
+    transition: all 0.3s ease;
+}
+.modal-input:focus, .modal-select:focus {
+    border-color: var(--main);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.2);
+}
+.modal-label { display: block; text-align: left; font-size: 13px; font-weight: 600; color: var(--darker); margin-left: 4px; }
+
+.btn-confirm { background: var(--main); color: var(--darker); margin-top: 10px; padding: 14px; width: 100%; border-radius: 15px; border: none; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3); }
+.btn-confirm:hover { transform: translateY(-2px); background: #FDE047; }
+.btn-close-modal { color: #6b7280; font-size: 13px; cursor: pointer; text-decoration: underline; margin-top: 15px; display: block; text-align: center; transition: 0.2s; }
+.btn-close-modal:hover { color: var(--darker); }
+
+/* 🌟 Inline Edit & Button Styles 🌟 */
+.btn-edit-inline, .btn-delete-inline, .btn-move-inline { 
+    background: #fff; 
+    border: 1px solid #e5e7eb; 
+    border-radius: 12px; 
+    font-size: 13px; 
+    cursor: pointer; 
+    color: var(--dark); 
+    font-weight: 500; 
+    transition: all 0.2s ease; 
+}
+/* ปรับปุ่มแก้ไขให้ยืด */
+.btn-edit-inline { flex: 1; padding: 8px 12px; border-color: var(--main); }
+.btn-edit-inline:hover { background: var(--main); color: var(--darker); }
+
+/* ปรับปุ่มลบให้เล็กพอดีคำ */
+.btn-delete-inline { flex: 0 0 auto; padding: 8px 14px; border-color: #fee2e2; color: #ef4444; background: #fef2f2; }
 .btn-delete-inline:hover { background: #ef4444; color: #fff; }
 
-.edit-form-container { padding: 15px; background: rgba(255,255,255,0.95); border-top: 1px dashed var(--main); display: flex; flex-direction: column; gap: 8px; cursor: default; }
-.edit-form-container label { font-size: 12px; font-weight: 600; color: var(--darker); margin-top: 5px; text-align: left; }
-.edit-actions { display: flex; gap: 10px; margin-top: 15px; }
-.edit-actions button { flex: 1; padding: 10px; border-radius: 15px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; color: #fff; }
-.btn-save-inline { background: #22c55e; }
-.btn-save-inline:hover { background: #16a34a; }
-.btn-cancel-inline { background: #ef4444; }
-.btn-cancel-inline:hover { background: #dc2626; }
+/* ปรับปุ่มลูกศรเป็นวงกลมขนาดเล็ก */
+.btn-move-inline { 
+    flex: 0 0 auto; 
+    width: 34px; 
+    height: 34px; 
+    border-radius: 50%; 
+    padding: 0; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    border-color: #d1d5db;
+    background: #f3f4f6;
+}
+.btn-move-inline:hover { background: var(--main); border-color: var(--main); color: var(--darker); }
+
+.edit-form-container { padding: 20px 15px; background: rgba(255,255,255,0.95); border-top: 1px dashed var(--main); display: flex; flex-direction: column; cursor: default; }
+.edit-actions { display: flex; gap: 10px; margin-top: 10px; }
+.edit-actions button { flex: 1; padding: 12px; border-radius: 12px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; color: #fff; }
+.btn-save-inline { background: #22c55e; box-shadow: 0 4px 10px rgba(34, 197, 94, 0.2); }
+.btn-save-inline:hover { background: #16a34a; transform: translateY(-2px); }
+.btn-cancel-inline { background: #ef4444; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2); }
+.btn-cancel-inline:hover { background: #dc2626; transform: translateY(-2px); }
 </style>
 </head>
 
@@ -248,7 +296,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 
 <div id="addCharModal" class="modal">
   <div class="modal-content" style="text-align: left;">
-    <h3 style="text-align: center;">🧁 อบขนมชิ้นใหม่</h3>
+    <h3 style="text-align: center; margin-bottom: 20px;">🧁 อบขนมชิ้นใหม่</h3>
     
     <label class="modal-label">หมวดหมู่ *</label>
     <select id="charCategory" class="modal-select">
@@ -292,14 +340,14 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
         <option value="3">ไม่มีความรัก 🚫</option>
     </select>
 
-    <button class="btn-confirm" id="btnSubmitAdd" style="width:100%" onclick="submitNewCharacter()">🚀 ส่งเข้าเตาอบ</button>
+    <button class="btn-confirm" id="btnSubmitAdd" onclick="submitNewCharacter()">🚀 ส่งเข้าเตาอบ</button>
     <span class="btn-close-modal" onclick="closeModal('addCharModal')">ยกเลิก</span>
   </div>
 </div>
 
 <div id="editAuthModal" class="modal">
   <div class="modal-content">
-    <h3>🔑 ยืนยันตัวตนเชฟ (เข้าโหมดจัดการ)</h3>
+    <h3 style="margin-bottom: 15px;">🔑 ยืนยันตัวตนเชฟ (เข้าโหมดจัดการ)</h3>
     <input type="password" id="editMasterPin" class="modal-input" placeholder="รหัสผ่าน (8888)">
     <button class="btn-confirm" onclick="checkEditAuth()">ยืนยันรหัส</button>
     <span class="btn-close-modal" onclick="closeModal('editAuthModal')">ยกเลิก</span>
@@ -488,10 +536,10 @@ function displayData(data) {
     let adminBtns = '';
     if(isEditMode) {
         adminBtns = `
-        <div style="display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(251, 191, 36, 0.5); padding-top: 10px;">
+        <div style="display:flex; flex-wrap:nowrap; align-items: center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(251, 191, 36, 0.5); padding-top: 10px;">
             <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', -1, '${item['หมวดหมู่']}')">⬆️</button>
             <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', 1, '${item['หมวดหมู่']}')">⬇️</button>
-            <button class="btn-edit-inline" style="flex:1;" onclick="event.stopPropagation(); openEditForm(this, '${safeName}')">✏️ แก้ไข</button>
+            <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, '${safeName}')">✏️ แก้ไข</button>
             <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline('${safeName}')">🗑️ ลบ</button>
         </div>`;
     }
@@ -528,20 +576,15 @@ function displayData(data) {
   });
 }
 
-// 🌟 ฟังก์ชันเลื่อนอันดับ (จะยิงคำสั่งไปที่ Google Sheets ทันที) 🌟
+// 🌟 ฟังก์ชันเลื่อนอันดับ 🌟
 async function moveItemInline(name, dir, category) {
-    // ให้แสดงการโหลดบนหน้าจอก่อน
     document.querySelectorAll('.btn-move-inline').forEach(b => b.disabled = true);
-    
     try {
         await fetch(API_URL, {
             method: 'POST',
-            headers: {
-                "Content-Type": "text/plain;charset=utf-8"
-            },
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify({ action: "move", name: name, category: category, direction: dir })
         });
-        // โหลดข้อมูลใหม่เพื่อรีเฟรชอันดับ
         fetchData(); 
     } catch (e) {
         console.error(e);
@@ -555,9 +598,7 @@ async function deleteItemInline(name) {
         try {
             await fetch(API_URL, {
                 method: 'POST',
-                headers: {
-                    "Content-Type": "text/plain;charset=utf-8"
-                },
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({ action: "delete", name: name })
             });
             alert("ลบข้อมูลแล้วค่ะ! 🗑️");
@@ -576,41 +617,42 @@ function openEditForm(btn, oldName) {
 
     const displayImgLink = item['Link รูปตัวละคร'] || '';
 
+    // อัปเดตโครงสร้างฟอร์มให้รับ Class แบบมินิมอล
     const formHtml = `
         <div class="edit-form-container" onclick="event.stopPropagation()">
-            <label>หมวดหมู่:</label>
-            <select id="edit_cat_${oldName}">
+            <label class="modal-label">หมวดหมู่:</label>
+            <select id="edit_cat_${oldName}" class="modal-select">
                 <option value="ขนมปัง" ${item['หมวดหมู่']==='ขนมปัง'?'selected':''}>ขนมปัง</option>
                 <option value="เค้ก" ${item['หมวดหมู่']==='เค้ก'?'selected':''}>เค้ก</option>
                 <option value="เครื่องดื่ม" ${item['หมวดหมู่']==='เครื่องดื่ม'?'selected':''}>เครื่องดื่ม</option>
             </select>
 
-            <label>ชื่อขนม:</label>
-            <input type="text" id="edit_name_${oldName}" value="${item['ชื่อขนม'] || ''}">
-            <label>คำบรรยาย:</label>
-            <input type="text" id="edit_desc_${oldName}" value="${item['คำบรรยาย'] || ''}">
+            <label class="modal-label">ชื่อขนม:</label>
+            <input type="text" id="edit_name_${oldName}" class="modal-input" value="${item['ชื่อขนม'] || ''}">
+            <label class="modal-label">คำบรรยาย:</label>
+            <input type="text" id="edit_desc_${oldName}" class="modal-input" value="${item['คำบรรยาย'] || ''}">
 
-            <label>ลิ้งก์รูปตัวละคร (Google Drive / URL):</label>
-            <input type="text" id="edit_img_link_${oldName}" value="${displayImgLink}" placeholder="วางลิ้งก์รูปภาพที่นี่">
+            <label class="modal-label">ลิ้งก์รูปตัวละคร (Google Drive / URL):</label>
+            <input type="text" id="edit_img_link_${oldName}" class="modal-input" value="${displayImgLink}" placeholder="วางลิ้งก์รูปภาพที่นี่">
 
-            <label>นักวาด:</label>
-            <input type="text" id="edit_artist_${oldName}" value="${item['นักวาด'] || ''}">
-            <label>ลิ้งก์นักวาด:</label>
-            <input type="text" id="edit_artistlink_${oldName}" value="${item['Link นักวาด'] || ''}">
-            <label>มูลค่า:</label>
-            <input type="text" id="edit_price_${oldName}" value="${item['มูลค่า'] || ''}">
-            <label>ลิ้งก์เพิ่มเติม:</label>
-            <input type="text" id="edit_more_${oldName}" value="${item['Link เพื่อดูเพิ่มเติม'] || ''}">
+            <label class="modal-label">นักวาด:</label>
+            <input type="text" id="edit_artist_${oldName}" class="modal-input" value="${item['นักวาด'] || ''}">
+            <label class="modal-label">ลิ้งก์นักวาด:</label>
+            <input type="text" id="edit_artistlink_${oldName}" class="modal-input" value="${item['Link นักวาด'] || ''}">
+            <label class="modal-label">มูลค่า:</label>
+            <input type="text" id="edit_price_${oldName}" class="modal-input" value="${item['มูลค่า'] || ''}">
+            <label class="modal-label">ลิ้งก์เพิ่มเติม:</label>
+            <input type="text" id="edit_more_${oldName}" class="modal-input" value="${item['Link เพื่อดูเพิ่มเติม'] || ''}">
 
-            <label>สถานะบ้าน (Sale):</label>
-            <select id="edit_sale_${oldName}">
+            <label class="modal-label">สถานะบ้าน (Sale):</label>
+            <select id="edit_sale_${oldName}" class="modal-select">
                 <option value="1" ${item['สถานะบ้าน']=='1'?'selected':''}>Forever Home</option>
                 <option value="2" ${item['สถานะบ้าน']=='2'?'selected':''}>TENT</option>
                 <option value="3" ${item['สถานะบ้าน']=='3'?'selected':''}>OTA/SP</option>
             </select>
 
-            <label>สถานะความรัก (Love):</label>
-            <select id="edit_love_${oldName}">
+            <label class="modal-label">สถานะความรัก (Love):</label>
+            <select id="edit_love_${oldName}" class="modal-select">
                 <option value="1" ${item['สถานะความรัก']=='1'?'selected':''}>มีคู่ ❤️</option>
                 <option value="2" ${item['สถานะความรัก']=='2'?'selected':''}>โสด 🤍</option>
                 <option value="3" ${item['สถานะความรัก']=='3'?'selected':''}>ไม่มีความรัก 🚫</option>
@@ -659,9 +701,7 @@ async function saveInlineEdit(oldName) {
     try {
         await fetch(API_URL, {
             method: 'POST',
-            headers: {
-                "Content-Type": "text/plain;charset=utf-8"
-            },
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify({ action: "edit", oldName: safeOldName, data: newItemData })
         });
         alert("บันทึกข้อมูลเรียบร้อยค่ะ! 💾");
