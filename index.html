@@ -5,166 +5,70 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SuperBButter - Bakery & OC</title>
 <link rel="icon" type="image/x-icon" href="https://drive.google.com/thumbnail?id=1aTumT9SN2pzCyOtInZyv85ksTcZyv5g1&sz=w1000">
-
 <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg: #FFFDF5; 
-  --main: #FBBF24; 
-  --dark: #78350F; 
-  --darker: #451A03; 
-  --white: rgba(255, 255, 255, 0.95);
-  --glass: rgba(255, 255, 255, 0.5); 
-  --glow: rgba(251, 191, 36, 0.25); 
-  --transition: 0.3s ease;
+  --bg: #FFFDF5; --main: #FBBF24; --dark: #78350F; --darker: #451A03; --white: rgba(255, 255, 255, 0.95); --glass: rgba(255, 255, 255, 0.5); --glow: rgba(251, 191, 36, 0.25); --transition: 0.3s ease;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
+button, input, select, textarea { appearance: none; -webkit-appearance: none; outline: none; font-family: 'Mitr', sans-serif; }
+select { background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2378350F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; padding-right: 35px !important; }
 
-/* 🌟 Reset & Normalize ให้ฟอร์มและปุ่มเหมือนกันทุกอุปกรณ์ 🌟 */
-button, input, select, textarea {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    outline: none;
-    font-family: 'Mitr', sans-serif;
-}
-
-/* สร้างลูกศรน่ารักๆ ให้กล่องตัวเลือก (Select) แทนที่ของเดิมที่ถูกล้างไป */
-select {
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2378350F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 16px;
-    padding-right: 35px !important; /* ป้องกันตัวหนังสือทับลูกศร */
-}
-
-body {
-  background: var(--bg);
-  background-image: linear-gradient(135deg, #FFFDF5 0%, #FFF8D6 100%);
-  display: flex; 
-  flex-direction: column;
-  align-items: center;
-  color: var(--dark);
-  min-height: 100vh;
-}
-
+body { background: var(--bg); background-image: linear-gradient(135deg, #FFFDF5 0%, #FFF8D6 100%); display: flex; flex-direction: column; align-items: center; color: var(--dark); min-height: 100vh; }
 body.locked { overflow: hidden; }
 
 /* 🌟 Admin Bar 🌟 */
-#admin-bar {
-  display: none; 
-  background: var(--darker); 
-  color: #fff; 
-  padding: 12px;
-  text-align: center; 
-  position: sticky; 
-  top: 0; 
-  z-index: 9999;
-  width: 100%; 
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-.btn-exit-edit {
-  margin-left: 10px; padding: 5px 15px; border-radius: 20px; border: none; background: var(--main); color: var(--darker); cursor: pointer; font-weight: 600; transition: 0.2s;
-}
+#admin-bar { display: none; background: var(--darker); color: #fff; padding: 12px; text-align: center; position: sticky; top: 0; z-index: 9999; width: 100%; font-size: 14px; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+.btn-exit-edit { margin-left: 10px; padding: 5px 15px; border-radius: 20px; border: none; background: var(--main); color: var(--darker); cursor: pointer; font-weight: 600; transition: 0.2s; }
 .btn-exit-edit:hover { background: #FDE047; transform: scale(1.05); }
 
-/* 🌟 Admin Add Button 🌟 */
-#admin-add-bar {
-  display: none; width: 100%; margin-bottom: 15px; animation: fadeIn 0.4s ease;
-}
-.btn-admin-add {
-  width: 100%; padding: 15px; background: #22c55e; color: #fff; border: none; border-radius: 20px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); transition: var(--transition);
-}
+#admin-add-bar { display: none; width: 100%; margin-bottom: 15px; animation: fadeIn 0.4s ease; }
+.btn-admin-add { width: 100%; padding: 15px; background: #22c55e; color: #fff; border: none; border-radius: 20px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); transition: var(--transition); }
 .btn-admin-add:hover { background: #16a34a; transform: translateY(-2px); }
 
-/* 🌟 Header 🌟 */
-header {
-  width: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 20px; background: transparent;
-}
-
+header { width: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 20px; background: transparent; }
 .logo-wrapper { position: relative; width: 150px; height: 150px; margin-bottom: 5px; }
 .logo { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; box-shadow: 0 10px 30px var(--glow); transition: var(--transition); border: 5px solid #fff; position: relative; z-index: 2; }
 .logo img { width: 100%; height: 100%; object-fit: cover; background-color: #fff; }
+h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, var(--darker), var(--dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; }
 
-h1 { 
-  font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, var(--darker), var(--dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600;
-}
-
-.nav-bar {
-  width: 95%; max-width: 450px; backdrop-filter: blur(15px); background: rgba(255, 255, 255, 0.9); display: flex; justify-content: space-around; padding: 8px 5px; border-radius: 35px; box-shadow: 0 8px 25px rgba(120, 53, 15, 0.1); z-index: 1000; border: 1px solid rgba(255, 255, 255, 0.8); margin-bottom: 5px;
-}
-
-.nav-item {
-  text-decoration: none; color: var(--dark); font-size: 12px; font-weight: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); padding: 6px 10px; border-radius: 20px; width: 25%;
-}
-.nav-item span { line-height: 1.2; }
+.nav-bar { width: 95%; max-width: 450px; backdrop-filter: blur(15px); background: rgba(255, 255, 255, 0.9); display: flex; justify-content: space-around; padding: 8px 5px; border-radius: 35px; box-shadow: 0 8px 25px rgba(120, 53, 15, 0.1); z-index: 1000; border: 1px solid rgba(255, 255, 255, 0.8); margin-bottom: 5px; }
+.nav-item { text-decoration: none; color: var(--dark); font-size: 12px; font-weight: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); padding: 6px 10px; border-radius: 20px; width: 25%; }
 .nav-item.active { background: var(--dark); color: #fff; box-shadow: 0 4px 12px rgba(120, 53, 15, 0.2); }
 
-/* Rules Gate Area */
-#rules-gate {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); background-image: linear-gradient(135deg, #FFFDF5 0%, #FFF8D6 100%); z-index: 9999; display: flex; flex-direction: column; align-items: center; padding: 40px 15px; overflow-y: auto; transition: opacity 0.5s ease;
-}
-
+#rules-gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); background-image: linear-gradient(135deg, #FFFDF5 0%, #FFF8D6 100%); z-index: 9999; display: flex; flex-direction: column; align-items: center; padding: 40px 15px; overflow-y: auto; transition: opacity 0.5s ease; }
 .gate-content { max-width: 500px; width: 100%; animation: fadeIn 0.6s ease; }
 
-#main-wrapper {
-  display: none; width: 100%; max-width: 500px; opacity: 0; transition: opacity 0.5s ease;
-}
-
+#main-wrapper { display: none; width: 100%; max-width: 500px; opacity: 0; transition: opacity 0.5s ease; }
 .container { width: 100%; padding: 10px 15px 50px; }
 .page { display: none; animation: fadeIn 0.4s ease; }
 .page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.section {
-  backdrop-filter: blur(10px); background: var(--glass); border-radius: 25px; padding: 20px; margin-bottom: 15px; box-shadow: 0 10px 30px rgba(120, 53, 15, 0.05); border: 1px solid rgba(255, 255, 255, 0.6);
-}
-
-.category-header {
-    display: inline-flex; align-items: center; background: #fff; border: 2px solid var(--main); padding: 8px 25px; border-radius: 50px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
+.section { backdrop-filter: blur(10px); background: var(--glass); border-radius: 25px; padding: 20px; margin-bottom: 15px; box-shadow: 0 10px 30px rgba(120, 53, 15, 0.05); border: 1px solid rgba(255, 255, 255, 0.6); }
+.category-header { display: inline-flex; align-items: center; background: #fff; border: 2px solid var(--main); padding: 8px 25px; border-radius: 50px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 .category-header h2 { font-size: 18px; color: var(--dark); margin: 0; font-weight: 600; }
 .category-desc { font-size: 13px; opacity: 0.8; margin-bottom: 25px; padding-left: 10px; }
 
-.menu-img { 
-  width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; background-color: #FFF8D6; border-bottom: 1px solid rgba(251, 191, 36, 0.3); 
-}
-
+.menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; background-color: #FFF8D6; border-bottom: 1px solid rgba(251, 191, 36, 0.3); }
 .menu-card { background: rgba(255, 255, 255, 0.85); border: 1px solid var(--main); border-radius: 20px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(120, 53, 15, 0.05); transition: var(--transition); }
 .menu-card:hover { transform: translateY(-3px); }
 .menu-header { display: block; cursor: pointer; }
-
 .menu-title-row { display: flex; flex-direction: column; align-items: flex-start; padding: 15px; gap: 5px; }
-
 .menu-title { font-weight: 500; color: var(--dark); font-size: 15px; flex: 1; display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
 .menu-icon { font-size: 12px; color: var(--dark); transition: transform 0.3s ease; padding: 5px; background: #FFF8D6; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 10px; }
 .menu-card.open .menu-icon { transform: rotate(180deg); background: var(--main); }
 
 .menu-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: rgba(255, 255, 255, 0.5); padding: 0 15px; }
-.menu-card.open .menu-details { max-height: 500px; padding: 10px 15px 15px; }
-
+.menu-card.open .menu-details { max-height: 1000px; padding: 10px 15px 15px; }
 .detail-text { font-size: 14px; margin-bottom: 8px; color: var(--darker); display: flex; align-items: center; gap: 8px; }
 .btn-view { display: inline-block; margin-top: 5px; background: linear-gradient(135deg, var(--main), #FDE047); color: var(--darker); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-size: 13px; font-weight: 600; text-align: center; width: 100%; border: none; cursor: pointer; transition: 0.3s; }
-.btn-view:hover { transform: translateY(-2px); }
 
 .rule-box { background: rgba(255, 255, 255, 0.7); padding: 15px; border-radius: 15px; font-size: 13px; line-height: 1.6; border: 1px dashed var(--main); text-align: left; }
-.highlight { color: #b91c1c; font-weight: 500; } 
-.btn-accept { font-size: 16px; padding: 15px; margin-top: 15px; animation: pulse 2s infinite; }
-
-.floating-emoji { position: absolute; font-size: 24px; z-index: 5; animation: floatEmoji 3s infinite; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-.emoji-1 { top: -10px; left: -10px; animation-delay: 0s; font-size: 26px; } 
-.emoji-2 { top: 20px; right: -20px; animation-delay: 0.7s; } 
-.emoji-3 { bottom: 15px; left: -15px; animation-delay: 1.4s; } 
-.emoji-4 { bottom: -5px; right: -10px; animation-delay: 2.1s; font-size: 28px; } 
-@keyframes floatEmoji { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.btn-accept { font-size: 16px; padding: 15px; margin-top: 15px; animation: pulse 2s infinite; cursor: pointer; width: 100%; border: none; border-radius: 20px; background: var(--main); font-weight: 600; color: var(--darker); }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); } 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); } }
 
 .mini-contact { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px dashed rgba(251, 191, 36, 0.3); }
 .socials-mini { display: flex; gap: 10px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
@@ -177,62 +81,26 @@ h1 {
 .status-tent { background: #eab308; box-shadow: 0 0 8px #eab308; }
 .status-forever { background: #94a3b8; }
 
-/* 🌟 Modal Styles 🌟 */
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); overflow-y: auto; }
 .modal-content { background: var(--bg); margin: 5% auto; padding: 25px; border-radius: 25px; width: 90%; max-width: 450px; border: 2px solid var(--main); animation: fadeIn 0.3s ease; text-align: center; }
 .modal-input, .modal-select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 15px; border: 1px solid var(--main); font-size: 14px; text-align: left; background: #fff; }
+.modal-label { display: block; text-align: left; font-size: 12px; font-weight: 600; margin-top: 5px; color: var(--dark); }
 .btn-confirm { background: var(--main); color: var(--darker); margin-top: 15px; padding: 12px; width: 100%; border-radius: 15px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; }
 .btn-close-modal { color: var(--dark); font-size: 12px; cursor: pointer; text-decoration: underline; margin-top: 10px; display: block; text-align: center; }
 
 /* 🌟 Inline Edit Styles 🌟 */
-.btn-edit-inline, .btn-move-inline, .btn-delete-inline {
-    background: #fff; border: 1px solid var(--main); border-radius: 15px; padding: 8px 12px; font-size: 12px; cursor: pointer; color: var(--dark); font-weight: 500; transition: 0.2s;
-}
-.btn-edit-inline:hover, .btn-move-inline:hover { background: var(--main); color: var(--darker); }
+.btn-edit-inline, .btn-delete-inline { background: #fff; border: 1px solid var(--main); border-radius: 15px; padding: 8px 12px; font-size: 12px; cursor: pointer; color: var(--dark); font-weight: 500; transition: 0.2s; flex: 1; }
+.btn-edit-inline:hover { background: var(--main); color: var(--darker); }
 .btn-delete-inline { border-color: #ef4444; color: #ef4444; }
 .btn-delete-inline:hover { background: #ef4444; color: #fff; }
 
-.edit-form-container {
-    padding: 15px; background: rgba(255,255,255,0.95); border-top: 1px dashed var(--main); display: flex; flex-direction: column; gap: 8px; cursor: default;
-}
-.edit-form-container label { font-size: 12px; font-weight: 600; color: var(--darker); margin-top: 5px; }
-.edit-form-container input, .edit-form-container select {
-    width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #ccc; font-family: 'Mitr', sans-serif;
-}
-
-input[type="file"] {
-    background: #FFF8D6; 
-    border: 1px dashed var(--main); 
-    padding: 6px; 
-    border-radius: 12px;
-    cursor: pointer; 
-    font-size: 12px;
-    color: var(--dark);
-    width: 100%;
-}
-input[type="file"]::file-selector-button {
-    background: linear-gradient(135deg, var(--main), #FDE047);
-    color: var(--darker);
-    border: none;
-    padding: 6px 16px;
-    border-radius: 15px;
-    cursor: pointer;
-    font-weight: 500;
-    margin-right: 12px;
-    font-family: 'Mitr', sans-serif;
-    transition: var(--transition);
-    box-shadow: 0 2px 6px rgba(120, 53, 15, 0.1);
-}
-input[type="file"]::file-selector-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(120, 53, 15, 0.15);
-}
-
+.edit-form-container { padding: 15px; background: rgba(255,255,255,0.95); border-top: 1px dashed var(--main); display: flex; flex-direction: column; gap: 8px; cursor: default; }
+.edit-form-container label { font-size: 12px; font-weight: 600; color: var(--darker); margin-top: 5px; text-align: left; }
 .edit-actions { display: flex; gap: 10px; margin-top: 15px; }
-.edit-actions button { flex: 1; padding: 10px; border-radius: 15px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; }
-.btn-save-inline { background: #22c55e; color: #fff; }
+.edit-actions button { flex: 1; padding: 10px; border-radius: 15px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; color: #fff;}
+.btn-save-inline { background: #22c55e; }
 .btn-save-inline:hover { background: #16a34a; }
-.btn-cancel-inline { background: #ef4444; color: #fff; }
+.btn-cancel-inline { background: #ef4444; }
 .btn-cancel-inline:hover { background: #dc2626; }
 </style>
 </head>
@@ -240,8 +108,8 @@ input[type="file"]::file-selector-button:hover {
 <body class="locked">
 
 <div id="admin-bar">
-    🛠️ โหมดแก้ไขกำลังทำงาน 
-    <button class="btn-exit-edit" onclick="exitEditMode()">ออกจากการแก้ไข</button>
+    🛠️ โหมดจัดการเปิดใช้งาน (เพิ่ม/แก้ไข/ลบ ข้อมูล)
+    <button class="btn-exit-edit" onclick="exitEditMode()">ปิดโหมดจัดการ</button>
 </div>
 
 <div id="rules-gate">
@@ -249,40 +117,18 @@ input[type="file"]::file-selector-button:hover {
     <div style="width: 80px; height: 80px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 3px solid #fff; box-shadow: 0 5px 15px var(--glow);">
       <img src="https://drive.google.com/thumbnail?id=1aTumT9SN2pzCyOtInZyv85ksTcZyv5g1&sz=w1000" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
-    
     <h2>📋 กติกาการเข้าชมครัว</h2>
     <div class="rule-box">
       <p><strong>กรุณาอ่านรายละเอียดให้ครบถ้วน</strong></p>
       <p>ก่อนเข้าสู่ครัวเข้าชมขนมของเรา กรุณาอ่านและทำตามประกาศอย่างเคร่งครัด !</p>
       <p>♡ สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน</span>นะคะ</p>
-      <p class="highlight"></p>
     </div>
-
-    <h2 style="margin-top: 20px; color: #b91c1c;">🚨 Warning</h2>
-    <div class="rule-box" style="background: rgba(255,255,255,0.9); border-color: #b91c1c; box-shadow: 0 4px 15px rgba(185, 28, 28, 0.1);">
-      <p class="highlight" style="font-size: 15px; margin-bottom: 8px;">⚠︎ คำเตือนลิขสิทธิ์และสิทธิ์ส่วนบุคคล</p>
-      <ul style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: #7f1d1d;">
-        <li>✘ <strong>ห้ามเซฟ (Save)</strong> รูปภาพทุกภาพในเว็บไซต์นี้เด็ดขาด</li>
-        <li>✘ <strong>ห้ามนำไปตัดต่อ</strong> ดัดแปลง แก้ไข หรือลบเครดิตนักวาด</li>
-        <li>✘ <strong>ห้ามนำไปใช้</strong> โดยไม่ได้รับอนุญาต</li>
-        <li>✘ <strong>ห้ามคัดลอกดีไซน์</strong> หรือนำไปแอบอ้างว่าเป็นของตนเอง</li>
-      </ul>
-      <p style="margin-top: 10px; font-weight: 600; color: #b91c1c; text-align: center;">หากพบเห็นการกระทำที่ผิดกฏ<br>ทางเราจะดำเนินการแบล็คลิสต์และปรับตามสมควรค่ะ !!</p>
-    </div>
-
-    <button class="btn-view btn-accept" onclick="acceptRules()">✅ รับทราบและยอมรับ</button>
+    <button class="btn-accept" onclick="acceptRules()">✅ รับทราบและยอมรับ</button>
   </div>
 </div>
 
 <div id="main-wrapper">
   <header>
-    <div class="logo-wrapper">
-      <div class="floating-emoji emoji-1">🧸</div><div class="floating-emoji emoji-2">🧈</div>
-      <div class="floating-emoji emoji-3">🥞</div><div class="floating-emoji emoji-4">⭐️</div>
-      <div class="logo">
-        <img src="https://drive.google.com/thumbnail?id=1aTumT9SN2pzCyOtInZyv85ksTcZyv5g1&sz=w1000" alt="SuperBButter Logo">
-      </div>
-    </div>
     <h1>SuperBButter</h1>
     <nav class="nav-bar">
       <div class="nav-item active" onclick="showPage('home', this)"><span>🏠</span><span>โฮม</span></div>
@@ -293,17 +139,14 @@ input[type="file"]::file-selector-button:hover {
   </header>
 
   <div class="container">
-    
     <div id="admin-add-bar">
-        <button class="btn-admin-add" onclick="openAddCharModal()">➕ อบขนมชิ้นใหม่ (เพิ่มตัวละคร)</button>
+        <button class="btn-admin-add" onclick="openAddCharModal()">➕ อบขนมชิ้นใหม่</button>
     </div>
 
     <div id="home" class="page active">
       <div class="rule-box" style="text-align: center; border-color: var(--main); margin-bottom: 15px;">
         <p style="font-size: 14px; font-weight: 500;">เบเกอรี่เล็ก ๆ ที่เต็มไปด้วยขนมจากเชฟยอดฝีมือ 👩🏻‍🍳</p>
-        <p style="font-size: 13px; opacity: 0.9;">เด็ก ๆ ทุกคนคือขนมภายในร้านที่แสนอร่อย ✨</p>
       </div>
-
       <div class="section" style="padding: 15px;">
         <h3 style="font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 5px;">✨ สัญลักษณ์ในครัว</h3>
         <div style="font-size: 13px; line-height: 1.8;">
@@ -318,45 +161,14 @@ input[type="file"]::file-selector-button:hover {
       </div>
     </div>
 
-    <div id="bread" class="page">
-      <div class="section">
-        <div class="category-header">
-            <h2>🍞 เมนูขนมปัง</h2>
-        </div>
-        <p class="category-desc">ขนมอบใหม่หอมกรุ่นจากเตา พร้อมเสิร์ฟค่ะ ✨</p>
-        <div id="bread-container"><div class="loading-text">กำลังโหลดข้อมูลจากเตาอบ... 👩🏻‍🍳</div></div>
-      </div>
-    </div>
-
-    <div id="cake" class="page">
-      <div class="section">
-        <div class="category-header">
-            <h2>🍰 เมนูเค้ก</h2>
-        </div>
-        <p class="category-desc">เค้กเนื้อนุ่ม ละมุนลิ้น รังสรรค์โดยเชฟยอดฝีมือ ✨</p>
-        <div id="cake-container"><div class="loading-text">กำลังโหลดข้อมูลจากเตาอบ... 👩🏻‍🍳</div></div>
-      </div>
-    </div>
-
-    <div id="drink" class="page">
-      <div class="section">
-        <div class="category-header">
-            <h2>🍵 เมนูเครื่องดื่ม</h2>
-        </div>
-        <p class="category-desc">เครื่องดื่มดับกระหาย ทานคู่กับขนมเข้ากันสุดๆ ✨</p>
-        <div id="drink-container"><div class="loading-text">กำลังโหลดข้อมูลจากเตาอบ... 👩🏻‍🍳</div></div>
-      </div>
-    </div>
+    <div id="bread" class="page"><div class="section"><div class="category-header"><h2>🍞 เมนูขนมปัง</h2></div><div id="bread-container">กำลังโหลด...</div></div></div>
+    <div id="cake" class="page"><div class="section"><div class="category-header"><h2>🍰 เมนูเค้ก</h2></div><div id="cake-container">กำลังโหลด...</div></div></div>
+    <div id="drink" class="page"><div class="section"><div class="category-header"><h2>🍵 เมนูเครื่องดื่ม</h2></div><div id="drink-container">กำลังโหลด...</div></div></div>
 
     <div class="mini-contact">
       <div class="socials-mini">
-        <a href="https://www.facebook.com/profile.php?id=61554192600355" target="_blank">Facebook</a>
-        <a href="https://line.me/ti/p/LfBtdhlrVa" target="_blank">Line</a>
-      </div>
-      <div class="socials-mini" style="margin-top: 5px;">
         <a href="javascript:void(0)" onclick="openEditAuthModal()" style="border-color: var(--dark); color: var(--dark); font-weight: 600;">🛠️ เข้าสู่โหมดจัดการ</a>
       </div>
-      <div class="copyright">© 2026 SuperBButter Bakery. All rights reserved.</div>
     </div>
   </div> 
 </div>
@@ -364,33 +176,44 @@ input[type="file"]::file-selector-button:hover {
 <div id="addCharModal" class="modal">
   <div class="modal-content" style="text-align: left;">
     <h3 style="text-align: center;">🧁 อบขนมชิ้นใหม่</h3>
+    
     <label class="modal-label">หมวดหมู่ *</label>
-    <select id="charCategory" class="modal-select"><option value="ขนมปัง">ขนมปัง</option><option value="เค้ก">เค้ก</option><option value="เครื่องดื่ม">เครื่องดื่ม</option></select>
+    <select id="charCategory" class="modal-select">
+        <option value="ขนมปัง">ขนมปัง</option>
+        <option value="เค้ก">เค้ก</option>
+        <option value="เครื่องดื่ม">เครื่องดื่ม</option>
+    </select>
+
     <label class="modal-label">ชื่อขนม *</label><input type="text" id="charName" class="modal-input">
     <label class="modal-label">คำบรรยาย</label><input type="text" id="charDesc" class="modal-input">
-    
-    <div style="background: rgba(251, 191, 36, 0.1); padding: 10px; border-radius: 15px; margin-top: 5px;">
-        <label class="modal-label" style="color:var(--dark);">อัปโหลดรูปภาพตัวละคร *</label>
-        <input type="file" id="charImgFile" accept="image/*" class="modal-input" style="margin-bottom: 5px;">
-        
-        <label class="modal-label" style="color:var(--dark); text-align: center; display: block; margin-top: 5px;">--- หรือ ---</label>
-        
-        <label class="modal-label" style="color:var(--dark);">ใส่ลิ้งก์รูปภาพ (Google Drive / URL)</label>
-        <input type="text" id="charImgLink" class="modal-input" placeholder="วางลิ้งก์ที่นี่ (ถ้าไม่อัปโหลดไฟล์)">
-    </div>
-
+    <label class="modal-label">ลิ้งก์รูปตัวละคร * (Drive URL)</label><input type="text" id="charImgLink" class="modal-input" placeholder="https://drive.google.com/...">
     <label class="modal-label">นักวาด *</label><input type="text" id="charArtist" class="modal-input">
     <label class="modal-label">ลิ้งก์นักวาด</label><input type="text" id="charArtistLink" class="modal-input">
     <label class="modal-label">มูลค่า *</label><input type="text" id="charPrice" class="modal-input">
     <label class="modal-label">ลิ้งก์เพิ่มเติม *</label><input type="text" id="charMore" class="modal-input">
-    <button class="btn-confirm" id="btnSubmitAdd" style="width:100%" onclick="submitNewCharacter()">🚀 ส่งเข้าเตาอบ</button>
+    
+    <label class="modal-label">สถานะบ้าน *</label>
+    <select id="charSale" class="modal-select">
+        <option value="1">Forever Home</option>
+        <option value="2">TENT</option>
+        <option value="3">OTA/SP</option>
+    </select>
+
+    <label class="modal-label">สถานะความรัก *</label>
+    <select id="charLove" class="modal-select">
+        <option value="1">มีคู่ ❤️</option>
+        <option value="2">โสด 🤍</option>
+        <option value="3">ไม่มีความรัก 🚫</option>
+    </select>
+
+    <button class="btn-confirm" onclick="submitNewCharacter()" id="btnAddSubmit">🚀 บันทึกข้อมูล</button>
     <span class="btn-close-modal" onclick="closeModal('addCharModal')">ยกเลิก</span>
   </div>
 </div>
 
 <div id="editAuthModal" class="modal">
   <div class="modal-content">
-    <h3>🔑 ยืนยันตัวตนเชฟ (เข้าโหมดจัดการ)</h3>
+    <h3>🔑 ยืนยันตัวตนเชฟ</h3>
     <input type="password" id="editMasterPin" class="modal-input" placeholder="รหัสผ่าน (8888)">
     <button class="btn-confirm" onclick="checkEditAuth()">ยืนยันรหัส</button>
     <span class="btn-close-modal" onclick="closeModal('editAuthModal')">ยกเลิก</span>
@@ -398,33 +221,19 @@ input[type="file"]::file-selector-button:hover {
 </div>
 
 <script>
-// 📌 นำ URL ของ APPS SCRIPT มาวางในบรรทัดด้านล่างนี้ได้เลยครับ 📌
-const API_URL = 'https://drive.google.com/drive/folders/1SrXr06r9DPFi-vCu9A8gZ9BigQcboTK9';
+// ==========================================
+// 📌 วาง URL ของ APPS SCRIPT ใหม่ตรงนี้
+// ==========================================
+const API_URL = 'https://script.google.com/macros/s/AKfycbzR07GRk0Y7tTRghWiwnSz8nhvs_JD7WWxMMog-dqt4p-2_WpESdrtJYA8f1Yg2i6Og/exec';
 
-let allData = []; 
 let isEditMode = false;
-
-function readFileAsDataURL(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target.result);
-        reader.onerror = (e) => reject(e);
-        reader.readAsDataURL(file);
-    });
-}
+let allData = []; // เก็บข้อมูลทั้งหมดไว้สร้างแบบฟอร์มแก้ไข
 
 function acceptRules() {
-  const gate = document.getElementById('rules-gate');
-  const mainWrapper = document.getElementById('main-wrapper');
-  gate.style.opacity = '0';
-  setTimeout(() => {
-    gate.style.display = 'none';
-    mainWrapper.style.display = 'flex';
-    mainWrapper.style.flexDirection = 'column';
-    mainWrapper.style.alignItems = 'center';
-    setTimeout(() => { mainWrapper.style.opacity = '1'; }, 50);
-    document.body.classList.remove('locked');
-  }, 500);
+  document.getElementById('rules-gate').style.display = 'none';
+  const main = document.getElementById('main-wrapper');
+  main.style.display = 'flex'; main.style.flexDirection = 'column'; main.style.alignItems = 'center'; main.style.opacity = '1';
+  document.body.classList.remove('locked');
 }
 
 function showPage(pageId, element) {
@@ -432,98 +241,16 @@ function showPage(pageId, element) {
   document.getElementById(pageId).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   element.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  if (isEditMode) {
-      if (pageId !== 'home') document.getElementById('admin-add-bar').style.display = 'block';
-      else document.getElementById('admin-add-bar').style.display = 'none';
-  } else {
-      document.getElementById('admin-add-bar').style.display = 'none';
-  }
+  
+  if (isEditMode && pageId !== 'home') document.getElementById('admin-add-bar').style.display = 'block';
+  else document.getElementById('admin-add-bar').style.display = 'none';
 }
 
 function toggleMenu(headerElement) { 
-    if(!isEditMode) {
-        headerElement.parentElement.classList.toggle('open'); 
-    }
+    if(!isEditMode) headerElement.parentElement.classList.toggle('open'); 
 }
-
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-function openAddCharModal() { 
-    document.getElementById('charName').value = '';
-    document.getElementById('charDesc').value = '';
-    document.getElementById('charImgFile').value = ''; 
-    document.getElementById('charImgLink').value = ''; 
-    document.getElementById('charArtist').value = '';
-    document.getElementById('charArtistLink').value = '';
-    document.getElementById('charPrice').value = '';
-    document.getElementById('charMore').value = '';
-    
-    const activePageId = document.querySelector('.page.active').id;
-    const categorySelect = document.getElementById('charCategory');
-    if (activePageId === 'bread') categorySelect.value = 'ขนมปัง';
-    if (activePageId === 'cake') categorySelect.value = 'เค้ก';
-    if (activePageId === 'drink') categorySelect.value = 'เครื่องดื่ม';
-
-    document.getElementById('addCharModal').style.display = 'block'; 
-}
-
-async function submitNewCharacter() {
-    const data = {
-        category: document.getElementById('charCategory').value,
-        name: document.getElementById('charName').value,
-        desc: document.getElementById('charDesc').value,
-        artist: document.getElementById('charArtist').value,
-        artistLink: document.getElementById('charArtistLink').value,
-        price: document.getElementById('charPrice').value,
-        more: document.getElementById('charMore').value
-    };
-    
-    const fileInput = document.getElementById('charImgFile');
-    let finalImgData = document.getElementById('charImgLink').value;
-
-    if (fileInput.files && fileInput.files[0]) {
-        try {
-            finalImgData = await readFileAsDataURL(fileInput.files[0]);
-        } catch (e) {
-            return alert("เกิดข้อผิดพลาดในการอ่านไฟล์รูปภาพค่ะ");
-        }
-    }
-
-    if(!data.name || !finalImgData || !data.artist || !data.price || !data.more) {
-        return alert("กรุณากรอกข้อมูลสำคัญและรูปภาพให้ครบถ้วนค่ะ");
-    }
-
-    const newItem = {
-        "หมวดหมู่": data.category,
-        "ชื่อขนม": data.name,
-        "คำบรรยาย": data.desc,
-        "Link รูปตัวละคร": finalImgData,
-        "นักวาด": data.artist,
-        "Link นักวาด": data.artistLink,
-        "มูลค่า": data.price,
-        "Link เพื่อดูเพิ่มเติม": data.more
-    };
-
-    const btnSubmit = document.getElementById('btnSubmitAdd');
-    btnSubmit.innerText = "กำลังอบขนม... ⏳";
-    
-    try {
-        await fetch(API_URL, {
-            method: 'POST',
-            body: JSON.stringify({ action: "add", data: newItem })
-        });
-        alert("อบขนมสำเร็จ!"); 
-        closeModal('addCharModal'); 
-        btnSubmit.innerText = "🚀 ส่งเข้าเตาอบ";
-        fetchData(); 
-    } catch (e) {
-        alert("❌ บันทึกไม่สำเร็จ! กรุณาลองใช้การใส่ลิ้งก์ภาพแทนการอัปโหลดไฟล์ค่ะ (กรณีไฟล์ภาพใหญ่เกินไป)");
-        btnSubmit.innerText = "🚀 ส่งเข้าเตาอบ";
-    }
-}
-
+function openAddCharModal() { document.getElementById('addCharModal').style.display = 'block'; }
 function openEditAuthModal() { document.getElementById('editAuthModal').style.display = 'block'; }
 
 function checkEditAuth() {
@@ -532,12 +259,8 @@ function checkEditAuth() {
         document.getElementById('editMasterPin').value = '';
         isEditMode = true;
         document.getElementById('admin-bar').style.display = 'block';
-        
-        const activePageId = document.querySelector('.page.active').id;
-        if (activePageId !== 'home') document.getElementById('admin-add-bar').style.display = 'block';
-        else document.getElementById('admin-add-bar').style.display = 'none';
-
-        displayData(allData); 
+        if (document.querySelector('.page.active').id !== 'home') document.getElementById('admin-add-bar').style.display = 'block';
+        displayData(allData); // โหลดหน้าใหม่เพื่อให้ปุ่มแก้ไขโผล่
     } else { alert("รหัสผ่านไม่ถูกต้องค่ะ ❌"); }
 }
 
@@ -545,66 +268,174 @@ function exitEditMode() {
     isEditMode = false;
     document.getElementById('admin-bar').style.display = 'none';
     document.getElementById('admin-add-bar').style.display = 'none'; 
-    displayData(allData); 
+    displayData(allData);
 }
 
-function getLocalSettings() { return JSON.parse(localStorage.getItem('bakery_settings') || '{}'); }
+// 🌟 API: ดึงข้อมูล (GET) 🌟
+async function fetchData() {
+  try {
+    const response = await fetch(API_URL);
+    allData = await response.json();
+    displayData(allData);
+  } catch (error) { console.error('Error fetching data:', error); }
+}
 
-async function fetchData() { 
-    try {
-        const response = await fetch(API_URL);
-        allData = await response.json();
-        displayData(allData);
-    } catch (error) { 
-        console.error('Error fetching data:', error); 
-        document.getElementById('bread-container').innerHTML = '<div class="loading-text" style="color:#b91c1c;">โหลดข้อมูลไม่สำเร็จ กรุณารีเฟรช 🥺</div>';
+// 🌟 API: เพิ่มข้อมูล (POST - add) 🌟
+function submitNewCharacter() {
+    const dataObj = {
+        "หมวดหมู่": document.getElementById('charCategory').value,
+        "ชื่อขนม": document.getElementById('charName').value,
+        "คำบรรยาย": document.getElementById('charDesc').value,
+        "Link รูปตัวละคร": document.getElementById('charImgLink').value,
+        "นักวาด": document.getElementById('charArtist').value,
+        "Link นักวาด": document.getElementById('charArtistLink').value,
+        "มูลค่า": document.getElementById('charPrice').value,
+        "Link เพื่อดูเพิ่มเติม": document.getElementById('charMore').value,
+        "สถานะบ้าน": document.getElementById('charSale').value,
+        "สถานะความรัก": document.getElementById('charLove').value
+    };
+
+    if(!dataObj['ชื่อขนม'] || !dataObj['Link รูปตัวละคร'] || !dataObj['นักวาด'] || !dataObj['มูลค่า']) {
+        return alert("กรุณากรอกข้อมูลสำคัญที่มี * ให้ครบถ้วนค่ะ");
+    }
+
+    document.getElementById('btnAddSubmit').innerText = "กำลังอบขนม... ⏳";
+    
+    fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: "add", data: dataObj })
+    }).then(() => {
+        alert("อบขนมสำเร็จ! 🧁");
+        document.getElementById('btnAddSubmit').innerText = "🚀 บันทึกข้อมูล";
+        closeModal('addCharModal');
+        fetchData(); 
+    }).catch(() => {
+        alert("เกิดข้อผิดพลาดในการส่งข้อมูล");
+        document.getElementById('btnAddSubmit').innerText = "🚀 บันทึกข้อมูล";
+    });
+}
+
+// 🌟 API: แก้ไขข้อมูล (POST - edit) 🌟
+function saveInlineEdit(oldName) {
+    const safeOldName = oldName.replace(/\\'/g, "'");
+    const dataObj = {
+        "หมวดหมู่": document.getElementById(`edit_cat_${oldName}`).value,
+        "ชื่อขนม": document.getElementById(`edit_name_${oldName}`).value,
+        "คำบรรยาย": document.getElementById(`edit_desc_${oldName}`).value,
+        "Link รูปตัวละคร": document.getElementById(`edit_img_${oldName}`).value,
+        "นักวาด": document.getElementById(`edit_artist_${oldName}`).value,
+        "Link นักวาด": document.getElementById(`edit_artistlink_${oldName}`).value,
+        "มูลค่า": document.getElementById(`edit_price_${oldName}`).value,
+        "Link เพื่อดูเพิ่มเติม": document.getElementById(`edit_more_${oldName}`).value,
+        "สถานะบ้าน": document.getElementById(`edit_sale_${oldName}`).value,
+        "สถานะความรัก": document.getElementById(`edit_love_${oldName}`).value
+    };
+
+    if(!dataObj['ชื่อขนม'] || !dataObj['Link รูปตัวละคร']) return alert("กรุณากรอกชื่อและรูปภาพให้ครบค่ะ");
+
+    fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: "edit", oldName: safeOldName, data: dataObj })
+    }).then(() => {
+        alert("แก้ไขข้อมูลสำเร็จ! ✏️");
+        fetchData();
+    }).catch(() => alert("เกิดข้อผิดพลาดในการแก้ไข"));
+}
+
+// 🌟 API: ลบข้อมูล (POST - delete) 🌟
+function deleteItemInline(name) {
+    const safeName = name.replace(/\\'/g, "'");
+    if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${safeName}" ออกจากเตาอบ?`)) {
+        fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify({ action: "delete", name: safeName })
+        }).then(() => {
+            alert("ลบข้อมูลแล้วค่ะ! 🗑️");
+            fetchData();
+        }).catch(() => alert("เกิดข้อผิดพลาดในการลบ"));
     }
 }
 
+// 🌟 ฟังก์ชันเปิดฟอร์มแก้ไข (Inline) 🌟
+function openEditForm(btn, oldName) {
+    const card = btn.closest('.menu-card');
+    const safeOldName = oldName.replace(/\\'/g, "'");
+    const item = allData.find(i => i['ชื่อขนม'] === safeOldName);
+    
+    const formHtml = `
+        <div class="edit-form-container" onclick="event.stopPropagation()">
+            <label>หมวดหมู่:</label>
+            <select id="edit_cat_${oldName}" class="modal-select">
+                <option value="ขนมปัง" ${item['หมวดหมู่']==='ขนมปัง'?'selected':''}>ขนมปัง</option>
+                <option value="เค้ก" ${item['หมวดหมู่']==='เค้ก'?'selected':''}>เค้ก</option>
+                <option value="เครื่องดื่ม" ${item['หมวดหมู่']==='เครื่องดื่ม'?'selected':''}>เครื่องดื่ม</option>
+            </select>
+
+            <label>ชื่อขนม:</label><input type="text" id="edit_name_${oldName}" class="modal-input" value="${item['ชื่อขนม']}">
+            <label>คำบรรยาย:</label><input type="text" id="edit_desc_${oldName}" class="modal-input" value="${item['คำบรรยาย'] || ''}">
+            <label>ลิ้งก์รูปภาพ (Drive URL):</label><input type="text" id="edit_img_${oldName}" class="modal-input" value="${item['Link รูปตัวละคร'] || ''}">
+            <label>นักวาด:</label><input type="text" id="edit_artist_${oldName}" class="modal-input" value="${item['นักวาด'] || ''}">
+            <label>ลิ้งก์นักวาด:</label><input type="text" id="edit_artistlink_${oldName}" class="modal-input" value="${item['Link นักวาด'] || ''}">
+            <label>มูลค่า:</label><input type="text" id="edit_price_${oldName}" class="modal-input" value="${item['มูลค่า'] || ''}">
+            <label>ลิ้งก์เพิ่มเติม:</label><input type="text" id="edit_more_${oldName}" class="modal-input" value="${item['Link เพื่อดูเพิ่มเติม'] || ''}">
+
+            <label>สถานะบ้าน:</label>
+            <select id="edit_sale_${oldName}" class="modal-select">
+                <option value="1" ${item['สถานะบ้าน']=='1'?'selected':''}>Forever Home</option>
+                <option value="2" ${item['สถานะบ้าน']=='2'?'selected':''}>TENT</option>
+                <option value="3" ${item['สถานะบ้าน']=='3'?'selected':''}>OTA/SP</option>
+            </select>
+
+            <label>สถานะความรัก:</label>
+            <select id="edit_love_${oldName}" class="modal-select">
+                <option value="1" ${item['สถานะความรัก']=='1'?'selected':''}>มีคู่ ❤️</option>
+                <option value="2" ${item['สถานะความรัก']=='2'?'selected':''}>โสด 🤍</option>
+                <option value="3" ${item['สถานะความรัก']=='3'?'selected':''}>ไม่มีความรัก 🚫</option>
+            </select>
+
+            <div class="edit-actions">
+                <button class="btn-save-inline" onclick="saveInlineEdit('${oldName}')">💾 บันทึก</button>
+                <button class="btn-cancel-inline" onclick="displayData(allData)">❌ ยกเลิก</button>
+            </div>
+        </div>
+    `;
+    card.innerHTML = formHtml;
+}
+
+// 🌟 สร้าง UI แสดงผลหน้าเว็บ 🌟
 function displayData(data) {
   const containers = { 'ขนมปัง': document.getElementById('bread-container'), 'เค้ก': document.getElementById('cake-container'), 'เครื่องดื่ม': document.getElementById('drink-container') };
-  
-  Object.values(containers).forEach(c => {
-      const cards = c.querySelectorAll('.menu-card, .loading-text');
-      cards.forEach(card => card.remove());
-  });
-
-  const settings = getLocalSettings();
-  
-  // 🌟 เรียงอันดับข้อมูลตามที่เคยถูกจัดไว้ 🌟
-  data.sort((a, b) => (settings[a['ชื่อขนม']]?.order ?? 999) - (settings[b['ชื่อขนม']]?.order ?? 999));
+  Object.values(containers).forEach(c => c.innerHTML = '');
 
   data.forEach(item => {
     const target = containers[item['หมวดหมู่']];
     if (!target) return;
-    const name = item['ชื่อขนม'];
-    const safeName = name.replace(/'/g, "\\'");
-    const set = settings[name] || {sale:'1', love:'2'};
+    
+    const safeName = item['ชื่อขนม'].replace(/'/g, "\\'");
 
     let lightClass = 'status-forever';
-    if(set.sale === '2') lightClass = 'status-tent';
-    if(set.sale === '3') lightClass = 'status-sp-ota';
+    if(item['สถานะบ้าน'] == '2') lightClass = 'status-tent';
+    if(item['สถานะบ้าน'] == '3') lightClass = 'status-sp-ota';
 
     let loveIcon = '';
-    if(set.love === '1') loveIcon = '<span style="margin-left:5px">❤️</span>';
-    if(set.love === '2') loveIcon = '<span style="margin-left:5px">🤍</span>';
-    if(set.love === '3') loveIcon = '<span style="margin-left:5px">🚫</span>';
+    if(item['สถานะความรัก'] == '1') loveIcon = '<span style="margin-left:5px">❤️</span>';
+    if(item['สถานะความรัก'] == '2') loveIcon = '<span style="margin-left:5px">🤍</span>';
+    if(item['สถานะความรัก'] == '3') loveIcon = '<span style="margin-left:5px">🚫</span>';
 
     let imgUrl = item['Link รูปตัวละคร'] || ''; 
     if (imgUrl.includes('drive.google.com/file/d/')) {
       const id = imgUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
       if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
     }
+
     const artistDisplay = item['Link นักวาด'] ? `<a href="${item['Link นักวาด']}" target="_blank" style="color:var(--darker); text-decoration:underline;">${item['นักวาด']}</a>` : item['นักวาด'];
-    const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3; width:100%;">${item['คำบรรยาย']}</div>` : '';
+    const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3;">${item['คำบรรยาย']}</div>` : '';
 
     let adminBtns = '';
     if(isEditMode) {
         adminBtns = `
-        <div style="display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(251, 191, 36, 0.5); padding-top: 10px;">
-            <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', -1, '${item['หมวดหมู่']}')">⬆️</button>
-            <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', 1, '${item['หมวดหมู่']}')">⬇️</button>
-            <button class="btn-edit-inline" style="flex:1;" onclick="event.stopPropagation(); openEditForm(this, '${safeName}')">✏️ แก้ไข</button>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(251, 191, 36, 0.5); padding-top: 10px;">
+            <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, '${safeName}')">✏️ แก้ไข</button>
             <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline('${safeName}')">🗑️ ลบ</button>
         </div>`;
     }
@@ -612,20 +443,18 @@ function displayData(data) {
     target.innerHTML += `
       <div class="menu-card">
         <div class="menu-header" onclick="toggleMenu(this)" style="${isEditMode ? 'cursor:default;' : 'cursor:pointer;'}">
-          <img src="${imgUrl}" alt="${name}" class="menu-img">
-          
+          <img src="${imgUrl}" alt="${item['ชื่อขนม']}" class="menu-img">
           <div class="menu-title-row">
             <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
                 <div class="menu-title">
                     <span class="status-light ${lightClass}"></span>
-                    ${name} ${loveIcon}
+                    ${item['ชื่อขนม']} ${loveIcon}
                 </div>
                 ${!isEditMode ? '<div class="menu-icon">▼</div>' : ''}
             </div>
             ${introText}
             ${adminBtns}
           </div>
-
         </div>
         <div class="menu-details">
           <div class="detail-text"><span>🎨</span> <strong>นักวาด:</strong> ${artistDisplay}</div>
@@ -636,185 +465,11 @@ function displayData(data) {
   });
   
   Object.keys(containers).forEach(key => { 
-      if (containers[key].querySelectorAll('.menu-card').length === 0) 
-          containers[key].innerHTML += '<div class="loading-text">ยังไม่มีเมนูในหมวดนี้ 🥺</div>'; 
+      if (containers[key].innerHTML === '') containers[key].innerHTML = '<div class="loading-text">ยังไม่มีเมนูในหมวดนี้ 🥺</div>'; 
   });
 }
 
-function moveItemInline(name, dir, category) {
-    const settings = getLocalSettings();
-    
-    // 🌟 เลื่อนอันดับข้อมูล 🌟
-    const items = allData.filter(i => i['หมวดหมู่'] === category).sort((a,b) => (settings[a['ชื่อขนม']]?.order ?? 999) - (settings[b['ชื่อขนม']]?.order ?? 999));
-    const idx = items.findIndex(i => i['ชื่อขนม'] === name);
-    
-    if(idx + dir >= 0 && idx + dir < items.length) {
-        const temp = items[idx]; items[idx] = items[idx+dir]; items[idx+dir] = temp;
-        items.forEach((it, i) => { 
-            if(!settings[it['ชื่อขนม']]) settings[it['ชื่อขนม']] = {}; 
-            settings[it['ชื่อขนม']].order = i; 
-        });
-        localStorage.setItem('bakery_settings', JSON.stringify(settings));
-        displayData(allData); 
-    }
-}
-
-async function deleteItemInline(name) {
-    if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${name}" ออกจากเตาอบ?`)) {
-        try {
-            await fetch(API_URL, {
-                method: 'POST',
-                body: JSON.stringify({ action: "delete", name: name })
-            });
-            const settings = getLocalSettings();
-            if(settings[name]) {
-                delete settings[name];
-                localStorage.setItem('bakery_settings', JSON.stringify(settings));
-            }
-            alert("ลบข้อมูลแล้วค่ะ! 🗑️");
-            fetchData(); 
-        } catch (e) {
-            alert("เกิดข้อผิดพลาดในการเชื่อมต่อเพื่อลบข้อมูลค่ะ");
-        }
-    }
-}
-
-function openEditForm(btn, oldName) {
-    const card = btn.closest('.menu-card');
-    const item = allData.find(i => i['ชื่อขนม'] === oldName);
-    const settings = getLocalSettings();
-    const set = settings[oldName] || {sale:'1', love:'2'};
-    const safeOldName = oldName.replace(/'/g, "\\'");
-
-    const currentImg = item['Link รูปตัวละคร'] || '';
-    const isBase64 = currentImg.startsWith('data:image');
-    const displayImgLink = isBase64 ? '' : currentImg;
-    const imgPlaceholder = isBase64 ? '(รูปภาพถูกอัปโหลดไว้ในระบบแล้ว หากต้องการเปลี่ยนให้ใส่ลิ้งก์ใหม่)' : 'วางลิ้งก์รูปภาพที่นี่';
-
-    const formHtml = `
-        <div class="edit-form-container" onclick="event.stopPropagation()">
-            <label>หมวดหมู่:</label>
-            <select id="edit_cat_${oldName}">
-                <option value="ขนมปัง" ${item['หมวดหมู่']==='ขนมปัง'?'selected':''}>ขนมปัง</option>
-                <option value="เค้ก" ${item['หมวดหมู่']==='เค้ก'?'selected':''}>เค้ก</option>
-                <option value="เครื่องดื่ม" ${item['หมวดหมู่']==='เครื่องดื่ม'?'selected':''}>เครื่องดื่ม</option>
-            </select>
-
-            <label>ชื่อขนม:</label>
-            <input type="text" id="edit_name_${oldName}" value="${item['ชื่อขนม']}">
-            <label>คำบรรยาย:</label>
-            <input type="text" id="edit_desc_${oldName}" value="${item['คำบรรยาย'] || ''}">
-
-            <div style="background: rgba(251, 191, 36, 0.1); padding: 10px; border-radius: 15px; margin-top: 5px;">
-                <label style="color:var(--dark);">อัปโหลดรูปภาพใหม่ (แทนที่รูปเดิม):</label>
-                <input type="file" id="edit_img_file_${oldName}" accept="image/*" style="margin-bottom: 5px; width: 100%;">
-                
-                <label style="color:var(--dark); text-align: center; display: block; font-size:12px; margin-top:5px;">--- หรือ ---</label>
-                
-                <label style="color:var(--dark);">ใส่ลิ้งก์รูปภาพใหม่:</label>
-                <input type="text" id="edit_img_link_${oldName}" value="${displayImgLink}" placeholder="${imgPlaceholder}">
-            </div>
-
-            <label>นักวาด:</label>
-            <input type="text" id="edit_artist_${oldName}" value="${item['นักวาด'] || ''}">
-            <label>ลิ้งก์นักวาด:</label>
-            <input type="text" id="edit_artistlink_${oldName}" value="${item['Link นักวาด'] || ''}">
-            <label>มูลค่า:</label>
-            <input type="text" id="edit_price_${oldName}" value="${item['มูลค่า'] || ''}">
-            <label>ลิ้งก์เพิ่มเติม:</label>
-            <input type="text" id="edit_more_${oldName}" value="${item['Link เพื่อดูเพิ่มเติม'] || ''}">
-
-            <label>สถานะบ้าน (Sale):</label>
-            <select id="edit_sale_${oldName}">
-                <option value="1" ${set.sale==='1'?'selected':''}>Forever Home</option>
-                <option value="2" ${set.sale==='2'?'selected':''}>TENT</option>
-                <option value="3" ${set.sale==='3'?'selected':''}>OTA/SP</option>
-            </select>
-
-            <label>สถานะความรัก (Love):</label>
-            <select id="edit_love_${oldName}">
-                <option value="1" ${set.love==='1'?'selected':''}>มีคู่ ❤️</option>
-                <option value="2" ${set.love==='2'?'selected':''}>โสด 🤍</option>
-                <option value="3" ${set.love==='3'?'selected':''}>ไม่มีความรัก 🚫</option>
-            </select>
-
-            <div class="edit-actions">
-                <button class="btn-save-inline" onclick="saveInlineEdit('${safeOldName}')">💾 บันทึก</button>
-                <button class="btn-cancel-inline" onclick="displayData(allData)">❌ ยกเลิก</button>
-            </div>
-        </div>
-    `;
-    card.innerHTML = formHtml;
-}
-
-async function saveInlineEdit(oldName) {
-    const itemIndex = allData.findIndex(i => i['ชื่อขนม'] === oldName);
-    if(itemIndex === -1) return;
-
-    const currentImg = allData[itemIndex]['Link รูปตัวละคร'] || '';
-    const newCat = document.getElementById(`edit_cat_${oldName}`).value;
-    const newName = document.getElementById(`edit_name_${oldName}`).value;
-    const newDesc = document.getElementById(`edit_desc_${oldName}`).value;
-    const newArtist = document.getElementById(`edit_artist_${oldName}`).value;
-    const newArtistLink = document.getElementById(`edit_artistlink_${oldName}`).value;
-    const newPrice = document.getElementById(`edit_price_${oldName}`).value;
-    const newMore = document.getElementById(`edit_more_${oldName}`).value;
-    const newSale = document.getElementById(`edit_sale_${oldName}`).value;
-    const newLove = document.getElementById(`edit_love_${oldName}`).value;
-
-    const fileInput = document.getElementById(`edit_img_file_${oldName}`);
-    let newImgLink = document.getElementById(`edit_img_link_${oldName}`).value;
-    
-    let finalImgData = currentImg; 
-
-    if (fileInput.files && fileInput.files[0]) {
-        try {
-            finalImgData = await readFileAsDataURL(fileInput.files[0]);
-        } catch (e) {
-            return alert("เกิดข้อผิดพลาดในการอ่านไฟล์รูปภาพค่ะ");
-        }
-    } 
-    else if (newImgLink) {
-        finalImgData = newImgLink;
-    }
-
-    if(!newName || !finalImgData) return alert("กรุณากรอกข้อมูลสำคัญ (ชื่อ, รูุป) ให้ครบถ้วนค่ะ");
-
-    const newItemData = {
-        "หมวดหมู่": newCat,
-        "ชื่อขนม": newName,
-        "คำบรรยาย": newDesc,
-        "Link รูปตัวละคร": finalImgData,
-        "นักวาด": newArtist,
-        "Link นักวาด": newArtistLink,
-        "มูลค่า": newPrice,
-        "Link เพื่อดูเพิ่มเติม": newMore
-    };
-    
-    try {
-        await fetch(API_URL, {
-            method: 'POST',
-            body: JSON.stringify({ action: "edit", oldName: oldName, data: newItemData })
-        });
-        
-        // บันทึกการตั้งค่า (ป้าย/อันดับ) ไว้ในเครื่องเหมือนเดิม
-        const settings = getLocalSettings();
-        const oldSet = settings[oldName] || {};
-        if (newName !== oldName) {
-            settings[newName] = oldSet;
-            delete settings[oldName];
-        }
-        settings[newName].sale = newSale;
-        settings[newName].love = newLove;
-        localStorage.setItem('bakery_settings', JSON.stringify(settings));
-
-        alert("บันทึกข้อมูลเรียบร้อยค่ะ! 💾");
-        fetchData();
-    } catch (e) {
-        alert("❌ บันทึกไม่สำเร็จ! กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตค่ะ");
-    }
-}
-
+// โหลดข้อมูลเมื่อเปิดเว็บ
 fetchData();
 </script>
 </body>
