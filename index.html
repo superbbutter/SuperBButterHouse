@@ -100,17 +100,16 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .socials-mini a { padding: 6px 15px; border-radius: 20px; background: #fff; text-decoration: none; color: var(--dark); font-size: 12px; border: 1px solid var(--main); transition: var(--transition); }
 .copyright { font-size: 10px; opacity: 0.6; }
 
-/* 🌟 Status Lights & Styles 🌟 */
+/* 🌟 Status Lights 🌟 */
 .status-light { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 5px; }
 .status-sp-ota { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
 .status-tent { background: #eab308; box-shadow: 0 0 8px #eab308; }
 .status-forever { background: #94a3b8; }
 
-/* 🌟 Modal & Modern Inputs 🌟 */
+/* 🌟 Modern Inputs & Modals 🌟 */
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); overflow-y: auto; }
 .modal-content { background: var(--bg); margin: 5% auto; padding: 30px 25px; border-radius: 25px; width: 90%; max-width: 450px; border: 2px solid var(--main); animation: fadeIn 0.3s ease; text-align: center; }
 
-/* ดีไซน์ Input ทันสมัยขึ้น */
 .modal-input, .modal-select { 
     width: 100%; 
     padding: 14px 16px; 
@@ -135,7 +134,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .btn-close-modal { color: #6b7280; font-size: 13px; cursor: pointer; text-decoration: underline; margin-top: 15px; display: block; text-align: center; transition: 0.2s; }
 .btn-close-modal:hover { color: var(--darker); }
 
-/* 🌟 Inline Edit & Button Styles 🌟 */
+/* 🌟 Modern Inline Edit Buttons 🌟 */
 .btn-edit-inline, .btn-delete-inline, .btn-move-inline { 
     background: #fff; 
     border: 1px solid #e5e7eb; 
@@ -146,15 +145,12 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     font-weight: 500; 
     transition: all 0.2s ease; 
 }
-/* ปรับปุ่มแก้ไขให้ยืด */
 .btn-edit-inline { flex: 1; padding: 8px 12px; border-color: var(--main); }
 .btn-edit-inline:hover { background: var(--main); color: var(--darker); }
 
-/* ปรับปุ่มลบให้เล็กพอดีคำ */
 .btn-delete-inline { flex: 0 0 auto; padding: 8px 14px; border-color: #fee2e2; color: #ef4444; background: #fef2f2; }
 .btn-delete-inline:hover { background: #ef4444; color: #fff; }
 
-/* ปรับปุ่มลูกศรเป็นวงกลมขนาดเล็ก */
 .btn-move-inline { 
     flex: 0 0 auto; 
     width: 34px; 
@@ -491,6 +487,7 @@ async function fetchData() {
     try {
         const response = await fetch(API_URL);
         allData = await response.json();
+        console.log("Data fetched successfully:", allData); // ไว้ดูว่าดึงข้อมูลมาได้ปกติไหม
         displayData(allData);
     } catch (error) { 
         console.error('Error fetching data:', error); 
@@ -536,7 +533,7 @@ function displayData(data) {
     let adminBtns = '';
     if(isEditMode) {
         adminBtns = `
-        <div style="display:flex; flex-wrap:nowrap; align-items: center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(251, 191, 36, 0.5); padding-top: 10px;">
+        <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(251, 191, 36, 0.5); padding-top: 10px;">
             <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', -1, '${item['หมวดหมู่']}')">⬆️</button>
             <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', 1, '${item['หมวดหมู่']}')">⬇️</button>
             <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, '${safeName}')">✏️ แก้ไข</button>
@@ -582,7 +579,9 @@ async function moveItemInline(name, dir, category) {
     try {
         await fetch(API_URL, {
             method: 'POST',
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
             body: JSON.stringify({ action: "move", name: name, category: category, direction: dir })
         });
         fetchData(); 
@@ -598,7 +597,9 @@ async function deleteItemInline(name) {
         try {
             await fetch(API_URL, {
                 method: 'POST',
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
                 body: JSON.stringify({ action: "delete", name: name })
             });
             alert("ลบข้อมูลแล้วค่ะ! 🗑️");
@@ -617,7 +618,6 @@ function openEditForm(btn, oldName) {
 
     const displayImgLink = item['Link รูปตัวละคร'] || '';
 
-    // อัปเดตโครงสร้างฟอร์มให้รับ Class แบบมินิมอล
     const formHtml = `
         <div class="edit-form-container" onclick="event.stopPropagation()">
             <label class="modal-label">หมวดหมู่:</label>
@@ -701,7 +701,9 @@ async function saveInlineEdit(oldName) {
     try {
         await fetch(API_URL, {
             method: 'POST',
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
             body: JSON.stringify({ action: "edit", oldName: safeOldName, data: newItemData })
         });
         alert("บันทึกข้อมูลเรียบร้อยค่ะ! 💾");
