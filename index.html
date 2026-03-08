@@ -458,6 +458,9 @@ async function submitNewCharacter() {
     try {
         await fetch(API_URL, {
             method: 'POST',
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
             body: JSON.stringify({ action: "add", data: newItem })
         });
         alert("อบขนมสำเร็จ!"); 
@@ -465,7 +468,8 @@ async function submitNewCharacter() {
         btnSubmit.innerText = "🚀 ส่งเข้าเตาอบ";
         fetchData(); 
     } catch (e) {
-        alert("❌ บันทึกไม่สำเร็จ! กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตค่ะ");
+        console.error(e);
+        alert("❌ บันทึกไม่สำเร็จ! กรุณาตรวจสอบลิงก์ API หรือลอง Deploy Apps Script ใหม่ค่ะ");
         btnSubmit.innerText = "🚀 ส่งเข้าเตาอบ";
     }
 }
@@ -610,6 +614,9 @@ async function deleteItemInline(name) {
         try {
             await fetch(API_URL, {
                 method: 'POST',
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
                 body: JSON.stringify({ action: "delete", name: name })
             });
             const settings = getLocalSettings();
@@ -620,6 +627,7 @@ async function deleteItemInline(name) {
             alert("ลบข้อมูลแล้วค่ะ! 🗑️");
             fetchData(); 
         } catch (e) {
+            console.error(e);
             alert("เกิดข้อผิดพลาดในการเชื่อมต่อเพื่อลบข้อมูลค่ะ");
         }
     }
@@ -716,6 +724,9 @@ async function saveInlineEdit(oldName) {
     try {
         await fetch(API_URL, {
             method: 'POST',
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
             body: JSON.stringify({ action: "edit", oldName: oldName, data: newItemData })
         });
         
@@ -733,7 +744,8 @@ async function saveInlineEdit(oldName) {
         alert("บันทึกข้อมูลเรียบร้อยค่ะ! 💾");
         fetchData();
     } catch (e) {
-        alert("❌ บันทึกไม่สำเร็จ! กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตค่ะ");
+        console.error(e);
+        alert("❌ บันทึกไม่สำเร็จ! กรุณาตรวจสอบลิงก์ API หรือลอง Deploy Apps Script ใหม่ค่ะ");
     }
 }
 
