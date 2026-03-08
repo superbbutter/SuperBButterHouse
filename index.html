@@ -19,15 +19,16 @@
   --glow: rgba(251, 191, 36, 0.25); 
   --transition: 0.3s ease;
   
-  /* 🎨 โทนสีสำหรับไอคอนสิทธิ์การใช้งาน (โทนเนย/คาราเมล/ขนมอบ) */
-  --badge-personal: #EAB308;   /* เหลืองเนย */
-  --badge-commercial: #D97706; /* ส้มคาราเมล */
-  --badge-full: #92400E;       /* น้ำตาลอบ */
+  /* 🎨 โทนสีใหม่สำหรับไอคอนวงกลม (น้ำตาล-เหลือง) 🎨 */
+  /* หมวดสิทธิ์การใช้งาน */
+  --badge-personal: #FDE047;   /* เหลืองครีม */
+  --badge-commercial: #F59E0B; /* ทอง */
+  --badge-full: #B45309;       /* น้ำตาลทองเข้ม */
 
-  /* ❤️ โทนสีสำหรับไอคอนสถานะความรัก (โทนแยม/ชา) */
-  --badge-taken: #F43F5E;      /* แยมสตรอว์เบอร์รี */
-  --badge-single: #A8A29E;     /* เทาชาเอิร์ลเกรย์ */
-  --badge-none: #57534E;       /* เทาเข้ม */
+  /* หมวดสถานะความรัก */
+  --badge-taken: #A16207;      /* น้ำตาลแดงอบอุ่น */
+  --badge-single: #D1B9A1;     /* น้ำตาลอ่อน (Taupe) */
+  --badge-none: #78350F;       /* น้ำตาลเทา */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
@@ -124,16 +125,17 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     width: 22px; 
     height: 22px;
     border-radius: 50%;
-    margin-right: 6px;
+    /* ปรับ margin จากขวาไปซ้ายแทนเพื่อไว้หลังชื่อ */
+    margin-left: 6px; 
     flex-shrink: 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.15);
     transition: transform 0.2s ease;
 }
-/* สีกรอบวงกลมสิทธิ์การใช้งาน */
+/* สีกรอบวงกลมสิทธิ์การใช้งาน (โทนน้ำตาล-เหลือง) */
 .usage-personal { background: var(--badge-personal); } 
 .usage-commercial { background: var(--badge-commercial); } 
 .usage-full { background: var(--badge-full); } 
-/* สีกรอบวงกลมสถานะความรัก */
+/* สีกรอบวงกลมสถานะความรัก (โทนน้ำตาล-เหลือง) */
 .love-taken { background: var(--badge-taken); } 
 .love-single { background: var(--badge-single); } 
 .love-none { background: var(--badge-none); } 
@@ -632,7 +634,8 @@ function displayData(data) {
             <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
                 <div class="menu-title" style="align-items:center;">
                     <span class="status-light ${lightClass}"></span>
-                    ${usageIcon}${loveIcon}<span style="margin-left:2px;">${name}</span>
+                    <span>${name}</span>
+                    <span style="display:inline-flex; align-items:center;">${usageIcon}${loveIcon}</span>
                 </div>
                 ${!isEditMode ? '<div class="menu-icon">▼</div>' : ''}
             </div>
