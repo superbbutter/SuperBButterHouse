@@ -246,7 +246,12 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
             <div><span class="status-light status-tent"></span> <strong>TENT :</strong> ยังลังเลใจ (พิจารณาอยู่ค่ะ)</div>
             <div><span class="status-light status-forever"></span> <strong>Forever Home :</strong> มีบ้านที่แสนอบอุ่นแล้ว</div>
             <div style="border-top: 1px dashed var(--main); margin: 8px 0;"></div>
-            <div style="display: flex; gap: 15px; justify-content: center;">
+            
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 5px;">
+                <span>👤 Personal</span> <span>💼 Commercial</span> <span>👑 สิทธิ์ขาด</span>
+            </div>
+            
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                 <span>❤️ มีคู่</span> <span>🤍 โสด</span> <span>🚫 ไม่มีความรัก</span>
             </div>
         </div>
@@ -329,18 +334,18 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
         <option value="3">OTA/SP</option>
     </select>
 
-    <label class="modal-label">สถานะความรัก *</label>
-    <select id="charLove" class="modal-select">
-        <option value="1">มีคู่ ❤️</option>
-        <option value="2">โสด 🤍</option>
-        <option value="3">ไม่มีความรัก 🚫</option>
-    </select>
-
     <label class="modal-label">สิทธิ์การใช้งาน *</label>
     <select id="charUsage" class="modal-select">
         <option value="Personal">Personal (ส่วนตัว)</option>
         <option value="Commercial">Commercial (เชิงพาณิชย์)</option>
         <option value="สิทธิ์ขาด">สิทธิ์ขาด (Full Rights)</option>
+    </select>
+
+    <label class="modal-label">สถานะความรัก *</label>
+    <select id="charLove" class="modal-select">
+        <option value="1">มีคู่ ❤️</option>
+        <option value="2">โสด 🤍</option>
+        <option value="3">ไม่มีความรัก 🚫</option>
     </select>
 
     <button class="btn-confirm" id="btnSubmitAdd" onclick="submitNewCharacter()">🚀 ส่งเข้าเตาอบ</button>
@@ -411,7 +416,7 @@ function openAddCharModal() {
     document.getElementById('charMore').value = '';
     document.getElementById('charSale').value = '1';
     document.getElementById('charLove').value = '2';
-    document.getElementById('charUsage').value = 'Personal'; // เซ็ตค่าเริ่มต้น
+    document.getElementById('charUsage').value = 'Personal';
     
     const activePageId = document.querySelector('.page.active').id;
     const categorySelect = document.getElementById('charCategory');
@@ -443,7 +448,7 @@ async function submitNewCharacter() {
         "Link เพื่อดูเพิ่มเติม": document.getElementById('charMore').value,
         "สถานะบ้าน": document.getElementById('charSale').value,
         "สถานะความรัก": document.getElementById('charLove').value,
-        "สิทธิ์การใช้งาน": document.getElementById('charUsage').value // ส่งข้อมูลสิทธิ์การใช้งานไปเก็บ
+        "สิทธิ์การใช้งาน": document.getElementById('charUsage').value 
     };
 
     const btnSubmit = document.getElementById('btnSubmitAdd');
@@ -518,16 +523,24 @@ function displayData(data) {
     
     const saleStatus = item['สถานะบ้าน'] || '1';
     const loveStatus = item['สถานะความรัก'] || '2';
-    const usageRights = item['สิทธิ์การใช้งาน'] || '-'; // ดึงข้อมูลสิทธิ์การใช้งานมาแสดง
+    const usageRights = item['สิทธิ์การใช้งาน'] || ''; 
 
+    // ไฟสถานะ
     let lightClass = 'status-forever';
     if(saleStatus == '2') lightClass = 'status-tent';
     if(saleStatus == '3') lightClass = 'status-sp-ota';
 
+    // ไอคอนสิทธิ์การใช้งาน (อยู่ก่อนไอคอนความรัก)
+    let usageIcon = '';
+    if(usageRights === 'Personal') usageIcon = '<span style="margin-left:5px" title="Personal">👤</span>';
+    else if(usageRights === 'Commercial') usageIcon = '<span style="margin-left:5px" title="Commercial">💼</span>';
+    else if(usageRights === 'สิทธิ์ขาด') usageIcon = '<span style="margin-left:5px" title="สิทธิ์ขาด">👑</span>';
+
+    // ไอคอนความรัก
     let loveIcon = '';
-    if(loveStatus == '1') loveIcon = '<span style="margin-left:5px">❤️</span>';
-    if(loveStatus == '2') loveIcon = '<span style="margin-left:5px">🤍</span>';
-    if(loveStatus == '3') loveIcon = '<span style="margin-left:5px">🚫</span>';
+    if(loveStatus == '1') loveIcon = '<span style="margin-left:5px" title="มีคู่">❤️</span>';
+    else if(loveStatus == '2') loveIcon = '<span style="margin-left:5px" title="โสด">🤍</span>';
+    else if(loveStatus == '3') loveIcon = '<span style="margin-left:5px" title="ไม่มีความรัก">🚫</span>';
 
     let imgUrl = item['Link รูปตัวละคร'] || ''; 
     if (imgUrl.includes('drive.google.com/file/d/')) {
@@ -557,7 +570,7 @@ function displayData(data) {
             <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
                 <div class="menu-title">
                     <span class="status-light ${lightClass}"></span>
-                    ${name} ${loveIcon}
+                    ${name} ${usageIcon} ${loveIcon}
                 </div>
                 ${!isEditMode ? '<div class="menu-icon">▼</div>' : ''}
             </div>
@@ -568,7 +581,6 @@ function displayData(data) {
         </div>
         <div class="menu-details">
           <div class="detail-text"><span>🎨</span> <strong>นักวาด:</strong> ${artistDisplay}</div>
-          <div class="detail-text"><span>📜</span> <strong>สิทธิ์การใช้งาน:</strong> ${usageRights}</div>
           <div class="detail-text"><span>💰</span> <strong>มูลค่า:</strong> ${item['มูลค่า']}</div>
           <a href="${item['Link เพื่อดูเพิ่มเติม'] || '#'}" class="btn-view" target="_blank">🔍 ดูข้อมูลเพิ่มเติม</a>
         </div>
@@ -657,18 +669,18 @@ function openEditForm(btn, oldName) {
                 <option value="3" ${item['สถานะบ้าน']=='3'?'selected':''}>OTA/SP</option>
             </select>
 
-            <label class="modal-label">สถานะความรัก (Love):</label>
-            <select id="edit_love_${oldName}" class="modal-select">
-                <option value="1" ${item['สถานะความรัก']=='1'?'selected':''}>มีคู่ ❤️</option>
-                <option value="2" ${item['สถานะความรัก']=='2'?'selected':''}>โสด 🤍</option>
-                <option value="3" ${item['สถานะความรัก']=='3'?'selected':''}>ไม่มีความรัก 🚫</option>
-            </select>
-
             <label class="modal-label">สิทธิ์การใช้งาน:</label>
             <select id="edit_usage_${oldName}" class="modal-select">
                 <option value="Personal" ${item['สิทธิ์การใช้งาน']==='Personal'?'selected':''}>Personal (ส่วนตัว)</option>
                 <option value="Commercial" ${item['สิทธิ์การใช้งาน']==='Commercial'?'selected':''}>Commercial (เชิงพาณิชย์)</option>
                 <option value="สิทธิ์ขาด" ${item['สิทธิ์การใช้งาน']==='สิทธิ์ขาด'?'selected':''}>สิทธิ์ขาด (Full Rights)</option>
+            </select>
+
+            <label class="modal-label">สถานะความรัก (Love):</label>
+            <select id="edit_love_${oldName}" class="modal-select">
+                <option value="1" ${item['สถานะความรัก']=='1'?'selected':''}>มีคู่ ❤️</option>
+                <option value="2" ${item['สถานะความรัก']=='2'?'selected':''}>โสด 🤍</option>
+                <option value="3" ${item['สถานะความรัก']=='3'?'selected':''}>ไม่มีความรัก 🚫</option>
             </select>
 
             <div class="edit-actions">
@@ -695,7 +707,7 @@ async function saveInlineEdit(oldName) {
     const newMore = document.getElementById(`edit_more_${oldName}`).value;
     const newSale = document.getElementById(`edit_sale_${oldName}`).value;
     const newLove = document.getElementById(`edit_love_${oldName}`).value;
-    const newUsage = document.getElementById(`edit_usage_${oldName}`).value; // รับค่าสิทธิ์การใช้งาน
+    const newUsage = document.getElementById(`edit_usage_${oldName}`).value; 
     const finalImgData = document.getElementById(`edit_img_link_${oldName}`).value;
 
     if(!newName || !finalImgData) return alert("กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูป) ให้ครบถ้วนค่ะ");
@@ -711,7 +723,7 @@ async function saveInlineEdit(oldName) {
         "Link เพื่อดูเพิ่มเติม": newMore,
         "สถานะบ้าน": newSale,
         "สถานะความรัก": newLove,
-        "สิทธิ์การใช้งาน": newUsage // ส่งไปอัปเดตในชีต
+        "สิทธิ์การใช้งาน": newUsage 
     };
     
     try {
