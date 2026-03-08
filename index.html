@@ -18,6 +18,11 @@
   --glass: rgba(255, 255, 255, 0.5); 
   --glow: rgba(251, 191, 36, 0.25); 
   --transition: 0.3s ease;
+  
+  /* 🎨 โทนสีใหม่สำหรับไอคอนสิทธิ์การใช้งาน ดูทันสมัยและเข้ากับธีม */
+  --badge-personal: #A1785C;   /* น้ำตาลนมอุ่นๆ */
+  --badge-commercial: #D4A373; /* ทองหม่นพรีเมียม */
+  --badge-full: #5D4037;       /* น้ำตาลช็อกโกแลตเข้ม */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
@@ -101,10 +106,28 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .copyright { font-size: 10px; opacity: 0.6; }
 
 /* Status Lights */
-.status-light { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.status-light { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 5px; flex-shrink: 0;}
 .status-sp-ota { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
 .status-tent { background: #eab308; box-shadow: 0 0 8px #eab308; }
 .status-forever { background: #94a3b8; }
+
+/* 🌟 สไตล์สำหรับไอคอนสิทธิ์การใช้งาน (วงกลมโทนสีใหม่) 🌟 */
+.usage-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px; /* ปรับขนาดใหญ่ขึ้นเล็กน้อยเพื่อให้ดูชัดเจนทันสมัย */
+    height: 22px;
+    border-radius: 50%;
+    margin-right: 8px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15); /* เพิ่มเงาให้ดูมีมิติ */
+    transition: transform 0.2s ease; /* เพิ่ม transition เวลา hover */
+}
+/* สีกรอบวงกลมโทนธีมเบเกอรี่ */
+.usage-personal { background: var(--badge-personal); } 
+.usage-commercial { background: var(--badge-commercial); } 
+.usage-full { background: var(--badge-full); } 
 
 /* Modern Inputs & Modals */
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); overflow-y: auto; }
@@ -247,11 +270,22 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
             <div><span class="status-light status-forever"></span> <strong>Forever Home :</strong> มีบ้านที่แสนอบอุ่นแล้ว</div>
             <div style="border-top: 1px dashed var(--main); margin: 8px 0;"></div>
             
-            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 5px;">
-                <span>👤 Personal</span> <span>💼 Commercial</span> <span>👑 สิทธิ์ขาด</span>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 5px; align-items: center;">
+                <span style="display:flex; align-items:center;">
+                    <span class="usage-badge usage-personal"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                    Personal
+                </span>
+                <span style="display:flex; align-items:center;">
+                    <span class="usage-badge usage-commercial"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span>
+                    Commercial
+                </span>
+                <span style="display:flex; align-items:center;">
+                    <span class="usage-badge usage-full"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                    สิทธิ์ขาด
+                </span>
             </div>
             
-            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 8px;">
                 <span>❤️ มีคู่</span> <span>🤍 โสด</span> <span>🚫 ไม่มีความรัก</span>
             </div>
         </div>
@@ -530,11 +564,15 @@ function displayData(data) {
     if(saleStatus == '2') lightClass = 'status-tent';
     if(saleStatus == '3') lightClass = 'status-sp-ota';
 
-    // ไอคอนสิทธิ์การใช้งาน (อยู่ก่อนไอคอนความรัก)
+    // ไอคอนสิทธิ์การใช้งาน (วงกลมโทนสีใหม่พร้อม SVG ภายใน)
     let usageIcon = '';
-    if(usageRights === 'Personal') usageIcon = '<span style="margin-left:5px" title="Personal">👤</span>';
-    else if(usageRights === 'Commercial') usageIcon = '<span style="margin-left:5px" title="Commercial">💼</span>';
-    else if(usageRights === 'สิทธิ์ขาด') usageIcon = '<span style="margin-left:5px" title="สิทธิ์ขาด">👑</span>';
+    if(usageRights === 'Personal') {
+        usageIcon = `<span class="usage-badge usage-personal" title="Personal (ส่วนตัว)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>`;
+    } else if(usageRights === 'Commercial') {
+        usageIcon = `<span class="usage-badge usage-commercial" title="Commercial (เชิงพาณิชย์)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span>`;
+    } else if(usageRights === 'สิทธิ์ขาด') {
+        usageIcon = `<span class="usage-badge usage-full" title="สิทธิ์ขาด (Full Rights)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>`;
+    }
 
     // ไอคอนความรัก
     let loveIcon = '';
@@ -568,9 +606,9 @@ function displayData(data) {
           
           <div class="menu-title-row">
             <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
-                <div class="menu-title">
+                <div class="menu-title" style="align-items:center;">
                     <span class="status-light ${lightClass}"></span>
-                    ${name} ${usageIcon} ${loveIcon}
+                    ${usageIcon}${name} ${loveIcon}
                 </div>
                 ${!isEditMode ? '<div class="menu-icon">▼</div>' : ''}
             </div>
