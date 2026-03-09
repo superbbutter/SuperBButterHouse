@@ -85,12 +85,12 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .menu-icon { font-size: 12px; color: var(--dark); transition: transform 0.3s ease; padding: 5px; background: #FFF8D6; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 10px; }
 .menu-card.open .menu-icon { transform: rotate(180deg); background: var(--main); }
 .menu-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: rgba(255, 255, 255, 0.5); padding: 0 15px; }
-/* ปรับ max-height เผื่อไว้สำหรับรูปเพิ่มเติมหลายรูป */
-.menu-card.open .menu-details { max-height: 4000px; padding: 10px 15px 15px; }
+.menu-card.open .menu-details { max-height: 6000px; padding: 10px 15px 15px; }
 
 .detail-text { font-size: 14px; margin-bottom: 8px; color: var(--darker); display: flex; align-items: center; gap: 8px; }
 .btn-view { display: inline-block; margin-top: 5px; background: linear-gradient(135deg, var(--main), #FDE047); color: var(--darker); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-size: 13px; font-weight: 600; text-align: center; width: 100%; border: none; cursor: pointer; transition: 0.3s; }
 .btn-view:hover { transform: translateY(-2px); }
+.btn-gallery { background: #FFF8D6; border: 1px dashed var(--main); color: var(--dark); margin-top: 10px; }
 
 .rule-box { background: rgba(255, 255, 255, 0.7); padding: 15px; border-radius: 15px; font-size: 13px; line-height: 1.6; border: 1px dashed var(--main); text-align: left; }
 .highlight { color: #b91c1c; font-weight: 500; } 
@@ -155,7 +155,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     background-color: #ffffff;
     box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.2);
 }
-.modal-label { display: block; text-align: left; font-size: 13px; font-weight: 600; color: var(--darker); margin-left: 4px; }
+.modal-label { display: block; text-align: left; font-size: 13px; font-weight: 600; color: var(--darker); margin-left: 4px; margin-bottom: 4px;}
 
 .btn-confirm { background: var(--main); color: var(--darker); margin-top: 10px; padding: 14px; width: 100%; border-radius: 15px; border: none; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3); }
 .btn-confirm:hover { transform: translateY(-2px); background: #FDE047; }
@@ -365,7 +365,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     <label class="modal-label">ลิ้งก์รูปตัวละคร (ภาพหลัก) *</label>
     <input type="text" id="charImgLink" class="modal-input" placeholder="วางลิ้งก์รูปภาพที่นี่">
 
-    <label class="modal-label">นักวาด *</label>
+    <label class="modal-label">นักวาด (ภาพหลัก) *</label>
     <input type="text" id="charArtist" class="modal-input">
     
     <label class="modal-label">ลิ้งก์นักวาด</label>
@@ -398,10 +398,15 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
         <option value="3">ไม่มีความรัก 🚫</option>
     </select>
 
-    <label class="modal-label">รูปเพิ่มเติม (ไม่บังคับ) <br><span style="font-size: 11px; font-weight: normal; color: #6b7280;">*กด Enter เพื่อเว้นบรรทัด 1 ลิ้งก์ ต่อ 1 รูป</span></label>
-    <textarea id="charExtraImgs" class="modal-input" rows="3" placeholder="วางลิ้งก์รูปที่ 1&#10;วางลิ้งก์รูปที่ 2"></textarea>
+    <div style="margin-top: 25px; border-top: 2px dashed rgba(251,191,36,0.5); padding-top: 15px;">
+        <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--darker); display:flex; justify-content:space-between; align-items:center;">
+            🖼️ รูปเพิ่มเติม (Gallery)
+            <button type="button" onclick="addExtraImgField('addExtraImgsContainer')" style="background:var(--main); border:none; padding:5px 10px; border-radius:15px; font-size:12px; font-weight:bold; color:var(--darker); cursor:pointer;">➕ เพิ่มรูป</button>
+        </h4>
+        <div id="addExtraImgsContainer"></div>
+    </div>
 
-    <button class="btn-confirm" id="btnSubmitAdd" onclick="submitNewCharacter()">🚀 ส่งเข้าเตาอบ</button>
+    <button class="btn-confirm" id="btnSubmitAdd" onclick="submitNewCharacter()" style="margin-top:20px;">🚀 ส่งเข้าเตาอบ</button>
     <span class="btn-close-modal" onclick="closeModal('addCharModal')">ยกเลิก</span>
   </div>
 </div>
@@ -416,7 +421,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 </div>
 
 <script>
-// 📌 ฝัง URL ของแท้ให้แล้วครับ! 📌
+// 📌 URL ของ Apps Script 📌
 const API_URL = 'https://script.google.com/macros/s/AKfycbxQf6kADkDT0Xz_LSVyfiGo_z4ntyRUlJzLJ1l5BhMYlEJCVFsaHDbYc9UEu3NPcFo/exec';
 
 let allData = []; 
@@ -457,9 +462,8 @@ function toggleMenu(headerElement) {
     }
 }
 
-// 🌟 ฟังก์ชันกดแสดง/ซ่อน แกลเลอรี่รูปเพิ่มเติม 🌟
 function toggleGallery(event, galleryId) {
-    event.stopPropagation(); // ไม่ให้การ์ดปิด
+    event.stopPropagation();
     const gallery = document.getElementById(galleryId);
     if(gallery.style.display === 'none') {
         gallery.style.display = 'block';
@@ -469,6 +473,52 @@ function toggleGallery(event, galleryId) {
 }
 
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+// 🌟 ฟังก์ชันสร้างกล่องกรอกข้อมูลรูปเพิ่มเติม 🌟
+function addExtraImgField(containerId, link='', artist='', artistLink='', price='') {
+    const container = document.getElementById(containerId);
+    const block = document.createElement('div');
+    block.className = 'extra-img-block';
+    block.style.cssText = 'background: rgba(251, 191, 36, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;';
+    block.innerHTML = `
+        <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #ef4444; font-weight: 600; font-size:12px; background:#fef2f2; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
+        <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
+        <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" placeholder="วางลิ้งก์รูปภาพที่นี่" value="${link}">
+        
+        <div style="display:flex; gap:10px;">
+            <div style="flex:1;">
+                <label class="modal-label">นักวาด (ถ้ามี)</label>
+                <input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" placeholder="ชื่อนักวาด" value="${artist}">
+            </div>
+            <div style="flex:1;">
+                <label class="modal-label">มูลค่า (ถ้ามี)</label>
+                <input type="text" class="modal-input ex-price" style="margin-bottom:10px; padding:10px;" placeholder="เช่น 500" value="${price}">
+            </div>
+        </div>
+        
+        <label class="modal-label">ลิ้งก์นักวาด (ถ้ามี)</label>
+        <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" placeholder="วางลิ้งก์เพจ/ช่องทางนักวาด" value="${artistLink}">
+    `;
+    container.appendChild(block);
+}
+
+// 🌟 ฟังก์ชันรวมข้อมูลจากกล่องรูปเพิ่มเติมให้เป็น String 🌟
+function getExtraImgsData(containerId) {
+    const container = document.getElementById(containerId);
+    if(!container) return '';
+    const blocks = container.querySelectorAll('.extra-img-block');
+    let result = [];
+    blocks.forEach(block => {
+        const img = block.querySelector('.ex-img').value.trim();
+        const artist = block.querySelector('.ex-artist').value.trim();
+        const artistLink = block.querySelector('.ex-artistlink').value.trim();
+        const price = block.querySelector('.ex-price').value.trim();
+        if(img) { // บันทึกเฉพาะกล่องที่มีการใส่ลิ้งก์รูป
+            result.push(`${img} | ${artist} | ${artistLink} | ${price}`);
+        }
+    });
+    return result.join('\n'); // เชื่อมแต่ละรูปด้วยการขึ้นบรรทัดใหม่
+}
 
 function openAddCharModal() { 
     document.getElementById('charName').value = '';
@@ -481,7 +531,7 @@ function openAddCharModal() {
     document.getElementById('charSale').value = '1';
     document.getElementById('charLove').value = '2';
     document.getElementById('charUsage').value = 'Personal';
-    document.getElementById('charExtraImgs').value = ''; // เคลียร์ช่องรูปเพิ่มเติม
+    document.getElementById('addExtraImgsContainer').innerHTML = ''; // ล้างกล่องเก่าออกให้หมด
     
     const activePageId = document.querySelector('.page.active').id;
     const categorySelect = document.getElementById('charCategory');
@@ -514,7 +564,7 @@ async function submitNewCharacter() {
         "สถานะบ้าน": document.getElementById('charSale').value,
         "สถานะความรัก": document.getElementById('charLove').value,
         "สิทธิ์การใช้งาน": document.getElementById('charUsage').value,
-        "รูปเพิ่มเติม": document.getElementById('charExtraImgs').value // ส่งรูปเพิ่มเติม
+        "รูปเพิ่มเติม": getExtraImgsData('addExtraImgsContainer') // เรียกใช้ฟังก์ชันดูดข้อมูลจากกล่อง
     };
 
     const btnSubmit = document.getElementById('btnSubmitAdd');
@@ -586,20 +636,18 @@ function displayData(data) {
     
     const name = item['ชื่อขนม'] || '';
     const safeName = name.replace(/'/g, "\\'");
-    // ID อ้างอิงเวลาเปิด/ปิดแกลเลอรี่รูปเพิ่มเติม
-    const galleryId = 'gallery_' + index + '_' + Math.random().toString(36).substr(2, 5);
+    const idSafeName = safeName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + index; // สร้าง ID ที่ปลอดภัยสำหรับการแก้ไข
+    const galleryId = 'gallery_' + idSafeName;
     
     const saleStatus = item['สถานะบ้าน'] || '1';
     const loveStatus = item['สถานะความรัก'] || '2';
     const usageRights = item['สิทธิ์การใช้งาน'] || ''; 
     const extraImgsStr = item['รูปเพิ่มเติม'] || '';
 
-    // ไฟสถานะ
     let lightClass = 'status-forever';
     if(saleStatus == '2') lightClass = 'status-tent';
     if(saleStatus == '3') lightClass = 'status-sp-ota';
 
-    // ไอคอนสิทธิ์การใช้งาน
     let usageIcon = '';
     if(usageRights === 'Personal') {
         usageIcon = `<span class="usage-badge usage-personal" title="Personal (ส่วนตัว)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>`;
@@ -609,7 +657,6 @@ function displayData(data) {
         usageIcon = `<span class="usage-badge usage-full" title="สิทธิ์ขาด (Full Rights)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>`;
     }
 
-    // ไอคอนความรัก
     let loveIcon = '';
     if(loveStatus == '1') {
         loveIcon = `<span class="usage-badge love-taken" title="มีคู่"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>`;
@@ -627,22 +674,54 @@ function displayData(data) {
     const artistDisplay = item['Link นักวาด'] ? `<a href="${item['Link นักวาด']}" target="_blank" style="color:var(--darker); text-decoration:underline;">${item['นักวาด']}</a>` : item['นักวาด'];
     const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3; width:100%;">${item['คำบรรยาย']}</div>` : '';
 
-    // 🌟 ส่วนประมวลผลรูปเพิ่มเติม (ตัดบรรทัดและแปลงลิงก์ Drive) 🌟
+    // 🌟 ระบบประมวลผลรูปเพิ่มเติม (ดึงข้อมูลออกมาโชว์ในการ์ด) 🌟
     let extraGalleryHtml = '';
     let toggleGalleryBtn = '';
     const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
     
     if (extraImgsArray.length > 0) {
-        let imagesHtml = extraImgsArray.map(link => {
+        let imagesHtml = extraImgsArray.map(line => {
+            const parts = line.split('|').map(p => p.trim());
+            let link = parts[0] || '';
+            let artist = parts[1] || '';
+            let artistLink = parts[2] || '';
+            let price = parts[3] || '';
+
             let parsedLink = link;
             if (link.includes('drive.google.com/file/d/')) {
                 const matchId = link.match(/\/d\/([a-zA-Z0-9_-]+)/);
                 if (matchId) parsedLink = `https://drive.google.com/thumbnail?id=${matchId[1]}&sz=w1000`;
             }
-            return `<img src="${parsedLink}" style="width:100%; border-radius:15px; margin-bottom:10px; border:1px solid rgba(251, 191, 36, 0.5);" alt="รูปเพิ่มเติม">`;
+            
+            let captionHtml = '';
+            if (artist || price) {
+                let artistDisplayExtra = artist;
+                if (artist && artistLink) {
+                    artistDisplayExtra = `<a href="${artistLink}" target="_blank" style="color:var(--dark); text-decoration:underline; font-weight:500;">${artist}</a>`;
+                }
+                let artistHtml = artist ? `<span>🎨 นักวาด: ${artistDisplayExtra}</span>` : '';
+                let priceHtml = price ? `<span>💰 มูลค่า: <strong>${price}</strong></span>` : '';
+                let separator = (artist && price) ? ' &nbsp;•&nbsp; ' : '';
+
+                captionHtml = `
+                <div style="background: rgba(255,255,255,0.8); padding: 10px; border: 1px solid rgba(251, 191, 36, 0.5); border-top: none; border-radius: 0 0 15px 15px; font-size: 12px; text-align: center; color: var(--darker);">
+                    ${artistHtml}${separator}${priceHtml}
+                </div>`;
+            }
+
+            let imgRadiusStyle = captionHtml ? 'border-radius: 15px 15px 0 0; border-bottom: none;' : 'border-radius: 15px;';
+
+            return `
+            <div style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
+                <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(251, 191, 36, 0.5);">
+                    <img src="${parsedLink}" style="width:100%; display:block; user-select:none; -webkit-user-drag:none; pointer-events:none;" alt="รูปเพิ่มเติม">
+                    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w400'); background-repeat:repeat; background-size:150px; pointer-events:none;"></div>
+                </div>
+                ${captionHtml}
+            </div>`;
         }).join('');
 
-        extraGalleryHtml = `<div id="${galleryId}" style="display:none; margin-top:15px;">${imagesHtml}</div>`;
+        extraGalleryHtml = `<div id="${galleryId}" style="display:none; margin-top:15px; padding-top:15px; border-top:1px dashed var(--main);">${imagesHtml}</div>`;
         toggleGalleryBtn = `<button onclick="toggleGallery(event, '${galleryId}')" class="btn-view btn-gallery" style="background:#FFF8D6; border:1px dashed var(--main); color:var(--dark); margin-top:10px;">🖼️ ดูรูปเพิ่มเติม (${extraImgsArray.length} รูป)</button>`;
     }
 
@@ -652,7 +731,7 @@ function displayData(data) {
         <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(251, 191, 36, 0.5); padding-top: 10px;">
             <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', -1, '${item['หมวดหมู่']}')">⬆️</button>
             <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', 1, '${item['หมวดหมู่']}')">⬇️</button>
-            <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, '${safeName}')">✏️ แก้ไข</button>
+            <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, '${safeName}', '${idSafeName}')">✏️ แก้ไข</button>
             <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline('${safeName}')">🗑️ ลบ</button>
         </div>`;
     }
@@ -728,66 +807,91 @@ async function deleteItemInline(name) {
 }
 
 // เปิดฟอร์มแก้ไข
-function openEditForm(btn, oldName) {
+function openEditForm(btn, oldName, idSafeName) {
     const card = btn.closest('.menu-card');
     const safeOldName = oldName.replace(/'/g, "\\'");
     const item = allData.find(i => i['ชื่อขนม'] === oldName);
 
     const displayImgLink = item['Link รูปตัวละคร'] || '';
-    const displayExtraImgs = item['รูปเพิ่มเติม'] || '';
+    const extraImgsStr = item['รูปเพิ่มเติม'] || '';
+    const editContainerId = 'editExtraImgsContainer_' + idSafeName;
+
+    // สร้าง HTML สำหรับกล่องรูปเพิ่มเติมที่มีอยู่แล้ว
+    let existingExtraImgsHtml = '';
+    const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
+    extraImgsArray.forEach(line => {
+        const parts = line.split('|').map(p => p.trim());
+        existingExtraImgsHtml += `
+        <div class="extra-img-block" style="background: rgba(251, 191, 36, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;">
+            <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #ef4444; font-weight: 600; font-size:12px; background:#fef2f2; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
+            <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
+            <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" value="${parts[0] || ''}">
+            <div style="display:flex; gap:10px;">
+                <div style="flex:1;"><label class="modal-label">นักวาด (ถ้ามี)</label><input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" value="${parts[1] || ''}"></div>
+                <div style="flex:1;"><label class="modal-label">มูลค่า (ถ้ามี)</label><input type="text" class="modal-input ex-price" style="margin-bottom:10px; padding:10px;" value="${parts[3] || ''}"></div>
+            </div>
+            <label class="modal-label">ลิ้งก์นักวาด (ถ้ามี)</label>
+            <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" value="${parts[2] || ''}">
+        </div>`;
+    });
 
     const formHtml = `
         <div class="edit-form-container" onclick="event.stopPropagation()">
             <label class="modal-label">หมวดหมู่:</label>
-            <select id="edit_cat_${oldName}" class="modal-select">
+            <select id="edit_cat_${idSafeName}" class="modal-select">
                 <option value="ขนมปัง" ${item['หมวดหมู่']==='ขนมปัง'?'selected':''}>ขนมปัง</option>
                 <option value="เค้ก" ${item['หมวดหมู่']==='เค้ก'?'selected':''}>เค้ก</option>
                 <option value="เครื่องดื่ม" ${item['หมวดหมู่']==='เครื่องดื่ม'?'selected':''}>เครื่องดื่ม</option>
             </select>
 
             <label class="modal-label">ชื่อขนม:</label>
-            <input type="text" id="edit_name_${oldName}" class="modal-input" value="${item['ชื่อขนม'] || ''}">
+            <input type="text" id="edit_name_${idSafeName}" class="modal-input" value="${item['ชื่อขนม'] || ''}">
             <label class="modal-label">คำบรรยาย:</label>
-            <input type="text" id="edit_desc_${oldName}" class="modal-input" value="${item['คำบรรยาย'] || ''}">
+            <input type="text" id="edit_desc_${idSafeName}" class="modal-input" value="${item['คำบรรยาย'] || ''}">
 
             <label class="modal-label">ลิ้งก์รูปตัวละคร (ภาพหลัก):</label>
-            <input type="text" id="edit_img_link_${oldName}" class="modal-input" value="${displayImgLink}" placeholder="วางลิ้งก์รูปภาพที่นี่">
+            <input type="text" id="edit_img_link_${idSafeName}" class="modal-input" value="${displayImgLink}" placeholder="วางลิ้งก์รูปภาพที่นี่">
 
             <label class="modal-label">นักวาด:</label>
-            <input type="text" id="edit_artist_${oldName}" class="modal-input" value="${item['นักวาด'] || ''}">
+            <input type="text" id="edit_artist_${idSafeName}" class="modal-input" value="${item['นักวาด'] || ''}">
             <label class="modal-label">ลิ้งก์นักวาด:</label>
-            <input type="text" id="edit_artistlink_${oldName}" class="modal-input" value="${item['Link นักวาด'] || ''}">
+            <input type="text" id="edit_artistlink_${idSafeName}" class="modal-input" value="${item['Link นักวาด'] || ''}">
             <label class="modal-label">มูลค่า:</label>
-            <input type="text" id="edit_price_${oldName}" class="modal-input" value="${item['มูลค่า'] || ''}">
+            <input type="text" id="edit_price_${idSafeName}" class="modal-input" value="${item['มูลค่า'] || ''}">
             <label class="modal-label">ลิ้งก์เพิ่มเติม:</label>
-            <input type="text" id="edit_more_${oldName}" class="modal-input" value="${item['Link เพื่อดูเพิ่มเติม'] || ''}">
+            <input type="text" id="edit_more_${idSafeName}" class="modal-input" value="${item['Link เพื่อดูเพิ่มเติม'] || ''}">
 
             <label class="modal-label">สถานะบ้าน (Sale):</label>
-            <select id="edit_sale_${oldName}" class="modal-select">
+            <select id="edit_sale_${idSafeName}" class="modal-select">
                 <option value="1" ${item['สถานะบ้าน']=='1'?'selected':''}>Forever Home</option>
                 <option value="2" ${item['สถานะบ้าน']=='2'?'selected':''}>TENT</option>
                 <option value="3" ${item['สถานะบ้าน']=='3'?'selected':''}>OTA/SP</option>
             </select>
 
             <label class="modal-label">สิทธิ์การใช้งาน:</label>
-            <select id="edit_usage_${oldName}" class="modal-select">
+            <select id="edit_usage_${idSafeName}" class="modal-select">
                 <option value="Personal" ${item['สิทธิ์การใช้งาน']==='Personal'?'selected':''}>Personal (ส่วนตัว)</option>
                 <option value="Commercial" ${item['สิทธิ์การใช้งาน']==='Commercial'?'selected':''}>Commercial (เชิงพาณิชย์)</option>
                 <option value="สิทธิ์ขาด" ${item['สิทธิ์การใช้งาน']==='สิทธิ์ขาด'?'selected':''}>สิทธิ์ขาด (Full Rights)</option>
             </select>
 
             <label class="modal-label">สถานะความรัก (Love):</label>
-            <select id="edit_love_${oldName}" class="modal-select">
+            <select id="edit_love_${idSafeName}" class="modal-select">
                 <option value="1" ${item['สถานะความรัก']=='1'?'selected':''}>มีคู่ ❤️</option>
                 <option value="2" ${item['สถานะความรัก']=='2'?'selected':''}>โสด 🤍</option>
                 <option value="3" ${item['สถานะความรัก']=='3'?'selected':''}>ไม่มีความรัก 🚫</option>
             </select>
 
-            <label class="modal-label">รูปเพิ่มเติม (ไม่บังคับ) <br><span style="font-size: 11px; font-weight: normal; color: #6b7280;">*กด Enter เพื่อเว้นบรรทัด 1 ลิ้งก์ ต่อ 1 รูป</span></label>
-            <textarea id="edit_extra_imgs_${oldName}" class="modal-input" rows="3">${displayExtraImgs}</textarea>
+            <div style="margin-top: 15px; border-top: 2px dashed rgba(251,191,36,0.5); padding-top: 15px;">
+                <h4 style="font-size: 13px; margin-bottom: 10px; color: var(--darker); display:flex; justify-content:space-between; align-items:center;">
+                    🖼️ รูปเพิ่มเติม (Gallery)
+                    <button type="button" onclick="addExtraImgField('${editContainerId}')" style="background:var(--main); border:none; padding:5px 10px; border-radius:15px; font-size:11px; font-weight:bold; color:var(--darker); cursor:pointer;">➕ เพิ่มรูป</button>
+                </h4>
+                <div id="${editContainerId}">${existingExtraImgsHtml}</div>
+            </div>
 
             <div class="edit-actions">
-                <button class="btn-save-inline" onclick="saveInlineEdit('${safeOldName}')">💾 บันทึก</button>
+                <button class="btn-save-inline" onclick="saveInlineEdit('${safeOldName}', '${idSafeName}', '${editContainerId}')">💾 บันทึก</button>
                 <button class="btn-cancel-inline" onclick="displayData(allData)">❌ ยกเลิก</button>
             </div>
         </div>
@@ -796,23 +900,23 @@ function openEditForm(btn, oldName) {
 }
 
 // เซฟการแก้ไข
-async function saveInlineEdit(oldName) {
+async function saveInlineEdit(oldName, idSafeName, containerId) {
     const safeOldName = oldName.replace(/\\'/g, "'");
     const itemIndex = allData.findIndex(i => i['ชื่อขนม'] === safeOldName);
     if(itemIndex === -1) return;
 
-    const newCat = document.getElementById(`edit_cat_${oldName}`).value;
-    const newName = document.getElementById(`edit_name_${oldName}`).value;
-    const newDesc = document.getElementById(`edit_desc_${oldName}`).value;
-    const newArtist = document.getElementById(`edit_artist_${oldName}`).value;
-    const newArtistLink = document.getElementById(`edit_artistlink_${oldName}`).value;
-    const newPrice = document.getElementById(`edit_price_${oldName}`).value;
-    const newMore = document.getElementById(`edit_more_${oldName}`).value;
-    const newSale = document.getElementById(`edit_sale_${oldName}`).value;
-    const newLove = document.getElementById(`edit_love_${oldName}`).value;
-    const newUsage = document.getElementById(`edit_usage_${oldName}`).value; 
-    const finalImgData = document.getElementById(`edit_img_link_${oldName}`).value;
-    const newExtraImgs = document.getElementById(`edit_extra_imgs_${oldName}`).value; // ดึงข้อมูลรูปเพิ่มเติมไปเซฟ
+    const newCat = document.getElementById(`edit_cat_${idSafeName}`).value;
+    const newName = document.getElementById(`edit_name_${idSafeName}`).value;
+    const newDesc = document.getElementById(`edit_desc_${idSafeName}`).value;
+    const newArtist = document.getElementById(`edit_artist_${idSafeName}`).value;
+    const newArtistLink = document.getElementById(`edit_artistlink_${idSafeName}`).value;
+    const newPrice = document.getElementById(`edit_price_${idSafeName}`).value;
+    const newMore = document.getElementById(`edit_more_${idSafeName}`).value;
+    const newSale = document.getElementById(`edit_sale_${idSafeName}`).value;
+    const newLove = document.getElementById(`edit_love_${idSafeName}`).value;
+    const newUsage = document.getElementById(`edit_usage_${idSafeName}`).value; 
+    const finalImgData = document.getElementById(`edit_img_link_${idSafeName}`).value;
+    const newExtraImgs = getExtraImgsData(containerId); // ดึงข้อมูลจากกล่องทั้งหมด
 
     if(!newName || !finalImgData) return alert("กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
 
