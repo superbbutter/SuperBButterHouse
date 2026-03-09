@@ -466,10 +466,9 @@ function showPage(pageId, element) {
   }
 }
 
+// 🌟 ปลดล็อคให้กางการ์ดได้แม้จะอยู่ในโหมด Edit 🌟
 function toggleMenu(headerElement) { 
-    if(!isEditMode) {
-        headerElement.parentElement.classList.toggle('open'); 
-    }
+    headerElement.parentElement.classList.toggle('open'); 
 }
 
 function toggleGallery(event, galleryId) {
@@ -696,7 +695,6 @@ function displayData(data) {
         const artistDisplay = item['Link นักวาด'] ? `<a href="${item['Link นักวาด']}" target="_blank" style="color:var(--darker); text-decoration:underline;">${item['นักวาด']}</a>` : (item['นักวาด'] || '');
         const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3; width:100%;">${item['คำบรรยาย']}</div>` : '';
 
-        // 🌟 ซ่อนปุ่มดูข้อมูลเพิ่มเติมถ้าไม่มีลิ้งก์ 🌟
         const moreLinkUrl = String(item['Link เพื่อดูเพิ่มเติม'] || '').trim();
         let moreLinkHtml = '';
         if(moreLinkUrl) {
@@ -728,7 +726,8 @@ function displayData(data) {
                         artistDisplayExtra = `<a href="${artistLink}" target="_blank" style="color:var(--dark); text-decoration:underline; font-weight:500;">${artist}</a>`;
                     }
                     let artistHtml = artist ? `<span>🎨 นักวาด: ${artistDisplayExtra}</span>` : '';
-                    let priceHtml = price ? `<span>💰 มูลค่า: <strong>${price}</strong></span>` : '';
+                    // 🌟 ปรับให้มูลค่าไม่เป็นตัวหนา 🌟
+                    let priceHtml = price ? `<span>💰 มูลค่า: ${price}</span>` : '';
                     let separator = (artist && price) ? ' &nbsp;•&nbsp; ' : '';
 
                     captionHtml = `
@@ -739,11 +738,12 @@ function displayData(data) {
 
                 let imgRadiusStyle = captionHtml ? 'border-radius: 15px 15px 0 0; border-bottom: none;' : 'border-radius: 15px;';
 
+                // 🌟 ขยายขนาดลายน้ำให้ใหญ่ขึ้น (background-size: 300px) 🌟
                 return `
                 <div style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
                     <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(251, 191, 36, 0.5);">
                         <img src="${parsedLink}" style="width:100%; display:block; user-select:none; -webkit-user-drag:none; pointer-events:none;" alt="รูปเพิ่มเติม">
-                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w400'); background-repeat:repeat; background-size:150px; pointer-events:none;"></div>
+                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w400'); background-repeat:repeat; background-size:300px; pointer-events:none;"></div>
                     </div>
                     ${captionHtml}
                 </div>`;
@@ -764,9 +764,10 @@ function displayData(data) {
             </div>`;
         }
 
+        // 🌟 ปลดล็อค cursor ในโหมดแก้ไขให้เป็น pointer เพื่อให้คลิกดูข้อมูลได้ 🌟
         target.innerHTML += `
           <div class="menu-card">
-            <div class="menu-header" onclick="toggleMenu(this)" style="${isEditMode ? 'cursor:default;' : 'cursor:pointer;'}">
+            <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
               <img src="${imgUrl}" alt="${name}" class="menu-img">
               
               <div class="menu-title-row">
@@ -776,7 +777,7 @@ function displayData(data) {
                         <span>${name}</span>
                         <span style="display:inline-flex; align-items:center; gap: 6px; margin-left: 6px;">${usageIcon}${loveIcon}</span>
                     </div>
-                    ${!isEditMode ? '<div class="menu-icon">▼</div>' : ''}
+                    <div class="menu-icon">▼</div>
                 </div>
                 ${introText}
                 ${adminBtns}
@@ -883,7 +884,7 @@ function openEditForm(btn, oldName, idSafeName) {
             <label class="modal-label">ลิ้งก์รูปตัวละคร (ภาพหลัก):</label>
             <input type="text" id="edit_img_link_${idSafeName}" class="modal-input" value="${displayImgLink}" placeholder="วางลิ้งก์รูปภาพที่นี่">
 
-            <label class="modal-label">นักวาด:</label>
+            <label class="modal-label">นักวาด (ภาพหลัก):</label>
             <input type="text" id="edit_artist_${idSafeName}" class="modal-input" value="${item['นักวาด'] || ''}">
             <label class="modal-label">ลิ้งก์นักวาด:</label>
             <input type="text" id="edit_artistlink_${idSafeName}" class="modal-input" value="${item['Link นักวาด'] || ''}">
