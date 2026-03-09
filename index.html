@@ -21,7 +21,7 @@
   --glow: rgba(168, 85, 247, 0.25); 
   --transition: 0.3s ease;
   
-  /* 🎨 โทนสีสำหรับไอคอนวงกลม (ม่วง-ขาว) 🎨 */
+  /* 🎨 โทนสีสำหรับไอคอนวงกลม 🎨 */
   --badge-personal: #D8B4FE;   
   --badge-commercial: #9333EA; 
   --badge-full: #581C87;       
@@ -120,9 +120,9 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 
 /* Status Lights */
 .status-light { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 5px; flex-shrink: 0;}
-.status-sp-ota { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
-.status-tent { background: #eab308; box-shadow: 0 0 8px #eab308; }
-.status-forever { background: #94a3b8; }
+.status-sp-ota { background: #C084FC; box-shadow: 0 0 8px #C084FC; }
+.status-tent { background: #581C87; box-shadow: 0 0 8px #581C87; }
+.status-forever { background: #9CA3AF; }
 
 /* 🌟 สไตล์สำหรับไอคอนวงกลม 🌟 */
 .usage-badge {
@@ -336,7 +336,7 @@ function acceptRules() {
         <div style="font-size: 13px; line-height: 1.8;">
             <div><span class="status-light status-sp-ota"></span> <strong>SP / OTA :</strong> พร้อมสำหรับการย้ายบ้าน</div>
             <div><span class="status-light status-tent"></span> <strong>TENT :</strong> ยังลังเลใจ (พิจารณาอยู่ค่ะ)</div>
-            <div><span class="status-light status-forever"></span> <strong>Forever Home :</strong> มีบ้านที่แสนอบอุ่นแล้ว</div>
+            <div><span class="status-light status-forever"></span> <strong>Forever Home :</strong> ไม่ปล่อยแน่นอน ถ้าโสดอยู่จีบได้ ขอเวิ่นขอโคได้เลยค่ะ</div>
             <div style="border-top: 1px dashed var(--main); margin: 8px 0;"></div>
             
             <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 5px; align-items: center;">
@@ -356,12 +356,12 @@ function acceptRules() {
             
             <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; align-items: center;">
                 <span style="display:flex; align-items:center; gap: 6px;">
-                    <span class="usage-badge love-taken"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
-                    <span>มีคู่</span>
-                </span>
-                <span style="display:flex; align-items:center; gap: 6px;">
                     <span class="usage-badge love-single"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
                     <span>โสด</span>
+                </span>
+                <span style="display:flex; align-items:center; gap: 6px;">
+                    <span class="usage-badge love-taken"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
+                    <span>มีคู่</span>
                 </span>
                 <span style="display:flex; align-items:center; gap: 6px;">
                     <span class="usage-badge love-none"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg></span>
@@ -493,8 +493,8 @@ function acceptRules() {
 
     <label class="modal-label">สถานะความรัก *</label>
     <select id="charLove" class="modal-select">
-        <option value="1">มีคู่</option>
         <option value="2">โสด</option>
+        <option value="1">มีคู่</option>
         <option value="3">ไม่มีความรัก</option>
     </select>
 
@@ -824,7 +824,6 @@ function displayData(data) {
 
                 let imgRadiusStyle = captionHtml ? 'border-radius: 15px 15px 0 0; border-bottom: none;' : 'border-radius: 15px;';
 
-                // 🌟 โค้ดลายน้ำขนาด 600px 🌟
                 return `
                 <div class="no-save" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
                     <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(168, 85, 247, 0.5); background-color:#FCF9FF;">
@@ -995,8 +994,8 @@ function openEditForm(btn, oldName, idSafeName) {
 
             <label class="modal-label">สถานะความรัก (Love):</label>
             <select id="edit_love_${idSafeName}" class="modal-select">
-                <option value="1" ${item['สถานะความรัก']=='1'?'selected':''}>มีคู่</option>
                 <option value="2" ${item['สถานะความรัก']=='2'?'selected':''}>โสด</option>
+                <option value="1" ${item['สถานะความรัก']=='1'?'selected':''}>มีคู่</option>
                 <option value="3" ${item['สถานะความรัก']=='3'?'selected':''}>ไม่มีความรัก</option>
             </select>
 
