@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SuperBButter - House</title>
-<link rel="icon" type="image/x-icon" href="https://drive.google.com/file/d/1My73I11RBd-cnjls68vM6hpmIx05FR2U/view?usp=drivesdk">
+<link rel="icon" type="image/x-icon" href="https://drive.google.com/thumbnail?id=1aTumT9SN2pzCyOtInZyv85ksTcZyv5g1&sz=w1000">
 
 <link rel="preload" href="https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600" as="image">
 
@@ -12,22 +12,22 @@
 
 <style>
 :root {
-  --bg: #FFFDF5; 
-  --main: #FBBF24; 
-  --dark: #78350F; 
-  --darker: #451A03; 
+  --bg: #FCF9FF; 
+  --main: #A855F7; 
+  --dark: #581C87; 
+  --darker: #3B0764; 
   --white: rgba(255, 255, 255, 0.95);
   --glass: rgba(255, 255, 255, 0.5); 
-  --glow: rgba(251, 191, 36, 0.25); 
+  --glow: rgba(168, 85, 247, 0.25); 
   --transition: 0.3s ease;
   
-  /* 🎨 โทนสีสำหรับไอคอนวงกลม 🎨 */
-  --badge-personal: #FDE047;   
-  --badge-commercial: #F59E0B; 
-  --badge-full: #B45309;       
-  --badge-taken: #A16207;      
-  --badge-single: #D1B9A1;     
-  --badge-none: #78350F;       
+  /* 🎨 โทนสีสำหรับไอคอนวงกลม (ม่วง-ขาว) 🎨 */
+  --badge-personal: #D8B4FE;   
+  --badge-commercial: #9333EA; 
+  --badge-full: #581C87;       
+  --badge-taken: #C084FC;      
+  --badge-single: #E9D5FF;     
+  --badge-none: #9CA3AF;       
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mitr', sans-serif; }
@@ -37,11 +37,11 @@ button, input, select, textarea {
 }
 
 select {
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2378350F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234C1D95' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat; background-position: right 15px center; background-size: 16px; padding-right: 40px !important; 
 }
 
-body { background: var(--bg); background-image: linear-gradient(135deg, #FFFDF5 0%, #FFF8D6 100%); display: flex; flex-direction: column; align-items: center; color: var(--dark); min-height: 100vh; }
+body { background: var(--bg); background-image: linear-gradient(135deg, #FCF9FF 0%, #F3E8FF 100%); display: flex; flex-direction: column; align-items: center; color: var(--dark); min-height: 100vh; }
 body.locked { overflow: hidden; }
 
 /* ป้องกันการกดค้างเพื่อเซฟรูป (มือถือ) */
@@ -53,12 +53,12 @@ body.locked { overflow: hidden; }
 
 /* Admin Bar */
 #admin-bar { display: none; background: var(--darker); color: #fff; padding: 12px; text-align: center; position: sticky; top: 0; z-index: 9999; width: 100%; font-size: 14px; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-.btn-exit-edit { margin-left: 10px; padding: 5px 15px; border-radius: 20px; border: none; background: var(--main); color: var(--darker); cursor: pointer; font-weight: 600; transition: 0.2s; }
-.btn-exit-edit:hover { background: #FDE047; transform: scale(1.05); }
+.btn-exit-edit { margin-left: 10px; padding: 5px 15px; border-radius: 20px; border: none; background: var(--main); color: #fff; cursor: pointer; font-weight: 600; transition: 0.2s; }
+.btn-exit-edit:hover { background: #9333EA; transform: scale(1.05); }
 
 #admin-add-bar { display: none; width: 100%; margin-bottom: 15px; animation: fadeIn 0.4s ease; }
-.btn-admin-add { width: 100%; padding: 15px; background: #22c55e; color: #fff; border: none; border-radius: 20px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); transition: var(--transition); }
-.btn-admin-add:hover { background: #16a34a; transform: translateY(-2px); }
+.btn-admin-add { width: 100%; padding: 15px; background: #9333EA; color: #fff; border: none; border-radius: 20px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3); transition: var(--transition); }
+.btn-admin-add:hover { background: #7E22CE; transform: translateY(-2px); }
 
 /* Header */
 header { width: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 20px; background: transparent; }
@@ -67,12 +67,12 @@ header { width: 100%; display: flex; flex-direction: column; align-items: center
 .logo img { width: 100%; height: 100%; object-fit: cover; background-color: #fff; }
 h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, var(--darker), var(--dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; }
 
-.nav-bar { width: 95%; max-width: 450px; backdrop-filter: blur(15px); background: rgba(255, 255, 255, 0.9); display: flex; justify-content: space-around; padding: 8px 5px; border-radius: 35px; box-shadow: 0 8px 25px rgba(120, 53, 15, 0.1); z-index: 1000; border: 1px solid rgba(255, 255, 255, 0.8); margin-bottom: 5px; }
+.nav-bar { width: 95%; max-width: 450px; backdrop-filter: blur(15px); background: rgba(255, 255, 255, 0.9); display: flex; justify-content: space-around; padding: 8px 5px; border-radius: 35px; box-shadow: 0 8px 25px rgba(88, 28, 135, 0.1); z-index: 1000; border: 1px solid rgba(255, 255, 255, 0.8); margin-bottom: 5px; }
 .nav-item { text-decoration: none; color: var(--dark); font-size: 12px; font-weight: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); padding: 6px 10px; border-radius: 20px; width: 25%; }
 .nav-item span { line-height: 1.2; }
-.nav-item.active { background: var(--dark); color: #fff; box-shadow: 0 4px 12px rgba(120, 53, 15, 0.2); }
+.nav-item.active { background: var(--dark); color: #fff; box-shadow: 0 4px 12px rgba(88, 28, 135, 0.2); }
 
-#rules-gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); background-image: linear-gradient(135deg, #FFFDF5 0%, #FFF8D6 100%); z-index: 9999; display: flex; flex-direction: column; align-items: center; padding: 40px 15px; overflow-y: auto; transition: opacity 0.5s ease; }
+#rules-gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); background-image: linear-gradient(135deg, #FCF9FF 0%, #F3E8FF 100%); z-index: 9999; display: flex; flex-direction: column; align-items: center; padding: 40px 15px; overflow-y: auto; transition: opacity 0.5s ease; }
 .gate-content { max-width: 500px; width: 100%; animation: fadeIn 0.6s ease; }
 #main-wrapper { display: none; width: 100%; max-width: 500px; opacity: 0; transition: opacity 0.5s ease; }
 .container { width: 100%; padding: 10px 15px 50px; }
@@ -80,40 +80,40 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .page.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.section { backdrop-filter: blur(10px); background: var(--glass); border-radius: 25px; padding: 20px; margin-bottom: 15px; box-shadow: 0 10px 30px rgba(120, 53, 15, 0.05); border: 1px solid rgba(255, 255, 255, 0.6); }
+.section { backdrop-filter: blur(10px); background: var(--glass); border-radius: 25px; padding: 20px; margin-bottom: 15px; box-shadow: 0 10px 30px rgba(88, 28, 135, 0.05); border: 1px solid rgba(255, 255, 255, 0.6); }
 .category-header { display: inline-flex; align-items: center; background: #fff; border: 2px solid var(--main); padding: 8px 25px; border-radius: 50px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-.category-header h2 { font-size: 18px; color: var(--dark); margin: 0; font-weight: 600; }
-.category-desc { font-size: 13px; opacity: 0.8; margin-bottom: 25px; padding-left: 10px; }
+.category-header h2 { font-size: 18px; color: var(--dark); margin: 0; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.category-desc { font-size: 13px; opacity: 0.8; margin-bottom: 25px; padding-left: 10px; display: flex; align-items: center; gap: 4px;}
 
-.menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; background-color: #FFF8D6; border-bottom: 1px solid rgba(251, 191, 36, 0.3); }
-.menu-card { background: rgba(255, 255, 255, 0.85); border: 1px solid var(--main); border-radius: 20px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(120, 53, 15, 0.05); transition: var(--transition); }
+.menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; background-color: #F3E8FF; border-bottom: 1px solid rgba(168, 85, 247, 0.3); }
+.menu-card { background: rgba(255, 255, 255, 0.85); border: 1px solid var(--main); border-radius: 20px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(88, 28, 135, 0.05); transition: var(--transition); }
 .menu-card:hover { transform: translateY(-3px); }
 .menu-header { display: block; cursor: pointer; }
 .menu-title-row { display: flex; flex-direction: column; align-items: flex-start; padding: 15px; gap: 5px; }
 .menu-title { font-weight: 500; color: var(--dark); font-size: 15px; flex: 1; display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
-.menu-icon { font-size: 12px; color: var(--dark); transition: transform 0.3s ease; padding: 5px; background: #FFF8D6; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 10px; }
-.menu-card.open .menu-icon { transform: rotate(180deg); background: var(--main); }
+.menu-icon { font-size: 12px; color: var(--dark); transition: transform 0.3s ease; padding: 5px; background: #F3E8FF; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 10px; }
+.menu-card.open .menu-icon { transform: rotate(180deg); background: var(--main); color: #fff; }
 .menu-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: rgba(255, 255, 255, 0.5); padding: 0 15px; }
 .menu-card.open .menu-details { max-height: 6000px; padding: 10px 15px 15px; }
 
 .detail-text { font-size: 14px; margin-bottom: 8px; color: var(--darker); display: flex; align-items: center; gap: 8px; }
-.btn-view { display: inline-block; margin-top: 5px; background: linear-gradient(135deg, var(--main), #FDE047); color: var(--darker); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-size: 13px; font-weight: 600; text-align: center; width: 100%; border: none; cursor: pointer; transition: 0.3s; }
+.btn-view { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 5px; background: linear-gradient(135deg, #C084FC, #D8B4FE); color: var(--darker); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-size: 13px; font-weight: 600; width: 100%; border: none; cursor: pointer; transition: 0.3s; }
 .btn-view:hover { transform: translateY(-2px); }
-.btn-gallery { background: #FFF8D6; border: 1px dashed var(--main); color: var(--dark); margin-top: 10px; }
+.btn-gallery { background: #F3E8FF; border: 1px dashed var(--main); color: var(--dark); margin-top: 10px; }
 
 .rule-box { background: rgba(255, 255, 255, 0.7); padding: 15px; border-radius: 15px; font-size: 13px; line-height: 1.6; border: 1px dashed var(--main); text-align: left; }
-.highlight { color: #b91c1c; font-weight: 500; } 
-.btn-accept { font-size: 16px; padding: 15px; margin-top: 15px; animation: pulse 2s infinite; cursor: pointer; width: 100%; background: var(--main); color: var(--darker); border-radius: 20px; font-weight: 600; border: none; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); } 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); } }
+.highlight { color: #7E22CE; font-weight: 500; } 
+.btn-accept { font-size: 16px; padding: 15px; margin-top: 15px; animation: pulse 2s infinite; cursor: pointer; width: 100%; background: var(--main); color: #fff; border-radius: 20px; font-weight: 600; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(147, 51, 234, 0); } 100% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0); } }
 
-.floating-emoji { position: absolute; font-size: 24px; z-index: 5; animation: floatEmoji 3s infinite; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
-.emoji-1 { top: -10px; left: -10px; animation-delay: 0s; font-size: 26px; } 
+.floating-emoji { position: absolute; font-size: 24px; z-index: 5; animation: floatEmoji 3s infinite; filter: drop-shadow(0 4px 6px rgba(168, 85, 247, 0.1)); }
+.emoji-1 { top: -10px; left: -10px; animation-delay: 0s; } 
 .emoji-2 { top: 20px; right: -20px; animation-delay: 0.7s; } 
 .emoji-3 { bottom: 15px; left: -15px; animation-delay: 1.4s; } 
-.emoji-4 { bottom: -5px; right: -10px; animation-delay: 2.1s; font-size: 28px; } 
+.emoji-4 { bottom: -5px; right: -10px; animation-delay: 2.1s; } 
 @keyframes floatEmoji { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-.mini-contact { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px dashed rgba(251, 191, 36, 0.3); }
+.mini-contact { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px dashed rgba(168, 85, 247, 0.3); }
 .socials-mini { display: flex; gap: 10px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
 .socials-mini a { padding: 6px 15px; border-radius: 20px; background: #fff; text-decoration: none; color: var(--dark); font-size: 12px; border: 1px solid var(--main); transition: var(--transition); }
 .copyright { font-size: 10px; opacity: 0.6; }
@@ -162,12 +162,12 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .modal-input:focus, .modal-select:focus {
     border-color: var(--main);
     background-color: #ffffff;
-    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.2);
+    box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
 }
 .modal-label { display: block; text-align: left; font-size: 13px; font-weight: 600; color: var(--darker); margin-left: 4px; margin-bottom: 4px;}
 
-.btn-confirm { background: var(--main); color: var(--darker); margin-top: 10px; padding: 14px; width: 100%; border-radius: 15px; border: none; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3); }
-.btn-confirm:hover { transform: translateY(-2px); background: #FDE047; }
+.btn-confirm { background: var(--main); color: #fff; margin-top: 10px; padding: 14px; width: 100%; border-radius: 15px; border: none; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3); display: flex; align-items: center; justify-content: center; gap: 6px;}
+.btn-confirm:hover { transform: translateY(-2px); background: #7E22CE; }
 .btn-close-modal { color: #6b7280; font-size: 13px; cursor: pointer; text-decoration: underline; margin-top: 15px; display: block; text-align: center; transition: 0.2s; }
 .btn-close-modal:hover { color: var(--darker); }
 
@@ -182,11 +182,11 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     font-weight: 500; 
     transition: all 0.2s ease; 
 }
-.btn-edit-inline { flex: 1; padding: 8px 12px; border-color: var(--main); }
-.btn-edit-inline:hover { background: var(--main); color: var(--darker); }
+.btn-edit-inline { flex: 1; padding: 8px 12px; border-color: var(--main); display: flex; align-items: center; justify-content: center; gap: 4px;}
+.btn-edit-inline:hover { background: var(--main); color: #fff; }
 
-.btn-delete-inline { flex: 0 0 auto; padding: 8px 14px; border-color: #fee2e2; color: #ef4444; background: #fef2f2; }
-.btn-delete-inline:hover { background: #ef4444; color: #fff; }
+.btn-delete-inline { flex: 0 0 auto; padding: 8px 14px; border-color: #FBCFE8; color: #C026D3; background: #FDF4FF; display: flex; align-items: center; justify-content: center; gap: 4px;}
+.btn-delete-inline:hover { background: #C026D3; color: #fff; }
 
 .btn-move-inline { 
     flex: 0 0 auto; 
@@ -200,15 +200,15 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     border-color: #d1d5db;
     background: #f3f4f6;
 }
-.btn-move-inline:hover { background: var(--main); border-color: var(--main); color: var(--darker); }
+.btn-move-inline:hover { background: var(--main); border-color: var(--main); color: #fff; }
 
 .edit-form-container { padding: 20px 15px; background: rgba(255,255,255,0.95); border-top: 1px dashed var(--main); display: flex; flex-direction: column; cursor: default; }
 .edit-actions { display: flex; gap: 10px; margin-top: 10px; }
-.edit-actions button { flex: 1; padding: 12px; border-radius: 12px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; color: #fff; }
-.btn-save-inline { background: #22c55e; box-shadow: 0 4px 10px rgba(34, 197, 94, 0.2); }
-.btn-save-inline:hover { background: #16a34a; transform: translateY(-2px); }
-.btn-cancel-inline { background: #ef4444; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2); }
-.btn-cancel-inline:hover { background: #dc2626; transform: translateY(-2px); }
+.edit-actions button { flex: 1; padding: 12px; border-radius: 12px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; color: #fff; display: flex; align-items: center; justify-content: center; gap: 4px;}
+.btn-save-inline { background: #9333EA; box-shadow: 0 4px 10px rgba(147, 51, 234, 0.2); }
+.btn-save-inline:hover { background: #7E22CE; transform: translateY(-2px); }
+.btn-cancel-inline { background: #C026D3; box-shadow: 0 4px 10px rgba(192, 38, 211, 0.2); }
+.btn-cancel-inline:hover { background: #A21CAF; transform: translateY(-2px); }
 </style>
 
 <script>
@@ -240,7 +240,8 @@ function acceptRules() {
 <body class="locked">
 
 <div id="admin-bar">
-    🛠️ โหมดแก้ไขกำลังทำงาน 
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right:4px;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg> 
+    โหมดแก้ไขกำลังทำงาน 
     <button class="btn-exit-edit" onclick="exitEditMode()">ออกจากการแก้ไข</button>
 </div>
 
@@ -250,63 +251,92 @@ function acceptRules() {
       <img src="https://drive.google.com/thumbnail?id=1aTumT9SN2pzCyOtInZyv85ksTcZyv5g1&sz=w1000" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
     
-    <h2>📋 กติกาการเข้าชมครัว</h2>
+    <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 5px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> กติกาการเข้าชมครัว</h2>
     <div class="rule-box">
       <p><strong>กรุณาอ่านรายละเอียดให้ครบถ้วน</strong></p>
       <p>ก่อนเข้าสู่ครัวเข้าชมขนมของเรา กรุณาอ่านและทำตามประกาศอย่างเคร่งครัด !</p>
-      <p>♡ สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน</span>นะคะ</p>
+      <p>สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน</span>นะคะ</p>
     </div>
 
-    <h2 style="margin-top: 20px; color: #b91c1c;">🚨 Warning</h2>
-    <div class="rule-box" style="background: rgba(255,255,255,0.9); border-color: #b91c1c; box-shadow: 0 4px 15px rgba(185, 28, 28, 0.1);">
-      <p class="highlight" style="font-size: 15px; margin-bottom: 8px;">⚠︎ คำเตือนลิขสิทธิ์และสิทธิ์ส่วนบุคคล</p>
-      <ul style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: #7f1d1d;">
-        <li>✘ <strong>ห้ามเซฟ (Save)</strong> รูปภาพทุกภาพในเว็บไซต์นี้เด็ดขาด</li>
-        <li>✘ <strong>ห้ามนำไปตัดต่อ</strong> ดัดแปลง แก้ไข หรือลบเครดิตนักวาด</li>
-        <li>✘ <strong>ห้ามนำไปใช้</strong> โดยไม่ได้รับอนุญาต</li>
-        <li>✘ <strong>ห้ามคัดลอกดีไซน์</strong> หรือนำไปแอบอ้างว่าเป็นของตนเอง</li>
+    <h2 style="margin-top: 20px; color: #7E22CE;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 5px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Warning</h2>
+    <div class="rule-box" style="background: rgba(255,255,255,0.9); border-color: #7E22CE; box-shadow: 0 4px 15px rgba(126, 34, 206, 0.1);">
+      <p class="highlight" style="font-size: 15px; margin-bottom: 8px;">คำเตือนลิขสิทธิ์และสิทธิ์ส่วนบุคคล</p>
+      <ul style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: #581C87;">
+        <li><strong>ห้ามเซฟ (Save)</strong> รูปภาพทุกภาพในเว็บไซต์นี้เด็ดขาด</li>
+        <li><strong>ห้ามนำไปตัดต่อ</strong> ดัดแปลง แก้ไข หรือลบเครดิตนักวาด</li>
+        <li><strong>ห้ามนำไปใช้</strong> โดยไม่ได้รับอนุญาต</li>
+        <li><strong>ห้ามคัดลอกดีไซน์</strong> หรือนำไปแอบอ้างว่าเป็นของตนเอง</li>
       </ul>
     </div>
 
-    <button class="btn-accept" onclick="acceptRules()">✅ รับทราบและยอมรับ</button>
+    <button class="btn-accept" onclick="acceptRules()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> 
+        รับทราบและยอมรับ
+    </button>
   </div>
 </div>
 
 <div id="main-wrapper">
   <header>
     <div class="logo-wrapper">
-      <div class="floating-emoji emoji-1">🧸</div><div class="floating-emoji emoji-2">🧈</div>
-      <div class="floating-emoji emoji-3">🥞</div><div class="floating-emoji emoji-4">⭐️</div>
+      <div class="floating-emoji emoji-1"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--main)" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div>
+      <div class="floating-emoji emoji-2"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--main)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+      <div class="floating-emoji emoji-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--main)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg></div>
+      <div class="floating-emoji emoji-4"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--main)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></div>
       <div class="logo">
         <img src="https://drive.google.com/thumbnail?id=1aTumT9SN2pzCyOtInZyv85ksTcZyv5g1&sz=w1000" alt="SuperBButter Logo">
       </div>
     </div>
     <h1>SuperBButter</h1>
     <nav class="nav-bar">
-      <div class="nav-item active" onclick="showPage('home', this)"><span>🏠</span><span>โฮม</span></div>
-      <div class="nav-item" onclick="showPage('bread', this)"><span>🍞</span><span>ขนมปัง</span></div>
-      <div class="nav-item" onclick="showPage('cake', this)"><span>🍰</span><span>เค้ก</span></div>
-      <div class="nav-item" onclick="showPage('drink', this)"><span>🍵</span><span>เครื่องดื่ม</span></div>
+      <div class="nav-item active" onclick="showPage('home', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:2px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>โฮม</span>
+      </div>
+      <div class="nav-item" onclick="showPage('bread', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:2px;"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M3 8c0-3 3-4 6-4s5 1 9 4"></path></svg>
+          <span>ขนมปัง</span>
+      </div>
+      <div class="nav-item" onclick="showPage('cake', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:2px;"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"></path><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"></path><path d="M12 11v-4"></path><path d="M12 3v1"></path></svg>
+          <span>เค้ก</span>
+      </div>
+      <div class="nav-item" onclick="showPage('drink', this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:2px;"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+          <span>เครื่องดื่ม</span>
+      </div>
     </nav>
   </header>
 
   <div class="container">
     <div id="admin-add-bar">
-        <button class="btn-admin-add" onclick="openAddCharModal()">➕ อบขนมชิ้นใหม่ (เพิ่มตัวละคร)</button>
+        <button class="btn-admin-add" onclick="openAddCharModal()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            อบขนมชิ้นใหม่ (เพิ่มตัวละคร)
+        </button>
     </div>
 
     <div id="home" class="page active">
       <div class="rule-box" style="text-align: center; border-color: var(--main); margin-bottom: 15px;">
-        <p style="font-size: 14px; font-weight: 500;">เบเกอรี่เล็ก ๆ ที่เต็มไปด้วยขนมจากเชฟยอดฝีมือ 👩🏻‍🍳</p>
-        <p style="font-size: 13px; opacity: 0.9;">เด็ก ๆ ทุกคนคือขนมภายในร้านที่แสนอร่อย ✨</p>
+        <p style="font-size: 14px; font-weight: 500;">
+            เบเกอรี่เล็ก ๆ ที่เต็มไปด้วยขนมจากเชฟยอดฝีมือ
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><path d="M12 2C8.69 2 6 4.69 6 8c0 2.21 1.2 4.14 3 5.19V16h6v-2.81c1.8-1.05 3-2.98 3-5.19 0-3.31-2.69-6-6-6z"></path><path d="M8 22h8"></path><path d="M10 19h4"></path></svg>
+        </p>
+        <p style="font-size: 13px; opacity: 0.9;">
+            เด็ก ๆ ทุกคนคือขนมภายในร้านที่แสนอร่อย 
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </p>
       </div>
 
       <div class="section" style="padding: 15px;">
-        <h3 style="font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 5px;">✨ สัญลักษณ์ในครัว</h3>
+        <h3 style="font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 5px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            สัญลักษณ์ในครัว
+        </h3>
         <div style="font-size: 13px; line-height: 1.8;">
             <div><span class="status-light status-sp-ota"></span> <strong>SP / OTA :</strong> พร้อมสำหรับการย้ายบ้าน</div>
-            <div><span class="status-light status-tent"></span> <strong>TENT :</strong> ยังลังเล</div>
-            <div><span class="status-light status-forever"></span> <strong>Forever Home :</strong> ไม่ปล่อยแน่นอน ถ้าโสดอยู่จีบได้ ขอเวิ่นขอโคได้เลยค่ะ</div>
+            <div><span class="status-light status-tent"></span> <strong>TENT :</strong> ยังลังเลใจ (พิจารณาอยู่ค่ะ)</div>
+            <div><span class="status-light status-forever"></span> <strong>Forever Home :</strong> มีบ้านที่แสนอบอุ่นแล้ว</div>
             <div style="border-top: 1px dashed var(--main); margin: 8px 0;"></div>
             
             <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 5px; align-items: center;">
@@ -326,12 +356,12 @@ function acceptRules() {
             
             <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; align-items: center;">
                 <span style="display:flex; align-items:center; gap: 6px;">
-                    <span class="usage-badge love-single"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
-                    <span>โสด</span>
-                </span>
-                <span style="display:flex; align-items:center; gap: 6px;">
                     <span class="usage-badge love-taken"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
                     <span>มีคู่</span>
+                </span>
+                <span style="display:flex; align-items:center; gap: 6px;">
+                    <span class="usage-badge love-single"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
+                    <span>โสด</span>
                 </span>
                 <span style="display:flex; align-items:center; gap: 6px;">
                     <span class="usage-badge love-none"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg></span>
@@ -344,25 +374,55 @@ function acceptRules() {
 
     <div id="bread" class="page">
       <div class="section">
-        <div class="category-header"><h2>🍞 เมนูขนมปัง</h2></div>
-        <p class="category-desc">ขนมอบใหม่หอมกรุ่นจากเตา พร้อมเสิร์ฟค่ะ ✨</p>
-        <div id="bread-container"><div class="loading-text">กำลังโหลดข้อมูลจากเตาอบ... 👩🏻‍🍳</div></div>
+        <div class="category-header">
+            <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M3 8c0-3 3-4 6-4s5 1 9 4"></path></svg> เมนูขนมปัง</h2>
+        </div>
+        <p class="category-desc">
+            ขนมอบใหม่หอมกรุ่นจากเตา พร้อมเสิร์ฟค่ะ 
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </p>
+        <div id="bread-container">
+            <div class="loading-text">
+                กำลังโหลดข้อมูลจากเตาอบ... 
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><path d="M12 2C8.69 2 6 4.69 6 8c0 2.21 1.2 4.14 3 5.19V16h6v-2.81c1.8-1.05 3-2.98 3-5.19 0-3.31-2.69-6-6-6z"></path><path d="M8 22h8"></path><path d="M10 19h4"></path></svg>
+            </div>
+        </div>
       </div>
     </div>
 
     <div id="cake" class="page">
       <div class="section">
-        <div class="category-header"><h2>🍰 เมนูเค้ก</h2></div>
-        <p class="category-desc">เค้กเนื้อนุ่ม ละมุนลิ้น รังสรรค์โดยเชฟยอดฝีมือ ✨</p>
-        <div id="cake-container"><div class="loading-text">กำลังโหลดข้อมูลจากเตาอบ... 👩🏻‍🍳</div></div>
+        <div class="category-header">
+            <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"></path><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"></path><path d="M12 11v-4"></path><path d="M12 3v1"></path></svg> เมนูเค้ก</h2>
+        </div>
+        <p class="category-desc">
+            เค้กเนื้อนุ่ม ละมุนลิ้น รังสรรค์โดยเชฟยอดฝีมือ 
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </p>
+        <div id="cake-container">
+            <div class="loading-text">
+                กำลังโหลดข้อมูลจากเตาอบ... 
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><path d="M12 2C8.69 2 6 4.69 6 8c0 2.21 1.2 4.14 3 5.19V16h6v-2.81c1.8-1.05 3-2.98 3-5.19 0-3.31-2.69-6-6-6z"></path><path d="M8 22h8"></path><path d="M10 19h4"></path></svg>
+            </div>
+        </div>
       </div>
     </div>
 
     <div id="drink" class="page">
       <div class="section">
-        <div class="category-header"><h2>🍵 เมนูเครื่องดื่ม</h2></div>
-        <p class="category-desc">เครื่องดื่มดับกระหาย จะหวานละมุน ขมเข้ม หรือเปรี๊ยวซ่าก็พร้อมเสิร์ฟ ✨</p>
-        <div id="drink-container"><div class="loading-text">กำลังโหลดข้อมูลจากเตาอบ... 👩🏻‍🍳</div></div>
+        <div class="category-header">
+            <h2><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg> เมนูเครื่องดื่ม</h2>
+        </div>
+        <p class="category-desc">
+            เครื่องดื่มดับกระหาย จะหวานละมุน ขมเข้ม หรือเปรี๊ยวซ่าก็พร้อมเสิร์ฟ 
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </p>
+        <div id="drink-container">
+            <div class="loading-text">
+                กำลังโหลดข้อมูลจากเตาอบ... 
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><path d="M12 2C8.69 2 6 4.69 6 8c0 2.21 1.2 4.14 3 5.19V16h6v-2.81c1.8-1.05 3-2.98 3-5.19 0-3.31-2.69-6-6-6z"></path><path d="M8 22h8"></path><path d="M10 19h4"></path></svg>
+            </div>
+        </div>
       </div>
     </div>
 
@@ -372,7 +432,10 @@ function acceptRules() {
         <a href="https://line.me/ti/p/oVkw4O6ssa" target="_blank">Line</a>
       </div>
       <div class="socials-mini" style="margin-top: 5px;">
-        <a href="javascript:void(0)" onclick="openEditAuthModal()" style="border-color: var(--dark); color: var(--dark); font-weight: 600;">🛠️ เข้าสู่โหมดจัดการ</a>
+        <a href="javascript:void(0)" onclick="openEditAuthModal()" style="border-color: var(--dark); color: var(--dark); font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+            เข้าสู่โหมดจัดการ
+        </a>
       </div>
       <div class="copyright">© 2026 SuperBButter. All rights reserved.</div>
     </div>
@@ -381,7 +444,10 @@ function acceptRules() {
 
 <div id="addCharModal" class="modal">
   <div class="modal-content" style="text-align: left;">
-    <h3 style="text-align: center; margin-bottom: 20px;">🧁 อบขนมชิ้นใหม่</h3>
+    <h3 style="text-align: center; margin-bottom: 20px; display:flex; justify-content:center; align-items:center; gap:6px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10h12l-1.5 11h-9L6 10z"></path><path d="M6 10C6 6.5 8.5 4 12 4s6 2.5 6 6"></path></svg>
+        อบขนมชิ้นใหม่
+    </h3>
     
     <label class="modal-label">หมวดหมู่ *</label>
     <select id="charCategory" class="modal-select">
@@ -427,27 +493,39 @@ function acceptRules() {
 
     <label class="modal-label">สถานะความรัก *</label>
     <select id="charLove" class="modal-select">
-        <option value="1">มีคู่ ❤️</option>
-        <option value="2">โสด 🤍</option>
-        <option value="3">ไม่มีความรัก 🚫</option>
+        <option value="1">มีคู่</option>
+        <option value="2">โสด</option>
+        <option value="3">ไม่มีความรัก</option>
     </select>
 
-    <div style="margin-top: 25px; border-top: 2px dashed rgba(251,191,36,0.5); padding-top: 15px;">
+    <div style="margin-top: 25px; border-top: 2px dashed rgba(168, 85, 247, 0.5); padding-top: 15px;">
         <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--darker); display:flex; justify-content:space-between; align-items:center;">
-            🖼️ รูปเพิ่มเติม (Gallery)
-            <button type="button" onclick="addExtraImgField('addExtraImgsContainer')" style="background:var(--main); border:none; padding:5px 10px; border-radius:15px; font-size:12px; font-weight:bold; color:var(--darker); cursor:pointer;">➕ เพิ่มรูป</button>
+            <span style="display:flex; align-items:center; gap:4px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                รูปเพิ่มเติม (Gallery)
+            </span>
+            <button type="button" onclick="addExtraImgField('addExtraImgsContainer')" style="background:var(--main); border:none; padding:5px 10px; border-radius:15px; font-size:12px; font-weight:bold; color:#fff; cursor:pointer; display:flex; align-items:center; gap:4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                เพิ่มรูป
+            </button>
         </h4>
         <div id="addExtraImgsContainer"></div>
     </div>
 
-    <button class="btn-confirm" id="btnSubmitAdd" onclick="submitNewCharacter()" style="margin-top:20px;">🚀 ส่งเข้าเตาอบ</button>
+    <button class="btn-confirm" id="btnSubmitAdd" onclick="submitNewCharacter()" style="margin-top:20px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"></path><path d="M22 2L15 22 11 13 2 9l20-7z"></path></svg>
+        ส่งเข้าเตาอบ
+    </button>
     <span class="btn-close-modal" onclick="closeModal('addCharModal')">ยกเลิก</span>
   </div>
 </div>
 
 <div id="editAuthModal" class="modal">
   <div class="modal-content">
-    <h3 style="margin-bottom: 15px;">🔑 ยืนยันตัวตนเชฟ (เข้าโหมดจัดการ)</h3>
+    <h3 style="margin-bottom: 15px; display:flex; justify-content:center; align-items:center; gap:6px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+        ยืนยันตัวตนเชฟ (เข้าโหมดจัดการ)
+    </h3>
     <input type="password" id="editMasterPin" class="modal-input" placeholder="รหัสผ่าน">
     <button class="btn-confirm" onclick="checkEditAuth()">ยืนยันรหัส</button>
     <span class="btn-close-modal" onclick="closeModal('editAuthModal')">ยกเลิก</span>
@@ -501,9 +579,9 @@ function addExtraImgField(containerId, link, artist, artistLink, price) {
     const container = document.getElementById(containerId);
     const block = document.createElement('div');
     block.className = 'extra-img-block';
-    block.style.cssText = 'background: rgba(251, 191, 36, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;';
+    block.style.cssText = 'background: rgba(168, 85, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;';
     block.innerHTML = `
-        <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #ef4444; font-weight: 600; font-size:12px; background:#fef2f2; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
+        <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #C026D3; font-weight: 600; font-size:12px; background:#FDF4FF; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
         <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
         <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" placeholder="วางลิ้งก์รูปภาพที่นี่" value="${link}">
         
@@ -576,7 +654,7 @@ async function submitNewCharacter() {
     const price = document.getElementById('charPrice').value;
     
     if(!name || !finalImgData || !artist || !price) {
-        return alert("กรุณากรอกข้อมูลสำคัญที่มีสัญลักษณ์ * ให้ครบถ้วนค่ะ");
+        return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญที่มีสัญลักษณ์ * ให้ครบถ้วนค่ะ");
     }
 
     const newItem = {
@@ -595,7 +673,7 @@ async function submitNewCharacter() {
     };
 
     const btnSubmit = document.getElementById('btnSubmitAdd');
-    btnSubmit.innerText = "กำลังอบขนม... ⏳";
+    btnSubmit.innerHTML = "<svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' style='vertical-align:middle; margin-right:4px;'><circle cx='12' cy='12' r='10'></circle><polyline points='12 6 12 12 16 14'></polyline></svg> กำลังอบขนม...";
     
     try {
         await fetch(API_URL, {
@@ -603,14 +681,14 @@ async function submitNewCharacter() {
             headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify({ action: "add", data: newItem })
         });
-        alert("อบขนมสำเร็จ!"); 
+        alert("[ สำเร็จ ] อบขนมสำเร็จ!"); 
         closeModal('addCharModal'); 
-        btnSubmit.innerText = "🚀 ส่งเข้าเตาอบ";
+        btnSubmit.innerHTML = "<svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' style='vertical-align:middle; margin-right:4px;'><path d='M22 2L11 13'></path><path d='M22 2L15 22 11 13 2 9l20-7z'></path></svg> ส่งเข้าเตาอบ";
         fetchData(); 
     } catch (e) {
         console.error(e);
-        alert("❌ บันทึกไม่สำเร็จ! ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตค่ะ");
-        btnSubmit.innerText = "🚀 ส่งเข้าเตาอบ";
+        alert("[ ผิดพลาด ] บันทึกไม่สำเร็จ! ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตค่ะ");
+        btnSubmit.innerHTML = "<svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' style='vertical-align:middle; margin-right:4px;'><path d='M22 2L11 13'></path><path d='M22 2L15 22 11 13 2 9l20-7z'></path></svg> ส่งเข้าเตาอบ";
     }
 }
 
@@ -628,7 +706,7 @@ function checkEditAuth() {
         else document.getElementById('admin-add-bar').style.display = 'none';
 
         displayData(allData); 
-    } else { alert("รหัสผ่านไม่ถูกต้องค่ะ ❌"); }
+    } else { alert("[ ผิดพลาด ] รหัสผ่านไม่ถูกต้องค่ะ"); }
 }
 
 function exitEditMode() {
@@ -645,7 +723,7 @@ async function fetchData() {
         displayData(allData);
     } catch (error) { 
         console.error('Error fetching data:', error); 
-        document.getElementById('bread-container').innerHTML = '<div class="loading-text" style="color:#b91c1c;">โหลดข้อมูลไม่สำเร็จ 🥺</div>';
+        document.getElementById('bread-container').innerHTML = '<div class="loading-text" style="color:#9333EA;">โหลดข้อมูลไม่สำเร็จ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-left:4px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg></div>';
     }
 }
 
@@ -707,7 +785,7 @@ function displayData(data) {
         const moreLinkUrl = String(item['Link เพื่อดูเพิ่มเติม'] || '').trim();
         let moreLinkHtml = '';
         if(moreLinkUrl) {
-            moreLinkHtml = `<a href="${moreLinkUrl}" class="btn-view" target="_blank">🔍 ดูข้อมูลตัวละครทั้งหมด</a>`;
+            moreLinkHtml = `<a href="${moreLinkUrl}" class="btn-view" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>ดูข้อมูลตัวละครทั้งหมด</a>`;
         }
 
         let extraGalleryHtml = '';
@@ -734,41 +812,41 @@ function displayData(data) {
                     if (artist && artistLink) {
                         artistDisplayExtra = `<a href="${artistLink}" target="_blank" style="color:var(--dark); text-decoration:underline; font-weight:500;">${artist}</a>`;
                     }
-                    let artistHtml = artist ? `<span>🎨 นักวาด: ${artistDisplayExtra}</span>` : '';
-                    let priceHtml = price ? `<span>💰 มูลค่า: ${price}</span>` : '';
+                    let artistHtml = artist ? `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.628-1.628H18c2.21 0 4-1.79 4-4 0-3.86-4.48-8-10-8z"></path></svg> นักวาด: ${artistDisplayExtra}</span>` : '';
+                    let priceHtml = price ? `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> มูลค่า: ${price}</span>` : '';
                     let separator = (artist && price) ? ' &nbsp;•&nbsp; ' : '';
 
                     captionHtml = `
-                    <div style="background: rgba(255,255,255,0.8); padding: 10px; border: 1px solid rgba(251, 191, 36, 0.5); border-top: none; border-radius: 0 0 15px 15px; font-size: 12px; text-align: center; color: var(--darker);">
+                    <div style="background: rgba(255,255,255,0.8); padding: 10px; border: 1px solid rgba(168, 85, 247, 0.5); border-top: none; border-radius: 0 0 15px 15px; font-size: 12px; text-align: center; color: var(--darker);">
                         ${artistHtml}${separator}${priceHtml}
                     </div>`;
                 }
 
                 let imgRadiusStyle = captionHtml ? 'border-radius: 15px 15px 0 0; border-bottom: none;' : 'border-radius: 15px;';
 
-                // 🌟 โค้ดรูปล็อกไม่ให้เซฟ พร้อมลายน้ำชัดเป๊ะ 🌟
+                // 🌟 โค้ดลายน้ำขนาด 600px 🌟
                 return `
                 <div class="no-save" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
-                    <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(251, 191, 36, 0.5); background-color:#FFFDF5;">
+                    <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(168, 85, 247, 0.5); background-color:#FCF9FF;">
                         <img src="${parsedLink}" style="width:100%; display:block; pointer-events:none;" alt="รูปเพิ่มเติม" oncontextmenu="return false;">
-                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none;"></div>
+                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:600px; pointer-events:none;"></div>
                     </div>
                     ${captionHtml}
                 </div>`;
             }).join('');
 
             extraGalleryHtml = `<div id="${galleryId}" style="display:none; margin-top:15px; padding-top:15px; border-top:1px dashed var(--main);">${imagesHtml}</div>`;
-            toggleGalleryBtn = `<button onclick="toggleGallery(event, '${galleryId}')" class="btn-view btn-gallery" style="background:#FFF8D6; border:1px dashed var(--main); color:var(--dark); margin-top:10px;">🖼️ ดูรูปเพิ่มเติม (${extraImgsArray.length} รูป)</button>`;
+            toggleGalleryBtn = `<button onclick="toggleGallery(event, '${galleryId}')" class="btn-view btn-gallery" style="background:#F3E8FF; border:1px dashed var(--main); color:var(--dark); margin-top:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>ดูรูปเพิ่มเติม (${extraImgsArray.length} รูป)</button>`;
         }
 
         let adminBtns = '';
         if(isEditMode) {
             adminBtns = `
-            <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(251, 191, 36, 0.5); padding-top: 10px;">
-                <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', -1, '${item['หมวดหมู่']}')">⬆️</button>
-                <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', 1, '${item['หมวดหมู่']}')">⬇️</button>
-                <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, '${safeName}', '${idSafeName}')">✏️ แก้ไข</button>
-                <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline('${safeName}')">🗑️ ลบ</button>
+            <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(168, 85, 247, 0.5); padding-top: 10px;">
+                <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', -1, '${item['หมวดหมู่']}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
+                <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', 1, '${item['หมวดหมู่']}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg></button>
+                <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, '${safeName}', '${idSafeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> แก้ไข</button>
+                <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline('${safeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> ลบ</button>
             </div>`;
         }
 
@@ -784,7 +862,7 @@ function displayData(data) {
                         <span>${name}</span>
                         <span style="display:inline-flex; align-items:center; gap: 6px; margin-left: 6px;">${usageIcon}${loveIcon}</span>
                     </div>
-                    <div class="menu-icon">▼</div>
+                    <div class="menu-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
                 </div>
                 ${introText}
                 ${adminBtns}
@@ -792,8 +870,8 @@ function displayData(data) {
 
             </div>
             <div class="menu-details">
-              <div class="detail-text"><span>🎨</span> <strong>นักวาด:</strong> ${artistDisplay}</div>
-              <div class="detail-text"><span>💰</span> <strong>มูลค่า:</strong> ${item['มูลค่า']}</div>
+              <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.628-1.628H18c2.21 0 4-1.79 4-4 0-3.86-4.48-8-10-8z"></path></svg> <strong>นักวาด:</strong> ${artistDisplay}</div>
+              <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> <strong>มูลค่า:</strong> ${item['มูลค่า']}</div>
               ${moreLinkHtml}
               ${toggleGalleryBtn}
               ${extraGalleryHtml}
@@ -803,11 +881,11 @@ function displayData(data) {
       
       Object.keys(containers).forEach(key => { 
           if (containers[key].querySelectorAll('.menu-card').length === 0) 
-              containers[key].innerHTML += '<div class="loading-text">ยังไม่มีเมนูในหมวดนี้ 🥺</div>'; 
+              containers[key].innerHTML += `<div class="loading-text">ยังไม่มีเมนูในหมวดนี้ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-left:4px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg></div>`; 
       });
   } catch (e) {
       console.error(e);
-      alert("มีข้อผิดพลาดในการโหลดหน้าเว็บ: " + e.message);
+      alert("[ ผิดพลาด ] มีข้อผิดพลาดในการโหลดหน้าเว็บ: " + e.message);
   }
 }
 
@@ -823,7 +901,7 @@ async function moveItemInline(name, dir, category) {
         fetchData(); 
     } catch (e) {
         console.error(e);
-        alert("เกิดข้อผิดพลาดในการเลื่อนอันดับค่ะ");
+        alert("[ ผิดพลาด ] เกิดข้อผิดพลาดในการเลื่อนอันดับค่ะ");
         document.querySelectorAll('.btn-move-inline').forEach(b => b.disabled = false);
     }
 }
@@ -837,11 +915,11 @@ async function deleteItemInline(name) {
                 headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify({ action: "delete", name: name })
             });
-            alert("ลบข้อมูลแล้วค่ะ! 🗑️");
+            alert("[ สำเร็จ ] ลบข้อมูลแล้วค่ะ!");
             fetchData(); 
         } catch (e) {
             console.error(e);
-            alert("เกิดข้อผิดพลาดในการเชื่อมต่อเพื่อลบข้อมูลค่ะ");
+            alert("[ ผิดพลาด ] เกิดข้อผิดพลาดในการเชื่อมต่อเพื่อลบข้อมูลค่ะ");
         }
     }
 }
@@ -861,8 +939,8 @@ function openEditForm(btn, oldName, idSafeName) {
     extraImgsArray.forEach(line => {
         const parts = line.split('|').map(p => p.trim());
         existingExtraImgsHtml += `
-        <div class="extra-img-block" style="background: rgba(251, 191, 36, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;">
-            <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #ef4444; font-weight: 600; font-size:12px; background:#fef2f2; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
+        <div class="extra-img-block" style="background: rgba(168, 85, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;">
+            <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #C026D3; font-weight: 600; font-size:12px; background:#FDF4FF; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
             <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
             <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" value="${parts[0] || ''}">
             <div style="display:flex; gap:10px;">
@@ -917,22 +995,34 @@ function openEditForm(btn, oldName, idSafeName) {
 
             <label class="modal-label">สถานะความรัก (Love):</label>
             <select id="edit_love_${idSafeName}" class="modal-select">
-                <option value="1" ${item['สถานะความรัก']=='1'?'selected':''}>มีคู่ ❤️</option>
-                <option value="2" ${item['สถานะความรัก']=='2'?'selected':''}>โสด 🤍</option>
-                <option value="3" ${item['สถานะความรัก']=='3'?'selected':''}>ไม่มีความรัก 🚫</option>
+                <option value="1" ${item['สถานะความรัก']=='1'?'selected':''}>มีคู่</option>
+                <option value="2" ${item['สถานะความรัก']=='2'?'selected':''}>โสด</option>
+                <option value="3" ${item['สถานะความรัก']=='3'?'selected':''}>ไม่มีความรัก</option>
             </select>
 
-            <div style="margin-top: 15px; border-top: 2px dashed rgba(251,191,36,0.5); padding-top: 15px;">
+            <div style="margin-top: 15px; border-top: 2px dashed rgba(168, 85, 247, 0.5); padding-top: 15px;">
                 <h4 style="font-size: 13px; margin-bottom: 10px; color: var(--darker); display:flex; justify-content:space-between; align-items:center;">
-                    🖼️ รูปเพิ่มเติม (Gallery)
-                    <button type="button" onclick="addExtraImgField('${editContainerId}')" style="background:var(--main); border:none; padding:5px 10px; border-radius:15px; font-size:11px; font-weight:bold; color:var(--darker); cursor:pointer;">➕ เพิ่มรูป</button>
+                    <span style="display:flex; align-items:center; gap:4px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        รูปเพิ่มเติม (Gallery)
+                    </span>
+                    <button type="button" onclick="addExtraImgField('${editContainerId}')" style="background:var(--main); border:none; padding:5px 10px; border-radius:15px; font-size:11px; font-weight:bold; color:#fff; cursor:pointer; display:flex; align-items:center; gap:4px;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        เพิ่มรูป
+                    </button>
                 </h4>
                 <div id="${editContainerId}">${existingExtraImgsHtml}</div>
             </div>
 
             <div class="edit-actions">
-                <button class="btn-save-inline" onclick="saveInlineEdit('${safeOldName}', '${idSafeName}', '${editContainerId}')">💾 บันทึก</button>
-                <button class="btn-cancel-inline" onclick="displayData(allData)">❌ ยกเลิก</button>
+                <button class="btn-save-inline" onclick="saveInlineEdit('${safeOldName}', '${idSafeName}', '${editContainerId}')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    บันทึก
+                </button>
+                <button class="btn-cancel-inline" onclick="displayData(allData)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    ยกเลิก
+                </button>
             </div>
         </div>
     `;
@@ -958,7 +1048,7 @@ async function saveInlineEdit(oldName, idSafeName, containerId) {
     const finalImgData = document.getElementById(`edit_img_link_${idSafeName}`).value;
     const newExtraImgs = getExtraImgsData(containerId); 
 
-    if(!newName || !finalImgData) return alert("กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
+    if(!newName || !finalImgData) return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
 
     const newItemData = {
         "หมวดหมู่": newCat,
@@ -981,11 +1071,11 @@ async function saveInlineEdit(oldName, idSafeName, containerId) {
             headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify({ action: "edit", oldName: safeOldName, data: newItemData })
         });
-        alert("บันทึกข้อมูลเรียบร้อยค่ะ! 💾");
+        alert("[ สำเร็จ ] บันทึกข้อมูลเรียบร้อยค่ะ!");
         fetchData();
     } catch (e) {
         console.error(e);
-        alert("❌ บันทึกไม่สำเร็จ! กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตค่ะ");
+        alert("[ ผิดพลาด ] บันทึกไม่สำเร็จ! กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตค่ะ");
     }
 }
 
