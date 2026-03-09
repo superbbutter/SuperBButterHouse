@@ -21,7 +21,7 @@
   --glow: rgba(168, 85, 247, 0.25); 
   --transition: 0.3s ease;
   
-  /* 🎨 โทนสีสำหรับไอคอนวงกลม 🎨 */
+  /* 🎨 โทนสีสำหรับไอคอนวงกลม (ม่วง-ขาว) 🎨 */
   --badge-personal: #D8B4FE;   
   --badge-commercial: #9333EA; 
   --badge-full: #581C87;       
@@ -106,12 +106,14 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .btn-accept { font-size: 16px; padding: 15px; margin-top: 15px; animation: pulse 2s infinite; cursor: pointer; width: 100%; background: var(--main); color: #fff; border-radius: 20px; font-weight: 600; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(147, 51, 234, 0); } 100% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0); } }
 
-.floating-emoji { position: absolute; font-size: 24px; z-index: 5; animation: floatEmoji 3s infinite; filter: drop-shadow(0 4px 6px rgba(168, 85, 247, 0.1)); }
-.emoji-1 { top: -10px; left: -10px; animation-delay: 0s; } 
-.emoji-2 { top: 20px; right: -20px; animation-delay: 0.7s; } 
-.emoji-3 { bottom: 15px; left: -15px; animation-delay: 1.4s; } 
-.emoji-4 { bottom: -5px; right: -10px; animation-delay: 2.1s; } 
-@keyframes floatEmoji { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+/* 🌟 สไตล์ใหม่สำหรับไอคอนดาวตกแต่ง (แทนที่อีโมจิ) 🌟 */
+.floating-star { position: absolute; z-index: 5; filter: drop-shadow(0 4px 6px rgba(168, 85, 247, 0.2)); }
+.star-1 { top: -15px; left: -10px; color: #D8B4FE; width: 28px; animation: floatStar 3.2s ease-in-out infinite; } 
+.star-2 { top: 15px; right: -25px; color: #581C87; width: 14px; animation: floatStar 2.5s ease-in-out infinite 0.5s; } 
+.star-3 { top: 55%; left: -30px; color: #C084FC; width: 18px; animation: floatStar 3.5s ease-in-out infinite 1.2s; } 
+.star-4 { bottom: -10px; right: -15px; color: #7E22CE; width: 24px; animation: floatStar 2.8s ease-in-out infinite 0.8s; } 
+.star-5 { bottom: 10px; left: 15px; color: #9333EA; width: 12px; animation: floatStar 3s ease-in-out infinite 2s; } 
+@keyframes floatStar { 0%, 100% { transform: translateY(0) scale(1) rotate(0deg); } 50% { transform: translateY(-10px) scale(1.1) rotate(5deg); } }
 
 .mini-contact { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px dashed rgba(168, 85, 247, 0.3); }
 .socials-mini { display: flex; gap: 10px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
@@ -279,10 +281,11 @@ function acceptRules() {
 <div id="main-wrapper">
   <header>
     <div class="logo-wrapper">
-      <div class="floating-emoji emoji-1"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--main)" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div>
-      <div class="floating-emoji emoji-2"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--main)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
-      <div class="floating-emoji emoji-3"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--main)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg></div>
-      <div class="floating-emoji emoji-4"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--main)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></div>
+      <div class="floating-star star-1"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+      <div class="floating-star star-2"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+      <div class="floating-star star-3"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+      <div class="floating-star star-4"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
+      <div class="floating-star star-5"><svg width="100%" height="100%" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
       <div class="logo">
         <img src="https://drive.google.com/thumbnail?id=1aTumT9SN2pzCyOtInZyv85ksTcZyv5g1&sz=w1000" alt="SuperBButter Logo">
       </div>
@@ -828,7 +831,7 @@ function displayData(data) {
                 <div class="no-save" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
                     <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(168, 85, 247, 0.5); background-color:#FCF9FF;">
                         <img src="${parsedLink}" style="width:100%; display:block; pointer-events:none;" alt="รูปเพิ่มเติม" oncontextmenu="return false;">
-                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:600px; pointer-events:none;"></div>
+                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none;"></div>
                     </div>
                     ${captionHtml}
                 </div>`;
