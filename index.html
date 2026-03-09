@@ -203,6 +203,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 </style>
 
 <script>
+// ฟังก์ชันกดยอมรับกฎ
 function acceptRules() {
     try {
         const gate = document.getElementById('rules-gate');
@@ -446,6 +447,7 @@ function acceptRules() {
 </div>
 
 <script>
+// 📌 URL ของ Apps Script 📌
 const API_URL = 'https://script.google.com/macros/s/AKfycbxQf6kADkDT0Xz_LSVyfiGo_z4ntyRUlJzLJ1l5BhMYlEJCVFsaHDbYc9UEu3NPcFo/exec';
 
 let allData = []; 
@@ -466,7 +468,7 @@ function showPage(pageId, element) {
   }
 }
 
-// 🌟 ปลดล็อคให้กางการ์ดได้แม้จะอยู่ในโหมด Edit 🌟
+// ปลดล็อคให้กางการ์ดได้ตลอดเวลา
 function toggleMenu(headerElement) { 
     headerElement.parentElement.classList.toggle('open'); 
 }
@@ -726,7 +728,6 @@ function displayData(data) {
                         artistDisplayExtra = `<a href="${artistLink}" target="_blank" style="color:var(--dark); text-decoration:underline; font-weight:500;">${artist}</a>`;
                     }
                     let artistHtml = artist ? `<span>🎨 นักวาด: ${artistDisplayExtra}</span>` : '';
-                    // 🌟 ปรับให้มูลค่าไม่เป็นตัวหนา 🌟
                     let priceHtml = price ? `<span>💰 มูลค่า: ${price}</span>` : '';
                     let separator = (artist && price) ? ' &nbsp;•&nbsp; ' : '';
 
@@ -738,12 +739,12 @@ function displayData(data) {
 
                 let imgRadiusStyle = captionHtml ? 'border-radius: 15px 15px 0 0; border-bottom: none;' : 'border-radius: 15px;';
 
-                // 🌟 ขยายขนาดลายน้ำให้ใหญ่ขึ้น (background-size: 300px) 🌟
+                // ลายน้ำปรับให้ขนาด 600px 
                 return `
                 <div style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
                     <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(251, 191, 36, 0.5);">
                         <img src="${parsedLink}" style="width:100%; display:block; user-select:none; -webkit-user-drag:none; pointer-events:none;" alt="รูปเพิ่มเติม">
-                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w400'); background-repeat:repeat; background-size:300px; pointer-events:none;"></div>
+                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1000'); background-repeat:repeat; background-size:600px; pointer-events:none;"></div>
                     </div>
                     ${captionHtml}
                 </div>`;
@@ -764,7 +765,6 @@ function displayData(data) {
             </div>`;
         }
 
-        // 🌟 ปลดล็อค cursor ในโหมดแก้ไขให้เป็น pointer เพื่อให้คลิกดูข้อมูลได้ 🌟
         target.innerHTML += `
           <div class="menu-card">
             <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
