@@ -92,7 +92,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .menu-card:hover { transform: translateY(-3px); }
 .menu-header { display: block; cursor: pointer; }
 
-/* 🌟 ภาพหลักสีขาว 🌟 */
+/* โครงสร้างภาพหลักเพื่อซ่อนลายน้ำและกันเซฟ (สีขาวบริสุทธิ์) */
 .menu-img-wrapper { position: relative; width: 100%; background-color: #ffffff; border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
 .menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; pointer-events: none; }
 
@@ -113,18 +113,29 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .mini-char-card { width: 100%; cursor: pointer; transition: transform 0.2s ease; text-align: center; }
 .mini-char-card:hover { transform: translateY(-4px); }
 .mini-char-img-wrapper { 
-    width: 80px; height: 80px; 
+    width: 100%; height: 100%; /* เปลี่ยนเป็น 100% เพื่อให้พอดีกรอบนอก */
     border-radius: 18px; 
     overflow: hidden; 
     border: 2px solid var(--main); 
     background-color: #ffffff; 
-    margin: 0 auto 6px; 
     box-shadow: 0 4px 10px rgba(107, 78, 144, 0.15); 
     position: relative;
+    margin: 0;
 }
 .mini-char-img-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none;}
 .mini-char-name { font-size: 11px; color: var(--darker); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; padding: 0 2px;}
-.mini-status-dot { position: absolute; top: -3px; right: -3px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff; z-index: 10; }
+
+/* 🌟 อัปเดตตำแหน่งจุดไฟสถานะให้เด้งออกมาทับกรอบมุมขวาบน 🌟 */
+.mini-status-dot { 
+    position: absolute; 
+    top: -5px; 
+    right: -5px; 
+    width: 16px; 
+    height: 16px; 
+    border-radius: 50%; 
+    border: 2px solid #fff; 
+    z-index: 10; 
+}
 
 .rule-box { background: rgba(255, 255, 255, 0.7); padding: 15px; border-radius: 15px; font-size: 13px; line-height: 1.6; border: 1px dashed var(--main); text-align: left; }
 .highlight { color: #9B68ED; font-weight: 500; } 
@@ -650,7 +661,7 @@ let allData = [];
 let isEditMode = false;
 let allUniqueArtistLinks = []; 
 
-// 🌟 ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ (เติม http ให้อัตโนมัติถ้าลืม) 🌟
+// 🌟 ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ 🌟
 function formatURL(url) {
     if(!url) return '';
     let cleanUrl = String(url).trim();
@@ -675,7 +686,7 @@ function showPage(pageId, element) {
   }
 }
 
-// 🌟 ฟังก์ชันสำหรับกดย้ายหน้าและ Scroll ไปที่การ์ดนั้นๆ 🌟
+// 🌟 ฟังก์ชันวาร์ปจากหน้าโฮมไปการ์ด 🌟
 function jumpToCard(category, cardId) {
     let pageId = '';
     let navId = '';
@@ -826,7 +837,6 @@ async function submitNewCharacter() {
         return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญที่มีสัญลักษณ์ * ให้ครบถ้วนค่ะ");
     }
 
-    // 🌟 ระบบป้องกันชื่อซ้ำ: เติมอักขระล่องหน (Zero-width space) ให้ชื่อไม่ซ้ำใน Google Sheet 🌟
     let finalUniqueName = nameInput.trim();
     while (allData.some(i => i['ชื่อขนม'] === finalUniqueName)) {
         finalUniqueName += '\u200B'; 
@@ -931,7 +941,6 @@ function displayData(data) {
           cards.forEach(card => card.remove());
       });
 
-      // เคลียร์ตู้กระจกในหน้าโฮม
       const gridContainer = document.getElementById('all-chars-grid');
       if (gridContainer) gridContainer.innerHTML = '';
 
@@ -944,12 +953,10 @@ function displayData(data) {
         const target = containers[item['หมวดหมู่']];
         if (!target) return;
         
-        // กรองชื่อให้สะอาดก่อนแสดงผล (ซ่อนอักขระล่องหน)
+        // 🌟 แก้ไข: ตัวแปรครบถ้วนแล้ว ไม่พังแน่นอน 🌟
         const name = String(item['ชื่อขนม'] || '');
         const cleanName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
         const safeName = name.replace(/'/g, "\\'");
-        
-        // 🌟 แก้บั๊ก: ต้องแน่ใจว่าตัวแปรพวกนี้ถูกประกาศให้ครบ! 🌟
         const idSafeName = safeName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + index; 
         const galleryId = 'gallery_' + idSafeName;
         const mainCardId = 'card_' + idSafeName; 
@@ -970,13 +977,15 @@ function displayData(data) {
           if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
         }
 
-        // เพิ่มลงในตู้กระจกหน้าโฮม
+        // เพิ่มลงในตู้กระจกหน้าโฮม (จุดไฟสถานะเด้งนอกกรอบ)
         if (gridContainer) {
             let miniCardHtml = `
             <div class="mini-char-card" onclick="jumpToCard('${item['หมวดหมู่']}', '${mainCardId}')">
-                <div class="mini-char-img-wrapper no-save">
-                    <img src="${imgUrl}" alt="${cleanName}" oncontextmenu="return false;" draggable="false">
-                    <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
+                <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 6px;">
+                    <div class="mini-char-img-wrapper no-save" style="width: 100%; height: 100%; margin: 0;">
+                        <img src="${imgUrl}" alt="${cleanName}" oncontextmenu="return false;" draggable="false">
+                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
+                    </div>
                     <div class="mini-status-dot ${lightClass}"></div>
                 </div>
                 <div class="mini-char-name">${cleanName}</div>
@@ -1006,12 +1015,10 @@ function displayData(data) {
             ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` 
             : '';
 
-        // แปลงลิ้งก์นักวาดหลักให้คลิกได้เสมอ
         let safeArtistLink = formatURL(item['Link นักวาด']);
         const artistDisplay = safeArtistLink ? `<a href="${safeArtistLink}" target="_blank" style="color:var(--darker); text-decoration:underline; position:relative; z-index:10;">${item['นักวาด']}</a>` : (item['นักวาด'] || '');
         const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3; width:100%;">${item['คำบรรยาย']}</div>` : '';
 
-        // แปลงลิ้งก์เพื่อดูเพิ่มเติม
         const moreLinkUrl = formatURL(item['Link เพื่อดูเพิ่มเติม']);
         let moreLinkHtml = '';
         if(moreLinkUrl) {
@@ -1080,7 +1087,6 @@ function displayData(data) {
             </div>`;
         }
 
-        // 🌟 ใส่ ID ให้กับการ์ดเพื่อใช้ในการวาร์ป 🌟
         target.innerHTML += `
           <div class="menu-card" id="${mainCardId}">
             <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
@@ -1126,7 +1132,7 @@ function displayData(data) {
 
 async function moveItemInline(index, dir) {
     document.querySelectorAll('.btn-move-inline').forEach(b => b.disabled = true);
-    const name = allData[index]['ชื่อขนม']; // ส่งชื่อที่มีอักขระล่องหนไปให้หลังบ้านจัดการ
+    const name = allData[index]['ชื่อขนม']; 
     const category = allData[index]['หมวดหมู่'];
     try {
         await fetch(API_URL, {
@@ -1144,7 +1150,6 @@ async function moveItemInline(index, dir) {
 
 async function deleteItemInline(index) {
     const name = allData[index]['ชื่อขนม']; 
-    // ตัดอักขระล่องหนออกตอนโชว์ Popup ให้ดูสวยงาม
     const showName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
     if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${showName}" ออกจากเตาอบ?`)) {
         try {
@@ -1172,7 +1177,6 @@ function openEditForm(btn, index, idSafeName) {
     const isWatermarkChecked = item['ลายน้ำภาพหลัก'] === 'Yes' ? 'checked' : '';
 
     const datalistId = `datalist_edit_${idSafeName}`;
-    // ตอนแก้ไข ลบอักขระล่องหนออกเพื่อให้ตอนพิมพ์ง่าย
     const cleanEditName = String(item['ชื่อขนม']).replace(/[\u200B-\u200D\uFEFF]/g, '');
 
     let existingExtraImgsHtml = '';
@@ -1313,7 +1317,6 @@ async function saveInlineEdit(index, idSafeName, containerId) {
 
     if(!newNameInput || !finalImgData) return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
 
-    // ระบบป้องกันชื่อซ้ำ: เช็คกับตัวละครอื่นทั้งหมด (ยกเว้นตัวมันเอง)
     let finalUniqueName = newNameInput.trim();
     while (allData.some((i, idx) => i['ชื่อขนม'] === finalUniqueName && idx !== index)) {
         finalUniqueName += '\u200B'; 
