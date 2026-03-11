@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SuperBButter - SuperBButter House</title>
+<title>SuperBButter - House</title>
 <link rel="icon" type="image/x-icon" href="https://drive.google.com/thumbnail?id=1aTumT9SN2pzCyOtInZyv85ksTcZyv5g1&sz=w1000">
 
 <link rel="preload" href="https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600" as="image">
@@ -117,7 +117,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     border-radius: 18px; 
     overflow: hidden; 
     border: 2px solid var(--main); 
-    background-color: #ffffff; /* พื้นหลังตู้กระจกสีขาว */
+    background-color: #ffffff; 
     box-shadow: 0 4px 10px rgba(107, 78, 144, 0.15); 
     position: relative;
     margin: 0;
@@ -135,6 +135,30 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     border-radius: 50%; 
     border: 2px solid #fff; 
     z-index: 10; 
+}
+
+/* 🌟 สไตล์สำหรับปุ่ม Home ลอยตัว (Floating Action Button) 🌟 */
+.floating-home-btn {
+    display: none; /* ซ่อนไว้ก่อน จะแสดงเฉพาะตอนไม่ได้อยู่หน้าโฮม */
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, #C4A4F7, #9B68ED);
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 6px 20px rgba(155, 104, 237, 0.4);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2000;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    border: 3px solid #fff;
+}
+.floating-home-btn:hover {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 8px 25px rgba(155, 104, 237, 0.6);
 }
 
 .rule-box { background: rgba(255, 255, 255, 0.7); padding: 15px; border-radius: 15px; font-size: 13px; line-height: 1.6; border: 1px dashed var(--main); text-align: left; }
@@ -352,7 +376,7 @@ function acceptRules() {
     <div class="rule-box">
       <p><strong>กรุณาอ่านรายละเอียดให้ครบถ้วน</strong></p>
       <p>ก่อนเข้าสู่ครัวเข้าชมขนมของเรา กรุณาอ่านและทำตามประกาศอย่างเคร่งครัด !</p>
-      <p>สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน</span> นะคะ</p>
+      <p>สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน</span>นะคะ</p>
     </div>
 
     <h2 style="margin-top: 20px; color: #9B68ED;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 5px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Warning</h2>
@@ -553,6 +577,10 @@ function acceptRules() {
   </div> 
 </div>
 
+<div id="floating-home-btn" class="floating-home-btn" onclick="showPage('home', document.getElementById('nav-home'))" title="กลับหน้าโฮม">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+</div>
+
 <div id="addCharModal" class="modal">
   <div class="modal-content" style="text-align: left;">
     <h3 style="text-align: center; margin-bottom: 20px; display:flex; justify-content:center; align-items:center; gap:6px;">
@@ -673,7 +701,6 @@ function formatURL(url) {
     return cleanUrl;
 }
 
-// 🌟 ฟังก์ชันแปลงอักขระพิเศษเพื่อป้องกันหน้าเว็บพัง 🌟
 function escapeHTML(str) {
     if(str === null || str === undefined) return '';
     return String(str)
@@ -690,6 +717,16 @@ function showPage(pageId, element) {
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   element.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // 🌟 ควบคุมปุ่ม Home ลอยตัว 🌟
+  const fab = document.getElementById('floating-home-btn');
+  if (fab) {
+      if (pageId !== 'home') {
+          fab.style.display = 'flex';
+      } else {
+          fab.style.display = 'none';
+      }
+  }
 
   if (isEditMode) {
       if (pageId !== 'home') document.getElementById('admin-add-bar').style.display = 'block';
@@ -977,7 +1014,6 @@ function displayData(data) {
       data.forEach((item, index) => {
         if(!item || typeof item !== 'object') return; 
 
-        // 🌟 กรองหมวดหมู่ให้ตรงกันเป๊ะๆ 🌟
         let category = String(item['หมวดหมู่'] || '').trim();
         if (category.includes('ปัง')) category = 'ขนมปัง';
         else if (category.includes('เค้ก')) category = 'เค้ก';
@@ -999,7 +1035,7 @@ function displayData(data) {
         const loveStatus = String(item['สถานะความรัก'] || '2');
         const usageRights = String(item['สิทธิ์การใช้งาน'] || ''); 
         
-        // 🌟 ป้องกันตัวแปรหาย (เพิ่มคืนมาแล้ว!) 🌟
+        // 🌟 ประกาศตัวแปรอาร์เรย์ให้ครบถ้วนแล้ว ไม่พังแน่นอน 🌟
         const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
         const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
         
@@ -1021,7 +1057,6 @@ function displayData(data) {
             ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` 
             : '';
             
-        // 🌟 ลายน้ำสำหรับตู้กระจก (ย่อขนาดให้พอดีกล่องเล็ก) 🌟
         const miniWatermarkHtml = isWatermarked 
             ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:150px; pointer-events:none; z-index:2;"></div>` 
             : '';
@@ -1140,7 +1175,7 @@ function displayData(data) {
           <div class="menu-card" id="${mainCardId}">
             <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
               
-              <div class="menu-img-wrapper" style="background-color: #ffffff;"> 
+              <div class="menu-img-wrapper" style="background-color: #ffffff;">
                   <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
                   ${mainWatermarkHtml}
                   <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
