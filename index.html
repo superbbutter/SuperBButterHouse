@@ -14,7 +14,7 @@
 :root {
   /* 🎨 โทนสีครีม - ม่วงพาสเทล 🎨 */
   --bg: #FFF8EC; 
-  --img-bg-pale: #FFFDF8; /* สีครีมอ่อนพิเศษสำหรับพื้นหลังรูปโปร่งใส */
+  --img-bg-pale: #ffffff; /* สีขาวบริสุทธิ์สำหรับพื้นหลังรูปโปร่งใส */
   --main: #C4A4F7; 
   --dark: #6B4E90; 
   --darker: #4A316A; 
@@ -92,8 +92,8 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .menu-card:hover { transform: translateY(-3px); }
 .menu-header { display: block; cursor: pointer; }
 
-/* โครงสร้างภาพหลักเพื่อซ่อนลายน้ำและกันเซฟ (ปรับสีพื้นหลังเป็นสีครีมอ่อนพิเศษ) */
-.menu-img-wrapper { position: relative; width: 100%; background-color: var(--img-bg-pale); border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
+/* โครงสร้างภาพหลักเพื่อซ่อนลายน้ำและกันเซฟ (สีขาวบริสุทธิ์) */
+.menu-img-wrapper { position: relative; width: 100%; background-color: #ffffff; border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
 .menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; pointer-events: none; }
 
 .menu-title-row { display: flex; flex-direction: column; align-items: flex-start; padding: 15px; gap: 5px; }
@@ -107,6 +107,24 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .btn-view { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 5px; background: linear-gradient(135deg, #D4BAFF, #E7D5FF); color: var(--darker); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-size: 13px; font-weight: 600; width: 100%; border: none; cursor: pointer; transition: 0.3s; }
 .btn-view:hover { transform: translateY(-2px); }
 .btn-gallery { background: #F7EFFF; border: 1px dashed var(--main); color: var(--dark); margin-top: 10px; }
+
+/* 🌟 สไตล์สำหรับหน้าโฮม: รวมตู้กระจก (Mini Grid) 🌟 */
+.all-chars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 15px 10px; justify-items: center; margin-top: 10px; }
+.mini-char-card { width: 100%; cursor: pointer; transition: transform 0.2s ease; text-align: center; }
+.mini-char-card:hover { transform: translateY(-4px); }
+.mini-char-img-wrapper { 
+    width: 80px; height: 80px; 
+    border-radius: 18px; 
+    overflow: hidden; 
+    border: 2px solid var(--main); 
+    background-color: #ffffff; 
+    margin: 0 auto 6px; 
+    box-shadow: 0 4px 10px rgba(107, 78, 144, 0.15); 
+    position: relative;
+}
+.mini-char-img-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none;}
+.mini-char-name { font-size: 11px; color: var(--darker); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; padding: 0 2px;}
+.mini-status-dot { position: absolute; top: -3px; right: -3px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff; z-index: 10; }
 
 .rule-box { background: rgba(255, 255, 255, 0.7); padding: 15px; border-radius: 15px; font-size: 13px; line-height: 1.6; border: 1px dashed var(--main); text-align: left; }
 .highlight { color: #9B68ED; font-weight: 500; } 
@@ -358,19 +376,19 @@ function acceptRules() {
     </div>
     <h1>SuperBButter</h1>
     <nav class="nav-bar">
-      <div class="nav-item active" onclick="showPage('home', this)">
+      <div class="nav-item active" id="nav-home" onclick="showPage('home', this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:2px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
           <span>โฮม</span>
       </div>
-      <div class="nav-item" onclick="showPage('bread', this)">
+      <div class="nav-item" id="nav-bread" onclick="showPage('bread', this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:2px;"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M3 8c0-3 3-4 6-4s5 1 9 4"></path></svg>
           <span>ขนมปัง</span>
       </div>
-      <div class="nav-item" onclick="showPage('cake', this)">
+      <div class="nav-item" id="nav-cake" onclick="showPage('cake', this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:2px;"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"></path><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"></path><path d="M12 11v-4"></path><path d="M12 3v1"></path></svg>
           <span>เค้ก</span>
       </div>
-      <div class="nav-item" onclick="showPage('drink', this)">
+      <div class="nav-item" id="nav-drink" onclick="showPage('drink', this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:2px;"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
           <span>เครื่องดื่ม</span>
       </div>
@@ -398,6 +416,16 @@ function acceptRules() {
       </div>
 
       <div class="section" style="padding: 15px;">
+        <h3 style="font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; justify-content: center; color: var(--darker);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            ตู้กระจกโชว์ขนม
+        </h3>
+        <div id="all-chars-grid" class="all-chars-grid">
+            <div class="loading-text" style="grid-column: 1 / -1; font-size: 12px; opacity: 0.7;">กำลังจัดเรียงขนมเข้าตู้...</div>
+        </div>
+      </div>
+
+      <div class="section" style="padding: 15px;">
         <h3 style="font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 5px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
             สัญลักษณ์ในครัว
@@ -410,30 +438,30 @@ function acceptRules() {
             
             <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 5px; align-items: center;">
                 <span style="display:flex; align-items:center; gap: 6px;">
-                    <span class="usage-badge usage-personal"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                    <span class="usage-badge usage-personal" title="Personal (ส่วนตัว)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
                     <span>Personal</span>
                 </span>
                 <span style="display:flex; align-items:center; gap: 6px;">
-                    <span class="usage-badge usage-commercial"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span>
+                    <span class="usage-badge usage-commercial" title="Commercial (เชิงพาณิชย์)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span>
                     <span>Commercial</span>
                 </span>
                 <span style="display:flex; align-items:center; gap: 6px;">
-                    <span class="usage-badge usage-full"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                    <span class="usage-badge usage-full" title="สิทธิ์ขาด (Full Rights)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
                     <span>สิทธิ์ขาด</span>
                 </span>
             </div>
             
             <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; align-items: center;">
                 <span style="display:flex; align-items:center; gap: 6px;">
-                    <span class="usage-badge love-single"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
+                    <span class="usage-badge love-single" title="โสด"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
                     <span>โสด</span>
                 </span>
                 <span style="display:flex; align-items:center; gap: 6px;">
-                    <span class="usage-badge love-taken"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
+                    <span class="usage-badge love-taken" title="มีคู่"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
                     <span>มีคู่</span>
                 </span>
                 <span style="display:flex; align-items:center; gap: 6px;">
-                    <span class="usage-badge love-none"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg></span>
+                    <span class="usage-badge love-none" title="ไม่มีความรัก"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg></span>
                     <span>ไม่มีความรัก</span>
                 </span>
             </div>
@@ -622,7 +650,7 @@ let allData = [];
 let isEditMode = false;
 let allUniqueArtistLinks = []; 
 
-// 🌟 ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ (เติม http ให้อัตโนมัติถ้าลืม) 🌟
+// ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ (เติม http ให้อัตโนมัติถ้าลืม)
 function formatURL(url) {
     if(!url) return '';
     let cleanUrl = String(url).trim();
@@ -645,6 +673,39 @@ function showPage(pageId, element) {
   } else {
       document.getElementById('admin-add-bar').style.display = 'none';
   }
+}
+
+// 🌟 ฟังก์ชันสำหรับกดย้ายหน้าและ Scroll ไปที่การ์ดนั้นๆ 🌟
+function jumpToCard(category, cardId) {
+    let pageId = '';
+    let navId = '';
+    if(category === 'ขนมปัง') { pageId = 'bread'; navId = 'nav-bread'; }
+    else if(category === 'เค้ก') { pageId = 'cake'; navId = 'nav-cake'; }
+    else if(category === 'เครื่องดื่ม') { pageId = 'drink'; navId = 'nav-drink'; }
+
+    if(pageId && navId) {
+        // เปลี่ยนหน้า
+        showPage(pageId, document.getElementById(navId));
+        
+        // รอให้หน้าต่างเปลี่ยนเสร็จแปปนึง แล้วค่อยเลื่อนลงมา
+        setTimeout(() => {
+            const card = document.getElementById(cardId);
+            if(card) {
+                // วาร์ปมาตรงกลางจอ
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // กางการ์ดออกอัตโนมัติ
+                if(!card.classList.contains('open')) {
+                    card.classList.add('open');
+                }
+                
+                // เอฟเฟกต์กระพริบแสงสีม่วงเบาๆ ให้รู้ว่าคือการ์ดนี้
+                card.style.transition = 'box-shadow 0.5s ease';
+                card.style.boxShadow = '0 0 25px rgba(196, 164, 247, 0.9)';
+                setTimeout(() => { card.style.boxShadow = '0 4px 12px rgba(107, 78, 144, 0.05)'; }, 2000);
+            }
+        }, 300);
+    }
 }
 
 function toggleMenu(headerElement) { 
@@ -773,7 +834,7 @@ async function submitNewCharacter() {
         return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญที่มีสัญลักษณ์ * ให้ครบถ้วนค่ะ");
     }
 
-    // 🌟 ระบบป้องกันชื่อซ้ำ: เติมอักขระล่องหน (Zero-width space) ให้ชื่อไม่ซ้ำใน Google Sheet 🌟
+    // ระบบป้องกันชื่อซ้ำ: เติมอักขระล่องหน (Zero-width space) ให้ชื่อไม่ซ้ำใน Google Sheet
     let finalUniqueName = nameInput.trim();
     while (allData.some(i => i['ชื่อขนม'] === finalUniqueName)) {
         finalUniqueName += '\u200B'; 
@@ -878,17 +939,26 @@ function displayData(data) {
           cards.forEach(card => card.remove());
       });
 
-      if(!Array.isArray(data)) return;
+      // 🌟 เคลียร์ตู้กระจกในหน้าโฮม 🌟
+      const gridContainer = document.getElementById('all-chars-grid');
+      if (gridContainer) gridContainer.innerHTML = '';
+
+      if(!Array.isArray(data) || data.length === 0) {
+          if (gridContainer) gridContainer.innerHTML = '<div class="loading-text" style="grid-column: 1 / -1;">ยังไม่มีขนมในตู้ค่ะ</div>';
+          return;
+      }
 
       data.forEach((item, index) => {
         const target = containers[item['หมวดหมู่']];
         if (!target) return;
         
         // กรองชื่อให้สะอาดก่อนแสดงผล (ซ่อนอักขระล่องหน)
-        const name = String(item['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '');
+        const name = String(item['ชื่อขนม'] || '');
+        const cleanName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
         const safeName = name.replace(/'/g, "\\'");
         const idSafeName = safeName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + index; 
         const galleryId = 'gallery_' + idSafeName;
+        const mainCardId = 'card_' + idSafeName; // สร้าง ID สำหรับกดลิงก์มา
         
         const saleStatus = String(item['สถานะบ้าน'] || '1');
         const loveStatus = String(item['สถานะความรัก'] || '2');
@@ -899,6 +969,26 @@ function displayData(data) {
         let lightClass = 'status-forever';
         if(saleStatus == '2') lightClass = 'status-tent';
         if(saleStatus == '3') lightClass = 'status-sp-ota';
+
+        let imgUrl = String(item['Link รูปตัวละคร'] || ''); 
+        if (imgUrl.includes('drive.google.com/file/d/')) {
+          const id = imgUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+          if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
+        }
+
+        // 🌟 เพิ่มลงในตู้กระจกหน้าโฮม 🌟
+        if (gridContainer) {
+            let miniCardHtml = `
+            <div class="mini-char-card" onclick="jumpToCard('${item['หมวดหมู่']}', '${mainCardId}')">
+                <div class="mini-char-img-wrapper no-save">
+                    <img src="${imgUrl}" alt="${cleanName}" oncontextmenu="return false;" draggable="false">
+                    <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
+                    <div class="mini-status-dot ${lightClass}"></div>
+                </div>
+                <div class="mini-char-name">${cleanName}</div>
+            </div>`;
+            gridContainer.innerHTML += miniCardHtml;
+        }
 
         let usageIcon = '';
         if(usageRights === 'Personal') {
@@ -918,22 +1008,16 @@ function displayData(data) {
             loveIcon = `<span class="usage-badge love-none" title="ไม่มีความรัก"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg></span>`;
         }
 
-        let imgUrl = String(item['Link รูปตัวละคร'] || ''); 
-        if (imgUrl.includes('drive.google.com/file/d/')) {
-          const id = imgUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-          if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
-        }
-
         const mainWatermarkHtml = mainImageWatermark === 'Yes' 
             ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` 
             : '';
 
-        // 🌟 แปลงลิ้งก์นักวาดหลักให้คลิกได้เสมอ 🌟
+        // แปลงลิ้งก์นักวาดหลักให้คลิกได้เสมอ
         let safeArtistLink = formatURL(item['Link นักวาด']);
         const artistDisplay = safeArtistLink ? `<a href="${safeArtistLink}" target="_blank" style="color:var(--darker); text-decoration:underline; position:relative; z-index:10;">${item['นักวาด']}</a>` : (item['นักวาด'] || '');
         const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3; width:100%;">${item['คำบรรยาย']}</div>` : '';
 
-        // 🌟 แปลงลิ้งก์เพื่อดูเพิ่มเติม 🌟
+        // แปลงลิ้งก์เพื่อดูเพิ่มเติม
         const moreLinkUrl = formatURL(item['Link เพื่อดูเพิ่มเติม']);
         let moreLinkHtml = '';
         if(moreLinkUrl) {
@@ -942,7 +1026,6 @@ function displayData(data) {
 
         let extraGalleryHtml = '';
         let toggleGalleryBtn = '';
-        const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
         
         if (extraImgsArray.length > 0) {
             let imagesHtml = extraImgsArray.map(line => {
@@ -961,7 +1044,6 @@ function displayData(data) {
                 let captionHtml = '';
                 if (artist || price) {
                     let artistDisplayExtra = artist;
-                    // 🌟 แปลงลิ้งก์นักวาดรูปเพิ่มเติมให้คลิกได้เสมอ 🌟
                     let safeExLink = formatURL(artistLink);
                     if (artist && safeExLink) {
                         artistDisplayExtra = `<a href="${safeExLink}" target="_blank" style="color:var(--dark); text-decoration:underline; font-weight:500; position:relative; z-index:10;">${artist}</a>`;
@@ -1004,12 +1086,12 @@ function displayData(data) {
             </div>`;
         }
 
+        // 🌟 ใส่ ID ให้กับการ์ดเพื่อใช้ในการวาร์ป 🌟
         target.innerHTML += `
-          <div class="menu-card">
+          <div class="menu-card" id="${mainCardId}">
             <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
               
-              <div class="menu-img-wrapper">
-                  <img src="${imgUrl}" alt="${name}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
+              <div class="menu-img-wrapper" style="background-color: #ffffff;"> <img src="${imgUrl}" alt="${cleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
                   ${mainWatermarkHtml}
                   <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
               </div>
@@ -1018,7 +1100,7 @@ function displayData(data) {
                 <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
                     <div class="menu-title" style="align-items:center;">
                         <span class="status-light ${lightClass}"></span>
-                        <span>${name}</span>
+                        <span>${cleanName}</span>
                         <span style="display:inline-flex; align-items:center; gap: 6px; margin-left: 6px;">${usageIcon}${loveIcon}</span>
                     </div>
                     <div class="menu-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
@@ -1237,7 +1319,7 @@ async function saveInlineEdit(index, idSafeName, containerId) {
 
     if(!newNameInput || !finalImgData) return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
 
-    // 🌟 ระบบป้องกันชื่อซ้ำ: เช็คกับตัวละครอื่นทั้งหมด (ยกเว้นตัวมันเอง) 🌟
+    // ระบบป้องกันชื่อซ้ำ: เช็คกับตัวละครอื่นทั้งหมด (ยกเว้นตัวมันเอง)
     let finalUniqueName = newNameInput.trim();
     while (allData.some((i, idx) => i['ชื่อขนม'] === finalUniqueName && idx !== index)) {
         finalUniqueName += '\u200B'; 
