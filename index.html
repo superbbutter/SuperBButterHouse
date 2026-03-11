@@ -47,9 +47,21 @@ body.locked { overflow: hidden; }
 
 /* ป้องกันการกดค้างเพื่อเซฟรูป (มือถือ) */
 .no-save {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none;   /* Safari */
-    user-select: none;           /* Non-prefixed version */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* 🌟 คลาสใหม่สำหรับลายน้ำ 🌟 */
+.watermark-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600');
+    background-repeat: repeat;
+    background-size: 400px;
+    pointer-events: none; /* เพื่อไม่ให้ขัดขวางการคลิกรูปหรืออื่นๆ */
+    z-index: 10;
 }
 
 /* Admin Bar */
@@ -212,6 +224,18 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .btn-save-inline:hover { background: #9B68ED; transform: translateY(-2px); }
 .btn-cancel-inline { background: #D484B6; box-shadow: 0 4px 10px rgba(212, 132, 182, 0.2); }
 .btn-cancel-inline:hover { background: #BA639A; transform: translateY(-2px); }
+
+/* Checkbox Style */
+.checkbox-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 18px;
+    background: rgba(196, 164, 247, 0.1); padding: 10px 15px; border-radius: 12px; border: 1px solid rgba(196, 164, 247, 0.3);
+}
+.checkbox-row input {
+    width: 18px; height: 18px; cursor: pointer; accent-color: var(--main); margin: 0;
+}
+.checkbox-row label {
+    font-size: 14px; font-weight: 500; color: var(--darker); cursor: pointer; margin: 0;
+}
 </style>
 
 <script>
@@ -467,7 +491,12 @@ function acceptRules() {
     <input type="text" id="charDesc" class="modal-input">
     
     <label class="modal-label">ลิ้งก์รูปตัวละคร (ภาพหลัก) *</label>
-    <input type="text" id="charImgLink" class="modal-input" placeholder="วางลิ้งก์รูปภาพที่นี่">
+    <input type="text" id="charImgLink" class="modal-input" placeholder="วางลิ้งก์รูปภาพที่นี่" style="margin-bottom: 10px;">
+
+    <div class="checkbox-row">
+        <input type="checkbox" id="charWatermark">
+        <label for="charWatermark">ใส่ลายน้ำปกป้องรูปหลัก</label>
+    </div>
 
     <label class="modal-label">นักวาด (ภาพหลัก) *</label>
     <input type="text" id="charArtist" class="modal-input">
@@ -558,7 +587,6 @@ function showPage(pageId, element) {
   }
 }
 
-// ปลดล็อคให้กางการ์ดได้ตลอดเวลา
 function toggleMenu(headerElement) { 
     headerElement.parentElement.classList.toggle('open'); 
 }
@@ -643,6 +671,9 @@ function openAddCharModal() {
     document.getElementById('charUsage').value = 'Personal';
     document.getElementById('addExtraImgsContainer').innerHTML = ''; 
     
+    // 🌟 รีเซ็ต Checkbox ตอนกดปุ่ม Add ใหม่ ให้ว่างเปล่า 🌟
+    document.getElementById('charWatermark').checked = false;
+    
     const activePageId = document.querySelector('.page.active').id;
     const categorySelect = document.getElementById('charCategory');
     if (activePageId === 'bread') categorySelect.value = 'ขนมปัง';
@@ -658,6 +689,9 @@ async function submitNewCharacter() {
     const artist = document.getElementById('charArtist').value;
     const price = document.getElementById('charPrice').value;
     
+    // 🌟 ดึงค่าจากการติ๊ก Checkbox มา 🌟
+    const isWatermark = document.getElementById('charWatermark').checked;
+    
     if(!name || !finalImgData || !artist || !price) {
         return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญที่มีสัญลักษณ์ * ให้ครบถ้วนค่ะ");
     }
@@ -667,6 +701,7 @@ async function submitNewCharacter() {
         "ชื่อขนม": name,
         "คำบรรยาย": document.getElementById('charDesc').value,
         "Link รูปตัวละคร": finalImgData,
+        "ลายน้ำ": isWatermark ? "TRUE" : "FALSE", // 🌟 เพิ่มคีย์ลายน้ำ ส่งค่าไปเซฟในชีท (อย่าลืมเพิ่มคอลัมน์ ลายน้ำ นะคะ) 🌟
         "นักวาด": artist,
         "Link นักวาด": document.getElementById('charArtistLink').value,
         "มูลค่า": price,
@@ -756,6 +791,9 @@ function displayData(data) {
         const loveStatus = String(item['สถานะความรัก'] || '2');
         const usageRights = String(item['สิทธิ์การใช้งาน'] || ''); 
         const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
+        
+        // 🌟 อ่านค่าสถานะลายน้ำจากฐานข้อมูล (รองรับทั้ง boolean และ text) 🌟
+        const hasWatermark = (String(item['ลายน้ำ']).toUpperCase() === 'TRUE' || item['ลายน้ำ'] === true);
 
         let lightClass = 'status-forever';
         if(saleStatus == '2') lightClass = 'status-tent';
@@ -784,6 +822,15 @@ function displayData(data) {
           const id = imgUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
           if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
         }
+        
+        // 🌟 โค้ดแสดงภาพหลัก + ลายน้ำ ถ้าติ๊กถูกมา จะโชว์ overlay ทับค่ะ 🌟
+        const mainImageHtml = `
+            <div style="position: relative; width: 100%; border-bottom: 1px solid rgba(196, 164, 247, 0.3);">
+                <img src="${imgUrl}" alt="${name}" class="menu-img no-save" style="border-bottom: none;" oncontextmenu="return false;">
+                ${hasWatermark ? '<div class="watermark-overlay"></div>' : ''}
+            </div>
+        `;
+
         const artistDisplay = item['Link นักวาด'] ? `<a href="${item['Link นักวาด']}" target="_blank" style="color:var(--darker); text-decoration:underline;">${item['นักวาด']}</a>` : (item['นักวาด'] || '');
         const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3; width:100%;">${item['คำบรรยาย']}</div>` : '';
 
@@ -833,7 +880,7 @@ function displayData(data) {
                 <div class="no-save" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
                     <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(196, 164, 247, 0.5); background-color:#FFF8EC;">
                         <img src="${parsedLink}" style="width:100%; display:block; pointer-events:none;" alt="รูปเพิ่มเติม" oncontextmenu="return false;">
-                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none;"></div>
+                        <div class="watermark-overlay"></div>
                     </div>
                     ${captionHtml}
                 </div>`;
@@ -850,240 +897,4 @@ function displayData(data) {
                 <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', -1, '${item['หมวดหมู่']}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
                 <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', 1, '${item['หมวดหมู่']}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg></button>
                 <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, '${safeName}', '${idSafeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> แก้ไข</button>
-                <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline('${safeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> ลบ</button>
-            </div>`;
-        }
-
-        target.innerHTML += `
-          <div class="menu-card">
-            <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
-              <img src="${imgUrl}" alt="${name}" class="menu-img no-save" oncontextmenu="return false;">
-              
-              <div class="menu-title-row">
-                <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
-                    <div class="menu-title" style="align-items:center;">
-                        <span class="status-light ${lightClass}"></span>
-                        <span>${name}</span>
-                        <span style="display:inline-flex; align-items:center; gap: 6px; margin-left: 6px;">${usageIcon}${loveIcon}</span>
-                    </div>
-                    <div class="menu-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
-                </div>
-                ${introText}
-                ${adminBtns}
-              </div>
-
-            </div>
-            <div class="menu-details">
-              <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.628-1.628H18c2.21 0 4-1.79 4-4 0-3.86-4.48-8-10-8z"></path></svg> <strong>นักวาด:</strong> ${artistDisplay}</div>
-              <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> <strong>มูลค่า:</strong> ${item['มูลค่า']}</div>
-              ${moreLinkHtml}
-              ${toggleGalleryBtn}
-              ${extraGalleryHtml}
-            </div>
-          </div>`;
-      });
-      
-      Object.keys(containers).forEach(key => { 
-          if (containers[key].querySelectorAll('.menu-card').length === 0) 
-              containers[key].innerHTML += `<div class="loading-text">ยังไม่มีเมนูในหมวดนี้ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-left:4px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg></div>`; 
-      });
-  } catch (e) {
-      console.error(e);
-      alert("[ ผิดพลาด ] มีข้อผิดพลาดในการโหลดหน้าเว็บ: " + e.message);
-  }
-}
-
-// เลื่อนอันดับ
-async function moveItemInline(name, dir, category) {
-    document.querySelectorAll('.btn-move-inline').forEach(b => b.disabled = true);
-    try {
-        await fetch(API_URL, {
-            method: 'POST',
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: "move", name: name, category: category, direction: dir })
-        });
-        fetchData(); 
-    } catch (e) {
-        console.error(e);
-        alert("[ ผิดพลาด ] เกิดข้อผิดพลาดในการเลื่อนอันดับค่ะ");
-        document.querySelectorAll('.btn-move-inline').forEach(b => b.disabled = false);
-    }
-}
-
-// ลบข้อมูล
-async function deleteItemInline(name) {
-    if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${name}" ออกจากเตาอบ?`)) {
-        try {
-            await fetch(API_URL, {
-                method: 'POST',
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ action: "delete", name: name })
-            });
-            alert("[ สำเร็จ ] ลบข้อมูลแล้วค่ะ!");
-            fetchData(); 
-        } catch (e) {
-            console.error(e);
-            alert("[ ผิดพลาด ] เกิดข้อผิดพลาดในการเชื่อมต่อเพื่อลบข้อมูลค่ะ");
-        }
-    }
-}
-
-// เปิดฟอร์มแก้ไข
-function openEditForm(btn, oldName, idSafeName) {
-    const card = btn.closest('.menu-card');
-    const safeOldName = oldName.replace(/'/g, "\\'");
-    const item = allData.find(i => String(i['ชื่อขนม']) === oldName);
-
-    const displayImgLink = item['Link รูปตัวละคร'] || '';
-    const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
-    const editContainerId = 'editExtraImgsContainer_' + idSafeName;
-
-    let existingExtraImgsHtml = '';
-    const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
-    extraImgsArray.forEach(line => {
-        const parts = line.split('|').map(p => p.trim());
-        existingExtraImgsHtml += `
-        <div class="extra-img-block" style="background: rgba(196, 164, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;">
-            <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #D484B6; font-weight: 600; font-size:12px; background:#FFF5F8; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
-            <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
-            <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" value="${parts[0] || ''}">
-            <div style="display:flex; gap:10px;">
-                <div style="flex:1;"><label class="modal-label">นักวาด (ถ้ามี)</label><input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" value="${parts[1] || ''}"></div>
-                <div style="flex:1;"><label class="modal-label">มูลค่า (ถ้ามี)</label><input type="text" class="modal-input ex-price" style="margin-bottom:10px; padding:10px;" value="${parts[3] || ''}"></div>
-            </div>
-            <label class="modal-label">ลิ้งก์นักวาด (ถ้ามี)</label>
-            <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" value="${parts[2] || ''}">
-        </div>`;
-    });
-
-    const formHtml = `
-        <div class="edit-form-container" onclick="event.stopPropagation()">
-            <label class="modal-label">หมวดหมู่:</label>
-            <select id="edit_cat_${idSafeName}" class="modal-select">
-                <option value="ขนมปัง" ${item['หมวดหมู่']==='ขนมปัง'?'selected':''}>ขนมปัง</option>
-                <option value="เค้ก" ${item['หมวดหมู่']==='เค้ก'?'selected':''}>เค้ก</option>
-                <option value="เครื่องดื่ม" ${item['หมวดหมู่']==='เครื่องดื่ม'?'selected':''}>เครื่องดื่ม</option>
-            </select>
-
-            <label class="modal-label">ชื่อขนม:</label>
-            <input type="text" id="edit_name_${idSafeName}" class="modal-input" value="${item['ชื่อขนม'] || ''}">
-            <label class="modal-label">คำบรรยาย:</label>
-            <input type="text" id="edit_desc_${idSafeName}" class="modal-input" value="${item['คำบรรยาย'] || ''}">
-
-            <label class="modal-label">ลิ้งก์รูปตัวละคร (ภาพหลัก):</label>
-            <input type="text" id="edit_img_link_${idSafeName}" class="modal-input" value="${displayImgLink}" placeholder="วางลิ้งก์รูปภาพที่นี่">
-
-            <label class="modal-label">นักวาด (ภาพหลัก):</label>
-            <input type="text" id="edit_artist_${idSafeName}" class="modal-input" value="${item['นักวาด'] || ''}">
-            <label class="modal-label">ลิ้งก์นักวาด:</label>
-            <input type="text" id="edit_artistlink_${idSafeName}" class="modal-input" value="${item['Link นักวาด'] || ''}">
-            <label class="modal-label">มูลค่า:</label>
-            <input type="text" id="edit_price_${idSafeName}" class="modal-input" value="${item['มูลค่า'] || ''}">
-            
-            <label class="modal-label">ลิ้งก์เพิ่มเติม (เพจ/ข้อมูลตัวละคร):</label>
-            <input type="text" id="edit_more_${idSafeName}" class="modal-input" placeholder="ถ้าไม่มีให้เว้นว่างไว้" value="${item['Link เพื่อดูเพิ่มเติม'] || ''}">
-
-            <label class="modal-label">สถานะบ้าน (Sale):</label>
-            <select id="edit_sale_${idSafeName}" class="modal-select">
-                <option value="1" ${item['สถานะบ้าน']=='1'?'selected':''}>Forever Home</option>
-                <option value="2" ${item['สถานะบ้าน']=='2'?'selected':''}>TENT</option>
-                <option value="3" ${item['สถานะบ้าน']=='3'?'selected':''}>OTA/SP</option>
-            </select>
-
-            <label class="modal-label">สิทธิ์การใช้งาน:</label>
-            <select id="edit_usage_${idSafeName}" class="modal-select">
-                <option value="Personal" ${item['สิทธิ์การใช้งาน']==='Personal'?'selected':''}>Personal (ส่วนตัว)</option>
-                <option value="Commercial" ${item['สิทธิ์การใช้งาน']==='Commercial'?'selected':''}>Commercial (เชิงพาณิชย์)</option>
-                <option value="สิทธิ์ขาด" ${item['สิทธิ์การใช้งาน']==='สิทธิ์ขาด'?'selected':''}>สิทธิ์ขาด (Full Rights)</option>
-            </select>
-
-            <label class="modal-label">สถานะความรัก (Love):</label>
-            <select id="edit_love_${idSafeName}" class="modal-select">
-                <option value="2" ${item['สถานะความรัก']=='2'?'selected':''}>โสด</option>
-                <option value="1" ${item['สถานะความรัก']=='1'?'selected':''}>มีคู่</option>
-                <option value="3" ${item['สถานะความรัก']=='3'?'selected':''}>ไม่มีความรัก</option>
-            </select>
-
-            <div style="margin-top: 15px; border-top: 2px dashed rgba(196, 164, 247, 0.5); padding-top: 15px;">
-                <h4 style="font-size: 13px; margin-bottom: 10px; color: var(--darker); display:flex; justify-content:space-between; align-items:center;">
-                    <span style="display:flex; align-items:center; gap:4px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                        รูปเพิ่มเติม (Gallery)
-                    </span>
-                    <button type="button" onclick="addExtraImgField('${editContainerId}')" style="background:var(--main); border:none; padding:5px 10px; border-radius:15px; font-size:11px; font-weight:bold; color:#fff; cursor:pointer; display:flex; align-items:center; gap:4px;">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        เพิ่มรูป
-                    </button>
-                </h4>
-                <div id="${editContainerId}">${existingExtraImgsHtml}</div>
-            </div>
-
-            <div class="edit-actions">
-                <button class="btn-save-inline" onclick="saveInlineEdit('${safeOldName}', '${idSafeName}', '${editContainerId}')">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                    บันทึก
-                </button>
-                <button class="btn-cancel-inline" onclick="displayData(allData)">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    ยกเลิก
-                </button>
-            </div>
-        </div>
-    `;
-    card.innerHTML = formHtml;
-}
-
-// เซฟการแก้ไข
-async function saveInlineEdit(oldName, idSafeName, containerId) {
-    const safeOldName = oldName.replace(/\\'/g, "'");
-    const itemIndex = allData.findIndex(i => String(i['ชื่อขนม']) === safeOldName);
-    if(itemIndex === -1) return;
-
-    const newCat = document.getElementById(`edit_cat_${idSafeName}`).value;
-    const newName = document.getElementById(`edit_name_${idSafeName}`).value;
-    const newDesc = document.getElementById(`edit_desc_${idSafeName}`).value;
-    const newArtist = document.getElementById(`edit_artist_${idSafeName}`).value;
-    const newArtistLink = document.getElementById(`edit_artistlink_${idSafeName}`).value;
-    const newPrice = document.getElementById(`edit_price_${idSafeName}`).value;
-    const newMore = document.getElementById(`edit_more_${idSafeName}`).value;
-    const newSale = document.getElementById(`edit_sale_${idSafeName}`).value;
-    const newLove = document.getElementById(`edit_love_${idSafeName}`).value;
-    const newUsage = document.getElementById(`edit_usage_${idSafeName}`).value; 
-    const finalImgData = document.getElementById(`edit_img_link_${idSafeName}`).value;
-    const newExtraImgs = getExtraImgsData(containerId); 
-
-    if(!newName || !finalImgData) return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
-
-    const newItemData = {
-        "หมวดหมู่": newCat,
-        "ชื่อขนม": newName,
-        "คำบรรยาย": newDesc,
-        "Link รูปตัวละคร": finalImgData,
-        "นักวาด": newArtist,
-        "Link นักวาด": newArtistLink,
-        "มูลค่า": newPrice,
-        "Link เพื่อดูเพิ่มเติม": newMore,
-        "สถานะบ้าน": newSale,
-        "สถานะความรัก": newLove,
-        "สิทธิ์การใช้งาน": newUsage,
-        "รูปเพิ่มเติม": newExtraImgs 
-    };
-    
-    try {
-        await fetch(API_URL, {
-            method: 'POST',
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: "edit", oldName: safeOldName, data: newItemData })
-        });
-        alert("[ สำเร็จ ] บันทึกข้อมูลเรียบร้อยค่ะ!");
-        fetchData();
-    } catch (e) {
-        console.error(e);
-        alert("[ ผิดพลาด ] บันทึกไม่สำเร็จ! กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตค่ะ");
-    }
-}
-
-fetchData();
-</script>
-</body>
-</html>
+                <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline('${safeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2
