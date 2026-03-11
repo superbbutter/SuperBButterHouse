@@ -14,6 +14,7 @@
 :root {
   /* 🎨 โทนสีครีม - ม่วงพาสเทล 🎨 */
   --bg: #FFF8EC; 
+  --img-bg-pale: #FFFDF8; /* สีครีมอ่อนพิเศษสำหรับพื้นหลังรูปโปร่งใส */
   --main: #C4A4F7; 
   --dark: #6B4E90; 
   --darker: #4A316A; 
@@ -47,10 +48,10 @@ body.locked { overflow: hidden; }
 
 /* ป้องกันการกดค้างเพื่อเซฟรูป (มือถือ) และคลุมดำ */
 .no-save {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none;   /* Safari */
-    user-select: none;           /* Non-prefixed version */
-    -webkit-user-drag: none;     /* Safari */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 /* Admin Bar */
@@ -91,8 +92,8 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .menu-card:hover { transform: translateY(-3px); }
 .menu-header { display: block; cursor: pointer; }
 
-/* 🌟 โครงสร้างภาพหลักเพื่อซ่อนลายน้ำและกันเซฟ (ปรับสีพื้นหลังเป็นสีครีมอ่อน) 🌟 */
-.menu-img-wrapper { position: relative; width: 100%; background-color: var(--bg); border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
+/* โครงสร้างภาพหลักเพื่อซ่อนลายน้ำและกันเซฟ (ปรับสีพื้นหลังเป็นสีครีมอ่อนพิเศษ) */
+.menu-img-wrapper { position: relative; width: 100%; background-color: var(--img-bg-pale); border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
 .menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; pointer-events: none; }
 
 .menu-title-row { display: flex; flex-direction: column; align-items: flex-start; padding: 15px; gap: 5px; }
@@ -112,7 +113,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .btn-accept { font-size: 16px; padding: 15px; margin-top: 15px; animation: pulse 2s infinite; cursor: pointer; width: 100%; background: var(--main); color: #fff; border-radius: 20px; font-weight: 600; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(196, 164, 247, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(176, 132, 245, 0); } 100% { box-shadow: 0 0 0 0 rgba(176, 132, 245, 0); } }
 
-/* 🌟 สไตล์สำหรับไอคอนดาวตกแต่ง 🌟 */
+/* สไตล์สำหรับไอคอนดาวตกแต่ง */
 .floating-star { position: absolute; z-index: 5; filter: drop-shadow(0 4px 6px rgba(196, 164, 247, 0.2)); }
 .star-1 { top: -15px; left: -10px; color: #E2CBFF; width: 28px; animation: floatStar 3.2s ease-in-out infinite; } 
 .star-2 { top: 15px; right: -25px; color: #6B4E90; width: 14px; animation: floatStar 2.5s ease-in-out infinite 0.5s; } 
@@ -132,7 +133,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .status-tent { background: #6B4E90; box-shadow: 0 0 8px #6B4E90; }
 .status-forever { background: #9CA3AF; }
 
-/* 🌟 สไตล์สำหรับไอคอนวงกลม 🌟 */
+/* สไตล์สำหรับไอคอนวงกลม */
 .usage-badge {
     display: inline-flex;
     align-items: center;
@@ -174,7 +175,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 }
 .modal-label { display: block; text-align: left; font-size: 13px; font-weight: 600; color: var(--darker); margin-left: 4px; margin-bottom: 4px;}
 
-/* 🌟 CSS สำหรับปุ่ม Toggle Switch เปิด-ปิดลายน้ำ 🌟 */
+/* CSS สำหรับปุ่ม Toggle Switch เปิด-ปิดลายน้ำ */
 .watermark-container {
     display: flex;
     align-items: center;
@@ -621,6 +622,16 @@ let allData = [];
 let isEditMode = false;
 let allUniqueArtistLinks = []; 
 
+// 🌟 ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ (เติม http ให้อัตโนมัติถ้าลืม) 🌟
+function formatURL(url) {
+    if(!url) return '';
+    let cleanUrl = String(url).trim();
+    if(cleanUrl !== '' && !cleanUrl.match(/^https?:\/\//i)) {
+        return 'https://' + cleanUrl;
+    }
+    return cleanUrl;
+}
+
 function showPage(pageId, element) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
@@ -652,7 +663,6 @@ function toggleGallery(event, galleryId) {
 
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-// 🌟 สร้างตัวเลือกแนะนำลิ้งก์นักวาด (แบบกดเลือกได้ เปลี่ยนได้) 🌟
 function populateArtistSuggestions(typedName, datalistId) {
     const listElem = document.getElementById(datalistId);
     if(!listElem) return;
@@ -753,19 +763,25 @@ function openAddCharModal() {
 }
 
 async function submitNewCharacter() {
-    const name = document.getElementById('charName').value;
+    const nameInput = document.getElementById('charName').value;
     const finalImgData = document.getElementById('charImgLink').value;
     const artist = document.getElementById('charArtist').value;
     const price = document.getElementById('charPrice').value;
     const isWatermark = document.getElementById('charWatermark').checked ? 'Yes' : 'No';
     
-    if(!name || !finalImgData || !artist || !price) {
+    if(!nameInput || !finalImgData || !artist || !price) {
         return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญที่มีสัญลักษณ์ * ให้ครบถ้วนค่ะ");
+    }
+
+    // 🌟 ระบบป้องกันชื่อซ้ำ: เติมอักขระล่องหน (Zero-width space) ให้ชื่อไม่ซ้ำใน Google Sheet 🌟
+    let finalUniqueName = nameInput.trim();
+    while (allData.some(i => i['ชื่อขนม'] === finalUniqueName)) {
+        finalUniqueName += '\u200B'; 
     }
 
     const newItem = {
         "หมวดหมู่": document.getElementById('charCategory').value,
-        "ชื่อขนม": name,
+        "ชื่อขนม": finalUniqueName,
         "คำบรรยาย": document.getElementById('charDesc').value,
         "Link รูปตัวละคร": finalImgData,
         "ลายน้ำภาพหลัก": isWatermark, 
@@ -868,7 +884,8 @@ function displayData(data) {
         const target = containers[item['หมวดหมู่']];
         if (!target) return;
         
-        const name = String(item['ชื่อขนม'] || '');
+        // กรองชื่อให้สะอาดก่อนแสดงผล (ซ่อนอักขระล่องหน)
+        const name = String(item['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '');
         const safeName = name.replace(/'/g, "\\'");
         const idSafeName = safeName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + index; 
         const galleryId = 'gallery_' + idSafeName;
@@ -911,10 +928,13 @@ function displayData(data) {
             ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` 
             : '';
 
-        const artistDisplay = item['Link นักวาด'] ? `<a href="${item['Link นักวาด']}" target="_blank" style="color:var(--darker); text-decoration:underline;">${item['นักวาด']}</a>` : (item['นักวาด'] || '');
+        // 🌟 แปลงลิ้งก์นักวาดหลักให้คลิกได้เสมอ 🌟
+        let safeArtistLink = formatURL(item['Link นักวาด']);
+        const artistDisplay = safeArtistLink ? `<a href="${safeArtistLink}" target="_blank" style="color:var(--darker); text-decoration:underline; position:relative; z-index:10;">${item['นักวาด']}</a>` : (item['นักวาด'] || '');
         const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3; width:100%;">${item['คำบรรยาย']}</div>` : '';
 
-        const moreLinkUrl = String(item['Link เพื่อดูเพิ่มเติม'] || '').trim();
+        // 🌟 แปลงลิ้งก์เพื่อดูเพิ่มเติม 🌟
+        const moreLinkUrl = formatURL(item['Link เพื่อดูเพิ่มเติม']);
         let moreLinkHtml = '';
         if(moreLinkUrl) {
             moreLinkHtml = `<a href="${moreLinkUrl}" class="btn-view" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>ดูข้อมูลตัวละครทั้งหมด</a>`;
@@ -941,8 +961,10 @@ function displayData(data) {
                 let captionHtml = '';
                 if (artist || price) {
                     let artistDisplayExtra = artist;
-                    if (artist && artistLink) {
-                        artistDisplayExtra = `<a href="${artistLink}" target="_blank" style="color:var(--dark); text-decoration:underline; font-weight:500;">${artist}</a>`;
+                    // 🌟 แปลงลิ้งก์นักวาดรูปเพิ่มเติมให้คลิกได้เสมอ 🌟
+                    let safeExLink = formatURL(artistLink);
+                    if (artist && safeExLink) {
+                        artistDisplayExtra = `<a href="${safeExLink}" target="_blank" style="color:var(--dark); text-decoration:underline; font-weight:500; position:relative; z-index:10;">${artist}</a>`;
                     }
                     let artistHtml = artist ? `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.628-1.628H18c2.21 0 4-1.79 4-4 0-3.86-4.48-8-10-8z"></path></svg> นักวาด: ${artistDisplayExtra}</span>` : '';
                     let priceHtml = price ? `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> มูลค่า: ${price}</span>` : '';
@@ -958,7 +980,7 @@ function displayData(data) {
 
                 return `
                 <div class="no-save" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
-                    <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(196, 164, 247, 0.5); background-color:var(--bg);">
+                    <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(196, 164, 247, 0.5); background-color:var(--img-bg-pale);">
                         <img src="${parsedLink}" style="width:100%; display:block; pointer-events:none;" alt="รูปเพิ่มเติม" oncontextmenu="return false;" draggable="false">
                         <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none;"></div>
                         <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
@@ -973,7 +995,6 @@ function displayData(data) {
 
         let adminBtns = '';
         if(isEditMode) {
-            // 🌟 แก้ไข: ใช้ index อ้างอิงตัวละครโดยตรง หมดปัญหาเรื่องชื่อซ้ำ! 🌟
             adminBtns = `
             <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(196, 164, 247, 0.5); padding-top: 10px;">
                 <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline(${index}, -1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
@@ -1027,10 +1048,9 @@ function displayData(data) {
   }
 }
 
-// 🌟 อัปเดตฟังก์ชันเพื่อใช้ Index ในการดึงข้อมูล 🌟
 async function moveItemInline(index, dir) {
     document.querySelectorAll('.btn-move-inline').forEach(b => b.disabled = true);
-    const name = allData[index]['ชื่อขนม'];
+    const name = allData[index]['ชื่อขนม']; // ส่งชื่อที่มีอักขระล่องหนไปให้หลังบ้านจัดการ
     const category = allData[index]['หมวดหมู่'];
     try {
         await fetch(API_URL, {
@@ -1047,8 +1067,10 @@ async function moveItemInline(index, dir) {
 }
 
 async function deleteItemInline(index) {
-    const name = allData[index]['ชื่อขนม'];
-    if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${name}" ออกจากเตาอบ?`)) {
+    const name = allData[index]['ชื่อขนม']; 
+    // ตัดอักขระล่องหนออกตอนโชว์ Popup ให้ดูสวยงาม
+    const showName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
+    if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${showName}" ออกจากเตาอบ?`)) {
         try {
             await fetch(API_URL, {
                 method: 'POST',
@@ -1064,10 +1086,9 @@ async function deleteItemInline(index) {
     }
 }
 
-// 🌟 ฟังก์ชันเปิดหน้าแก้ไขโดยใช้ Index แทนชื่อ 🌟
 function openEditForm(btn, index, idSafeName) {
     const card = btn.closest('.menu-card');
-    const item = allData[index]; // 👈 ดึงข้อมูลตรงๆ จากลำดับเลย หมดปัญหา!
+    const item = allData[index]; 
 
     const displayImgLink = item['Link รูปตัวละคร'] || '';
     const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
@@ -1075,6 +1096,8 @@ function openEditForm(btn, index, idSafeName) {
     const isWatermarkChecked = item['ลายน้ำภาพหลัก'] === 'Yes' ? 'checked' : '';
 
     const datalistId = `datalist_edit_${idSafeName}`;
+    // ตอนแก้ไข ลบอักขระล่องหนออกเพื่อให้ตอนพิมพ์ง่าย
+    const cleanEditName = String(item['ชื่อขนม']).replace(/[\u200B-\u200D\uFEFF]/g, '');
 
     let existingExtraImgsHtml = '';
     const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
@@ -1114,7 +1137,7 @@ function openEditForm(btn, index, idSafeName) {
             </select>
 
             <label class="modal-label">ชื่อขนม:</label>
-            <input type="text" id="edit_name_${idSafeName}" class="modal-input" value="${item['ชื่อขนม'] || ''}">
+            <input type="text" id="edit_name_${idSafeName}" class="modal-input" value="${cleanEditName}">
             <label class="modal-label">คำบรรยาย:</label>
             <input type="text" id="edit_desc_${idSafeName}" class="modal-input" value="${item['คำบรรยาย'] || ''}">
 
@@ -1195,12 +1218,11 @@ function openEditForm(btn, index, idSafeName) {
     card.innerHTML = formHtml;
 }
 
-// เซฟการแก้ไข (อ้างอิงจาก Index)
 async function saveInlineEdit(index, idSafeName, containerId) {
-    const safeOldName = allData[index]['ชื่อขนม']; // ดึงชื่อเดิมจากฐานข้อมูลตรงๆ เพื่ออ้างอิงส่งไปให้ Sheet ลบหรือแทนที่ได้ถูกต้อง
+    const safeOldName = allData[index]['ชื่อขนม']; 
 
     const newCat = document.getElementById(`edit_cat_${idSafeName}`).value;
-    const newName = document.getElementById(`edit_name_${idSafeName}`).value;
+    const newNameInput = document.getElementById(`edit_name_${idSafeName}`).value;
     const newDesc = document.getElementById(`edit_desc_${idSafeName}`).value;
     const newArtist = document.getElementById(`edit_artist_${idSafeName}`).value;
     const newArtistLink = document.getElementById(`edit_artistlink_${idSafeName}`).value;
@@ -1213,11 +1235,17 @@ async function saveInlineEdit(index, idSafeName, containerId) {
     const newWatermark = document.getElementById(`edit_watermark_${idSafeName}`).checked ? 'Yes' : 'No';
     const newExtraImgs = getExtraImgsData(containerId); 
 
-    if(!newName || !finalImgData) return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
+    if(!newNameInput || !finalImgData) return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
+
+    // 🌟 ระบบป้องกันชื่อซ้ำ: เช็คกับตัวละครอื่นทั้งหมด (ยกเว้นตัวมันเอง) 🌟
+    let finalUniqueName = newNameInput.trim();
+    while (allData.some((i, idx) => i['ชื่อขนม'] === finalUniqueName && idx !== index)) {
+        finalUniqueName += '\u200B'; 
+    }
 
     const newItemData = {
         "หมวดหมู่": newCat,
-        "ชื่อขนม": newName,
+        "ชื่อขนม": finalUniqueName,
         "คำบรรยาย": newDesc,
         "Link รูปตัวละคร": finalImgData,
         "ลายน้ำภาพหลัก": newWatermark, 
