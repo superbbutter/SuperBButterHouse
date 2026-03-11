@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SuperBButter - House</title>
+<title>SuperBButter - SuperBButter House</title>
 <link rel="icon" type="image/x-icon" href="https://drive.google.com/thumbnail?id=1aTumT9SN2pzCyOtInZyv85ksTcZyv5g1&sz=w1000">
 
 <link rel="preload" href="https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600" as="image">
@@ -108,7 +108,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .btn-view:hover { transform: translateY(-2px); }
 .btn-gallery { background: #F7EFFF; border: 1px dashed var(--main); color: var(--dark); margin-top: 10px; }
 
-/* 🌟 สไตล์สำหรับหน้าโฮม: รวมตู้กระจก (Mini Grid) 🌟 */
+/* สไตล์สำหรับหน้าโฮม: รวมตู้กระจก (Mini Grid) */
 .all-chars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 15px 10px; justify-items: center; margin-top: 5px; }
 .mini-char-card { width: 100%; cursor: pointer; transition: transform 0.2s ease; text-align: center; }
 .mini-char-card:hover { transform: translateY(-4px); }
@@ -352,7 +352,7 @@ function acceptRules() {
     <div class="rule-box">
       <p><strong>กรุณาอ่านรายละเอียดให้ครบถ้วน</strong></p>
       <p>ก่อนเข้าสู่ครัวเข้าชมขนมของเรา กรุณาอ่านและทำตามประกาศอย่างเคร่งครัด !</p>
-      <p>สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน</span>นะคะ</p>
+      <p>สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน</span> นะคะ</p>
     </div>
 
     <h2 style="margin-top: 20px; color: #9B68ED;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 5px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Warning</h2>
@@ -673,6 +673,17 @@ function formatURL(url) {
     return cleanUrl;
 }
 
+// 🌟 ฟังก์ชันแปลงอักขระพิเศษเพื่อป้องกันหน้าเว็บพัง 🌟
+function escapeHTML(str) {
+    if(str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
 function showPage(pageId, element) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
@@ -688,12 +699,12 @@ function showPage(pageId, element) {
   }
 }
 
-function jumpToCard(category, cardId) {
+function jumpToCard(categoryName, cardId) {
     let pageId = '';
     let navId = '';
-    if(category === 'ขนมปัง') { pageId = 'bread'; navId = 'nav-bread'; }
-    else if(category === 'เค้ก') { pageId = 'cake'; navId = 'nav-cake'; }
-    else if(category === 'เครื่องดื่ม') { pageId = 'drink'; navId = 'nav-drink'; }
+    if(categoryName.includes('ปัง')) { pageId = 'bread'; navId = 'nav-bread'; }
+    else if(categoryName.includes('เค้ก')) { pageId = 'cake'; navId = 'nav-cake'; }
+    else if(categoryName.includes('ดื่ม')) { pageId = 'drink'; navId = 'nav-drink'; }
 
     if(pageId && navId) {
         showPage(pageId, document.getElementById(navId));
@@ -761,21 +772,21 @@ function addExtraImgField(containerId, link, artist, artistLink, price) {
     block.innerHTML = `
         <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #D484B6; font-weight: 600; font-size:12px; background:#FFF5F8; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
         <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
-        <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" placeholder="วางลิ้งก์รูปภาพที่นี่" value="${link}">
+        <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" placeholder="วางลิ้งก์รูปภาพที่นี่" value="${escapeHTML(link)}">
         
         <div style="display:flex; gap:10px;">
             <div style="flex:1;">
                 <label class="modal-label">นักวาด (ถ้ามี)</label>
-                <input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" placeholder="ชื่อนักวาด" value="${artist}" oninput="populateArtistSuggestions(this.value, '${datalistId}')">
+                <input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" placeholder="ชื่อนักวาด" value="${escapeHTML(artist)}" oninput="populateArtistSuggestions(this.value, '${datalistId}')">
             </div>
             <div style="flex:1;">
                 <label class="modal-label">มูลค่า (ถ้ามี)</label>
-                <input type="text" class="modal-input ex-price" style="margin-bottom:10px; padding:10px;" placeholder="เช่น 500" value="${price}">
+                <input type="text" class="modal-input ex-price" style="margin-bottom:10px; padding:10px;" placeholder="เช่น 500" value="${escapeHTML(price)}">
             </div>
         </div>
         
         <label class="modal-label">ลิ้งก์นักวาด (ถ้ามี)</label>
-        <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี" value="${artistLink}" list="${datalistId}">
+        <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี" value="${escapeHTML(artistLink)}" list="${datalistId}">
         <datalist id="${datalistId}"></datalist>
     `;
     container.appendChild(block);
@@ -964,18 +975,23 @@ function displayData(data) {
       }
 
       data.forEach((item, index) => {
-        if(!item || typeof item !== 'object') return;
+        if(!item || typeof item !== 'object') return; 
 
-        const category = String(item['หมวดหมู่'] || '').trim();
+        // 🌟 กรองหมวดหมู่ให้ตรงกันเป๊ะๆ 🌟
+        let category = String(item['หมวดหมู่'] || '').trim();
+        if (category.includes('ปัง')) category = 'ขนมปัง';
+        else if (category.includes('เค้ก')) category = 'เค้ก';
+        else if (category.includes('ดื่ม')) category = 'เครื่องดื่ม';
+
         const target = containers[category];
         const gridTarget = homeGrids[category];
         if (!target) return; 
         
         const name = String(item['ชื่อขนม'] || '');
         const cleanName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
-        const safeName = name.replace(/'/g, "\\'");
-        const escapedCleanName = cleanName.replace(/"/g, '&quot;'); 
-        const idSafeName = safeName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + index; 
+        const escapedCleanName = escapeHTML(cleanName); 
+        
+        const idSafeName = "char_" + index; 
         const galleryId = 'gallery_' + idSafeName;
         const mainCardId = 'card_' + idSafeName; 
         
@@ -983,7 +999,7 @@ function displayData(data) {
         const loveStatus = String(item['สถานะความรัก'] || '2');
         const usageRights = String(item['สิทธิ์การใช้งาน'] || ''); 
         
-        // 🌟 ตรงนี้คือจุดที่เชฟลืมเติมในรอบที่แล้วค่ะ เติมให้แล้วน้า 🌟
+        // 🌟 ป้องกันตัวแปรหาย (เพิ่มคืนมาแล้ว!) 🌟
         const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
         const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
         
@@ -999,13 +1015,28 @@ function displayData(data) {
           if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
         }
 
+        const isWatermarked = (mainImageWatermark === 'Yes' || mainImageWatermark === 'true' || mainImageWatermark === 'TRUE');
+        
+        const mainWatermarkHtml = isWatermarked 
+            ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` 
+            : '';
+            
+        // 🌟 ลายน้ำสำหรับตู้กระจก (ย่อขนาดให้พอดีกล่องเล็ก) 🌟
+        const miniWatermarkHtml = isWatermarked 
+            ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:150px; pointer-events:none; z-index:2;"></div>` 
+            : '';
+
         if (gridTarget) {
-            let safeCategory = category.replace(/'/g, "\\'");
+            let catForWarp = 'bread';
+            if (category === 'เค้ก') catForWarp = 'cake';
+            if (category === 'เครื่องดื่ม') catForWarp = 'drink';
+
             let miniCardHtml = `
-            <div class="mini-char-card" onclick="jumpToCard('${safeCategory}', '${mainCardId}')">
+            <div class="mini-char-card" onclick="jumpToCard('${catForWarp}', '${mainCardId}')">
                 <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 6px;">
                     <div class="mini-char-img-wrapper no-save" style="width: 100%; height: 100%; margin: 0;">
                         <img src="${imgUrl}" alt="${escapedCleanName}" oncontextmenu="return false;" draggable="false">
+                        ${miniWatermarkHtml}
                         <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
                     </div>
                     <div class="mini-status-dot ${lightClass}"></div>
@@ -1033,13 +1064,9 @@ function displayData(data) {
             loveIcon = `<span class="usage-badge love-none" title="ไม่มีความรัก"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg></span>`;
         }
 
-        const mainWatermarkHtml = mainImageWatermark === 'Yes' 
-            ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` 
-            : '';
-
         let safeArtistLink = formatURL(item['Link นักวาด']);
-        const artistDisplay = safeArtistLink ? `<a href="${safeArtistLink}" target="_blank" style="color:var(--darker); text-decoration:underline; position:relative; z-index:10;">${item['นักวาด']}</a>` : (item['นักวาด'] || '');
-        const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3; width:100%;">${item['คำบรรยาย']}</div>` : '';
+        const artistDisplay = safeArtistLink ? `<a href="${safeArtistLink}" target="_blank" style="color:var(--darker); text-decoration:underline; position:relative; z-index:10;">${escapeHTML(item['นักวาด'])}</a>` : escapeHTML(item['นักวาด'] || '');
+        const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3; width:100%;">${escapeHTML(item['คำบรรยาย'])}</div>` : '';
 
         const moreLinkUrl = formatURL(item['Link เพื่อดูเพิ่มเติม']);
         let moreLinkHtml = '';
@@ -1066,13 +1093,13 @@ function displayData(data) {
                 
                 let captionHtml = '';
                 if (artist || price) {
-                    let artistDisplayExtra = artist;
+                    let artistDisplayExtra = escapeHTML(artist);
                     let safeExLink = formatURL(artistLink);
                     if (artist && safeExLink) {
-                        artistDisplayExtra = `<a href="${safeExLink}" target="_blank" style="color:var(--dark); text-decoration:underline; font-weight:500; position:relative; z-index:10;">${artist}</a>`;
+                        artistDisplayExtra = `<a href="${safeExLink}" target="_blank" style="color:var(--dark); text-decoration:underline; font-weight:500; position:relative; z-index:10;">${artistDisplayExtra}</a>`;
                     }
                     let artistHtml = artist ? `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.628-1.628H18c2.21 0 4-1.79 4-4 0-3.86-4.48-8-10-8z"></path></svg> นักวาด: ${artistDisplayExtra}</span>` : '';
-                    let priceHtml = price ? `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> มูลค่า: ${price}</span>` : '';
+                    let priceHtml = price ? `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> มูลค่า: ${escapeHTML(price)}</span>` : '';
                     let separator = (artist && price) ? ' &nbsp;•&nbsp; ' : '';
 
                     captionHtml = `
@@ -1113,7 +1140,7 @@ function displayData(data) {
           <div class="menu-card" id="${mainCardId}">
             <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
               
-              <div class="menu-img-wrapper" style="background-color: #ffffff;">
+              <div class="menu-img-wrapper" style="background-color: #ffffff;"> 
                   <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
                   ${mainWatermarkHtml}
                   <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
@@ -1123,7 +1150,7 @@ function displayData(data) {
                 <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
                     <div class="menu-title" style="align-items:center;">
                         <span class="status-light ${lightClass}"></span>
-                        <span>${cleanName}</span>
+                        <span>${escapedCleanName}</span>
                         <span style="display:inline-flex; align-items:center; gap: 6px; margin-left: 6px;">${usageIcon}${loveIcon}</span>
                     </div>
                     <div class="menu-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
@@ -1135,7 +1162,7 @@ function displayData(data) {
             </div>
             <div class="menu-details">
               <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.628-1.628H18c2.21 0 4-1.79 4-4 0-3.86-4.48-8-10-8z"></path></svg> <strong>นักวาด:</strong> ${artistDisplay}</div>
-              <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> <strong>มูลค่า:</strong> ${item['มูลค่า']}</div>
+              <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> <strong>มูลค่า:</strong> ${escapeHTML(item['มูลค่า'])}</div>
               ${moreLinkHtml}
               ${toggleGalleryBtn}
               ${extraGalleryHtml}
@@ -1201,7 +1228,7 @@ function openEditForm(btn, index, idSafeName) {
     const displayImgLink = item['Link รูปตัวละคร'] || '';
     const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
     const editContainerId = 'editExtraImgsContainer_' + idSafeName;
-    const isWatermarkChecked = item['ลายน้ำภาพหลัก'] === 'Yes' ? 'checked' : '';
+    const isWatermarkChecked = (item['ลายน้ำภาพหลัก'] === 'Yes' || item['ลายน้ำภาพหลัก'] === 'true' || item['ลายน้ำภาพหลัก'] === 'TRUE') ? 'checked' : '';
 
     const datalistId = `datalist_edit_${idSafeName}`;
     const cleanEditName = String(item['ชื่อขนม']).replace(/[\u200B-\u200D\uFEFF]/g, '');
@@ -1217,19 +1244,19 @@ function openEditForm(btn, index, idSafeName) {
         <div class="extra-img-block" style="background: rgba(196, 164, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;">
             <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #D484B6; font-weight: 600; font-size:12px; background:#FFF5F8; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
             <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
-            <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" value="${parts[0] || ''}">
+            <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" value="${escapeHTML(parts[0] || '')}">
             <div style="display:flex; gap:10px;">
                 <div style="flex:1;">
                     <label class="modal-label">นักวาด (ถ้ามี)</label>
-                    <input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" value="${exArtistName}" oninput="populateArtistSuggestions(this.value, '${exDatalistId}')">
+                    <input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" value="${escapeHTML(exArtistName)}" oninput="populateArtistSuggestions(this.value, '${exDatalistId}')">
                 </div>
                 <div style="flex:1;">
                     <label class="modal-label">มูลค่า (ถ้ามี)</label>
-                    <input type="text" class="modal-input ex-price" style="margin-bottom:10px; padding:10px;" value="${parts[3] || ''}">
+                    <input type="text" class="modal-input ex-price" style="margin-bottom:10px; padding:10px;" value="${escapeHTML(parts[3] || '')}">
                 </div>
             </div>
             <label class="modal-label">ลิ้งก์นักวาด (ถ้ามี)</label>
-            <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" value="${parts[2] || ''}" list="${exDatalistId}" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี">
+            <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" value="${escapeHTML(parts[2] || '')}" list="${exDatalistId}" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี">
             <datalist id="${exDatalistId}"></datalist>
         </div>`;
     });
@@ -1244,12 +1271,12 @@ function openEditForm(btn, index, idSafeName) {
             </select>
 
             <label class="modal-label">ชื่อขนม:</label>
-            <input type="text" id="edit_name_${idSafeName}" class="modal-input" value="${cleanEditName}">
+            <input type="text" id="edit_name_${idSafeName}" class="modal-input" value="${escapeHTML(cleanEditName)}">
             <label class="modal-label">คำบรรยาย:</label>
-            <input type="text" id="edit_desc_${idSafeName}" class="modal-input" value="${item['คำบรรยาย'] || ''}">
+            <input type="text" id="edit_desc_${idSafeName}" class="modal-input" value="${escapeHTML(item['คำบรรยาย'] || '')}">
 
             <label class="modal-label">ลิ้งก์รูปตัวละคร (ภาพหลัก):</label>
-            <input type="text" id="edit_img_link_${idSafeName}" class="modal-input" value="${displayImgLink}" placeholder="วางลิ้งก์รูปภาพที่นี่">
+            <input type="text" id="edit_img_link_${idSafeName}" class="modal-input" value="${escapeHTML(displayImgLink)}" placeholder="วางลิ้งก์รูปภาพที่นี่">
 
             <div class="watermark-container">
                 <div class="watermark-label-text">
@@ -1263,17 +1290,17 @@ function openEditForm(btn, index, idSafeName) {
             </div>
 
             <label class="modal-label">นักวาด (ภาพหลัก):</label>
-            <input type="text" id="edit_artist_${idSafeName}" class="modal-input" value="${item['นักวาด'] || ''}" oninput="populateArtistSuggestions(this.value, '${datalistId}')">
+            <input type="text" id="edit_artist_${idSafeName}" class="modal-input" value="${escapeHTML(item['นักวาด'] || '')}" oninput="populateArtistSuggestions(this.value, '${datalistId}')">
             
             <label class="modal-label">ลิ้งก์นักวาด:</label>
-            <input type="text" id="edit_artistlink_${idSafeName}" class="modal-input" value="${item['Link นักวาด'] || ''}" list="${datalistId}" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี">
+            <input type="text" id="edit_artistlink_${idSafeName}" class="modal-input" value="${escapeHTML(item['Link นักวาด'] || '')}" list="${datalistId}" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี">
             <datalist id="${datalistId}"></datalist>
 
             <label class="modal-label">มูลค่า:</label>
-            <input type="text" id="edit_price_${idSafeName}" class="modal-input" value="${item['มูลค่า'] || ''}">
+            <input type="text" id="edit_price_${idSafeName}" class="modal-input" value="${escapeHTML(item['มูลค่า'] || '')}">
             
             <label class="modal-label">ลิ้งก์เพิ่มเติม (เพจ/ข้อมูลตัวละคร):</label>
-            <input type="text" id="edit_more_${idSafeName}" class="modal-input" placeholder="ถ้าไม่มีให้เว้นว่างไว้" value="${item['Link เพื่อดูเพิ่มเติม'] || ''}">
+            <input type="text" id="edit_more_${idSafeName}" class="modal-input" placeholder="ถ้าไม่มีให้เว้นว่างไว้" value="${escapeHTML(item['Link เพื่อดูเพิ่มเติม'] || '')}">
 
             <label class="modal-label">สถานะบ้าน (Sale):</label>
             <select id="edit_sale_${idSafeName}" class="modal-select">
