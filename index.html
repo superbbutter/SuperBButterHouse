@@ -117,7 +117,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     border-radius: 18px; 
     overflow: hidden; 
     border: 2px solid var(--main); 
-    background-color: #ffffff; /* พื้นหลังสีขาว */
+    background-color: #ffffff; /* พื้นหลังตู้กระจกสีขาว */
     box-shadow: 0 4px 10px rgba(107, 78, 144, 0.15); 
     position: relative;
     margin: 0;
@@ -664,7 +664,6 @@ let allData = [];
 let isEditMode = false;
 let allUniqueArtistLinks = []; 
 
-// 🌟 ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ 🌟
 function formatURL(url) {
     if(!url) return '';
     let cleanUrl = String(url).trim();
@@ -920,7 +919,7 @@ function displayData(data) {
       const tempMap = new Map(); 
       if(Array.isArray(data)) {
           data.forEach(item => {
-              if(!item || typeof item !== 'object') return; // กันบั๊กข้อมูลว่างจาก Google Sheet
+              if(!item || typeof item !== 'object') return; 
 
               const name = String(item['นักวาด'] || '').trim();
               const link = String(item['Link นักวาด'] || '').trim();
@@ -965,19 +964,17 @@ function displayData(data) {
       }
 
       data.forEach((item, index) => {
-        if(!item || typeof item !== 'object') return; // กันบั๊กข้อมูลว่างจาก Google Sheet
+        if(!item || typeof item !== 'object') return;
 
-        const target = containers[item['หมวดหมู่']];
-        const gridTarget = homeGrids[item['หมวดหมู่']];
+        const category = String(item['หมวดหมู่'] || '').trim();
+        const target = containers[category];
+        const gridTarget = homeGrids[category];
         if (!target) return; 
         
         const name = String(item['ชื่อขนม'] || '');
         const cleanName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
         const safeName = name.replace(/'/g, "\\'");
-        
-        // 🌟 ประกาศตัวแปรนี้แล้ว ไม่มีบั๊กแน่นอน 🌟
         const escapedCleanName = cleanName.replace(/"/g, '&quot;'); 
-        
         const idSafeName = safeName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + index; 
         const galleryId = 'gallery_' + idSafeName;
         const mainCardId = 'card_' + idSafeName; 
@@ -985,7 +982,11 @@ function displayData(data) {
         const saleStatus = String(item['สถานะบ้าน'] || '1');
         const loveStatus = String(item['สถานะความรัก'] || '2');
         const usageRights = String(item['สิทธิ์การใช้งาน'] || ''); 
+        
+        // 🌟 ตรงนี้คือจุดที่เชฟลืมเติมในรอบที่แล้วค่ะ เติมให้แล้วน้า 🌟
         const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
+        const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
+        
         const mainImageWatermark = String(item['ลายน้ำภาพหลัก'] || 'No'); 
 
         let lightClass = 'status-forever';
@@ -999,8 +1000,9 @@ function displayData(data) {
         }
 
         if (gridTarget) {
+            let safeCategory = category.replace(/'/g, "\\'");
             let miniCardHtml = `
-            <div class="mini-char-card" onclick="jumpToCard('${item['หมวดหมู่']}', '${mainCardId}')">
+            <div class="mini-char-card" onclick="jumpToCard('${safeCategory}', '${mainCardId}')">
                 <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 6px;">
                     <div class="mini-char-img-wrapper no-save" style="width: 100%; height: 100%; margin: 0;">
                         <img src="${imgUrl}" alt="${escapedCleanName}" oncontextmenu="return false;" draggable="false">
@@ -1107,12 +1109,12 @@ function displayData(data) {
             </div>`;
         }
 
-        // 🌟 ใส่ ID ให้กับการ์ดเพื่อใช้ในการวาร์ป 🌟
         target.innerHTML += `
           <div class="menu-card" id="${mainCardId}">
             <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
               
-              <div class="menu-img-wrapper" style="background-color: #ffffff;"> <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
+              <div class="menu-img-wrapper" style="background-color: #ffffff;">
+                  <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
                   ${mainWatermarkHtml}
                   <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
               </div>
@@ -1157,7 +1159,7 @@ function displayData(data) {
 
 async function moveItemInline(index, dir) {
     document.querySelectorAll('.btn-move-inline').forEach(b => b.disabled = true);
-    const name = allData[index]['ชื่อขนม']; // ส่งชื่อที่มีอักขระล่องหนไปให้หลังบ้านจัดการ
+    const name = allData[index]['ชื่อขนม']; 
     const category = allData[index]['หมวดหมู่'];
     try {
         await fetch(API_URL, {
@@ -1175,7 +1177,6 @@ async function moveItemInline(index, dir) {
 
 async function deleteItemInline(index) {
     const name = allData[index]['ชื่อขนม']; 
-    // ตัดอักขระล่องหนออกตอนโชว์ Popup ให้ดูสวยงาม
     const showName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
     if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${showName}" ออกจากเตาอบ?`)) {
         try {
@@ -1203,7 +1204,6 @@ function openEditForm(btn, index, idSafeName) {
     const isWatermarkChecked = item['ลายน้ำภาพหลัก'] === 'Yes' ? 'checked' : '';
 
     const datalistId = `datalist_edit_${idSafeName}`;
-    // ตอนแก้ไข ลบอักขระล่องหนออกเพื่อให้ตอนพิมพ์ง่าย
     const cleanEditName = String(item['ชื่อขนม']).replace(/[\u200B-\u200D\uFEFF]/g, '');
 
     let existingExtraImgsHtml = '';
