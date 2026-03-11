@@ -92,7 +92,8 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .menu-card:hover { transform: translateY(-3px); }
 .menu-header { display: block; cursor: pointer; }
 
-.menu-img-wrapper { position: relative; width: 100%; border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
+/* ภาพหลักพื้นหลังสีขาว */
+.menu-img-wrapper { position: relative; width: 100%; background-color: #ffffff; border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
 .menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; pointer-events: none; }
 
 .menu-title-row { display: flex; flex-direction: column; align-items: flex-start; padding: 15px; gap: 5px; }
@@ -116,7 +117,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     border-radius: 18px; 
     overflow: hidden; 
     border: 2px solid var(--main); 
-    background-color: #ffffff; 
+    background-color: #ffffff; /* พื้นหลังสีขาว */
     box-shadow: 0 4px 10px rgba(107, 78, 144, 0.15); 
     position: relative;
     margin: 0;
@@ -663,7 +664,7 @@ let allData = [];
 let isEditMode = false;
 let allUniqueArtistLinks = []; 
 
-// ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ
+// 🌟 ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ 🌟
 function formatURL(url) {
     if(!url) return '';
     let cleanUrl = String(url).trim();
@@ -688,6 +689,7 @@ function showPage(pageId, element) {
   }
 }
 
+// 🌟 ฟังก์ชันวาร์ปจากหน้าโฮมไปการ์ด 🌟
 function jumpToCard(category, cardId) {
     let pageId = '';
     let navId = '';
@@ -916,11 +918,10 @@ async function fetchData() {
 
 function displayData(data) {
   try {
-      // 🌟 ระบบป้องกัน Null: ตรวจสอบข้อมูลก่อนนำไปประมวลผล 🌟
       const tempMap = new Map(); 
       if(Array.isArray(data)) {
           data.forEach(item => {
-              if(!item || typeof item !== 'object') return; // กันบั๊กบรรทัดว่าง
+              if(!item || typeof item !== 'object') return; // กันบั๊ก
 
               const name = String(item['นักวาด'] || '').trim();
               const link = String(item['Link นักวาด'] || '').trim();
@@ -950,7 +951,6 @@ function displayData(data) {
           'เครื่องดื่ม': document.getElementById('home-drink-grid')
       };
 
-      // เคลียร์การ์ดเก่า
       Object.values(containers).forEach(c => {
           if(c) {
               const cards = c.querySelectorAll('.menu-card, .loading-text');
@@ -966,16 +966,19 @@ function displayData(data) {
       }
 
       data.forEach((item, index) => {
-        if(!item || typeof item !== 'object') return; // กันบั๊กบรรทัดว่าง
+        if(!item || typeof item !== 'object') return;
 
         const target = containers[item['หมวดหมู่']];
         const gridTarget = homeGrids[item['หมวดหมู่']];
-        if (!target) return; // ข้ามถ้าหมวดหมู่ไม่ถูกต้อง
+        if (!target) return; 
         
         const name = String(item['ชื่อขนม'] || '');
         const cleanName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
         const safeName = name.replace(/'/g, "\\'");
-        const escapedCleanName = cleanName.replace(/"/g, '&quot;'); // กันบั๊กชื่อมีฟันหนู
+        
+        // 🌟 ประกาศตัวแปรนี้กลับมาแล้ว! ไร้บั๊กแน่นอน 🌟
+        const escapedCleanName = cleanName.replace(/"/g, '&quot;'); 
+        
         const idSafeName = safeName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + index; 
         const galleryId = 'gallery_' + idSafeName;
         const mainCardId = 'card_' + idSafeName; 
@@ -1006,7 +1009,7 @@ function displayData(data) {
                     </div>
                     <div class="mini-status-dot ${lightClass}"></div>
                 </div>
-                <div class="mini-char-name">${cleanName}</div>
+                <div class="mini-char-name">${escapedCleanName}</div>
             </div>`;
             gridTarget.innerHTML += miniCardHtml;
         }
@@ -1109,8 +1112,7 @@ function displayData(data) {
           <div class="menu-card" id="${mainCardId}">
             <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
               
-              <div class="menu-img-wrapper">
-                  <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
+              <div class="menu-img-wrapper" style="background-color: #ffffff;"> <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
                   ${mainWatermarkHtml}
                   <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
               </div>
@@ -1139,7 +1141,6 @@ function displayData(data) {
           </div>`;
       });
       
-      // เติมข้อความถ้าหมวดไหนว่าง
       Object.keys(containers).forEach(key => { 
           if (containers[key] && containers[key].querySelectorAll('.menu-card').length === 0) {
               containers[key].innerHTML += `<div class="loading-text">ยังไม่มีเมนูในหมวดนี้</div>`;
