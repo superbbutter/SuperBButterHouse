@@ -545,10 +545,10 @@ function acceptRules() {
     </div>
 
     <label class="modal-label">นักวาด (ภาพหลัก) *</label>
-    <input type="text" id="charArtist" class="modal-input">
+    <input type="text" id="charArtist" class="modal-input" oninput="populateArtistSuggestions(this.value, 'addArtistLinksDatalist')">
     
     <label class="modal-label">ลิ้งก์นักวาด</label>
-    <input type="text" id="charArtistLink" class="modal-input" list="addArtistLinksDatalist">
+    <input type="text" id="charArtistLink" class="modal-input" list="addArtistLinksDatalist" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี">
     
     <label class="modal-label">มูลค่า *</label>
     <input type="text" id="charPrice" class="modal-input">
@@ -619,8 +619,6 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbxQf6kADkDT0Xz_LSVyfiGo
 
 let allData = []; 
 let isEditMode = false;
-
-// 🌟 ตัวแปรเก็บข้อมูลคู่ (ชื่อนักวาด, ลิ้งก์) ทั้งหมดเพื่อสร้างรายการแนะนำ 🌟
 let allUniqueArtistLinks = []; 
 
 function showPage(pageId, element) {
@@ -654,21 +652,19 @@ function toggleGallery(event, galleryId) {
 
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-// 🌟 ฟังก์ชันสร้างตัวเลือกแนะนำลิ้งก์นักวาด (Dropdown Suggestions) 🌟
+// 🌟 สร้างตัวเลือกแนะนำลิ้งก์นักวาด (แบบกดเลือกได้ เปลี่ยนได้) 🌟
 function populateArtistSuggestions(typedName, datalistId) {
     const listElem = document.getElementById(datalistId);
     if(!listElem) return;
-    listElem.innerHTML = ''; // เคลียร์ของเก่า
-
+    listElem.innerHTML = ''; 
     typedName = typedName.trim().toLowerCase();
     if(!typedName) return;
 
-    // ค้นหาลิ้งก์ที่เคยใช้สำหรับนักวาดคนนี้ (หรือมีชื่อใกล้เคียง)
     allUniqueArtistLinks.forEach(pair => {
         if(pair.name.toLowerCase().includes(typedName)) {
             const option = document.createElement('option');
-            option.value = pair.link; // เมื่อเลือก จะเติมลิ้งก์ลงช่อง
-            option.textContent = `ใช้ลิ้งก์นี้ล่าสุดสำหรับ: ${pair.name}`; // ข้อความอธิบาย
+            option.value = pair.link;
+            option.textContent = `ใช้ล่าสุดกับนักวาด: ${pair.name}`;
             listElem.appendChild(option);
         }
     });
@@ -685,7 +681,6 @@ function addExtraImgField(containerId, link, artist, artistLink, price) {
     block.className = 'extra-img-block';
     block.style.cssText = 'background: rgba(196, 164, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;';
     
-    // 🌟 สร้าง ID เฉพาะสำหรับ datalist ในแต่ละบล็อกรูปเพิ่มเติม 🌟
     const datalistId = `datalist_ex_${Date.now()}_${Math.random().toString(16).slice(2)}`;
     
     block.innerHTML = `
@@ -705,8 +700,7 @@ function addExtraImgField(containerId, link, artist, artistLink, price) {
         </div>
         
         <label class="modal-label">ลิ้งก์นักวาด (ถ้ามี)</label>
-        <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" placeholder="วางลิ้งก์เพจ/ช่องทางนักวาด" value="${artistLink}" list="${datalistId}">
-        
+        <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี" value="${artistLink}" list="${datalistId}">
         <datalist id="${datalistId}"></datalist>
     `;
     container.appendChild(block);
@@ -748,10 +742,6 @@ function openAddCharModal() {
     document.getElementById('charLove').value = '2';
     document.getElementById('charUsage').value = 'Personal';
     document.getElementById('addExtraImgsContainer').innerHTML = ''; 
-    
-    // ผูก event เมื่อพิมพ์ชื่อนักวาดหลัก ให้เรียก datalist
-    const artistInput = document.getElementById('charArtist');
-    artistInput.oninput = function() { populateArtistSuggestions(this.value, 'addArtistLinksDatalist'); };
 
     const activePageId = document.querySelector('.page.active').id;
     const categorySelect = document.getElementById('charCategory');
@@ -846,16 +836,13 @@ async function fetchData() {
 
 function displayData(data) {
   try {
-      // 🌟 ดึงข้อมูลคู่ (นักวาด, ลิ้งก์) ทั้งหมดที่มีในระบบ เพื่อเอาไว้ทำรายงานแนะนำ 🌟
-      const tempMap = new Map(); // ใช้ Map เพื่อกันชื่อนักวาดซ้ำ เก็บลิ้งก์ล่าสุดที่เจอ
+      const tempMap = new Map(); 
       if(Array.isArray(data)) {
           data.forEach(item => {
-              // ดึงจากนักวาดหลัก
               const name = String(item['นักวาด'] || '').trim();
               const link = String(item['Link นักวาด'] || '').trim();
               if(name && link) tempMap.set(name, link);
 
-              // ดึงจากนักวาดในรูปเพิ่มเติม (Gallery)
               const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
               const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
               extraImgsArray.forEach(line => {
@@ -866,9 +853,7 @@ function displayData(data) {
               });
           });
       }
-      // แปลง Map เป็น Array เพื่อให้ค้นหาง่ายขึ้นในภายหลัง
       allUniqueArtistLinks = Array.from(tempMap.entries()).map(([name, link]) => ({ name, link }));
-
 
       const containers = { 'ขนมปัง': document.getElementById('bread-container'), 'เค้ก': document.getElementById('cake-container'), 'เครื่องดื่ม': document.getElementById('drink-container') };
       
@@ -922,7 +907,6 @@ function displayData(data) {
           if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
         }
 
-        // ระบบลายน้ำภาพหลัก
         const mainWatermarkHtml = mainImageWatermark === 'Yes' 
             ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` 
             : '';
@@ -974,7 +958,7 @@ function displayData(data) {
 
                 return `
                 <div class="no-save" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
-                    <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(196, 164, 247, 0.5); background-color:#FFF8EC;">
+                    <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(196, 164, 247, 0.5); background-color:var(--bg);">
                         <img src="${parsedLink}" style="width:100%; display:block; pointer-events:none;" alt="รูปเพิ่มเติม" oncontextmenu="return false;" draggable="false">
                         <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none;"></div>
                         <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
@@ -989,12 +973,13 @@ function displayData(data) {
 
         let adminBtns = '';
         if(isEditMode) {
+            // 🌟 แก้ไข: ใช้ index อ้างอิงตัวละครโดยตรง หมดปัญหาเรื่องชื่อซ้ำ! 🌟
             adminBtns = `
             <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(196, 164, 247, 0.5); padding-top: 10px;">
-                <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', -1, '${item['หมวดหมู่']}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
-                <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', 1, '${item['หมวดหมู่']}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg></button>
-                <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, '${safeName}', '${idSafeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> แก้ไข</button>
-                <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline('${safeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> ลบ</button>
+                <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline(${index}, -1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
+                <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline(${index}, 1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg></button>
+                <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, ${index}, '${idSafeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> แก้ไข</button>
+                <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline(${index})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> ลบ</button>
             </div>`;
         }
 
@@ -1042,9 +1027,11 @@ function displayData(data) {
   }
 }
 
-// เลื่อนอันดับ
-async function moveItemInline(name, dir, category) {
+// 🌟 อัปเดตฟังก์ชันเพื่อใช้ Index ในการดึงข้อมูล 🌟
+async function moveItemInline(index, dir) {
     document.querySelectorAll('.btn-move-inline').forEach(b => b.disabled = true);
+    const name = allData[index]['ชื่อขนม'];
+    const category = allData[index]['หมวดหมู่'];
     try {
         await fetch(API_URL, {
             method: 'POST',
@@ -1059,8 +1046,8 @@ async function moveItemInline(name, dir, category) {
     }
 }
 
-// ลบข้อมูล
-async function deleteItemInline(name) {
+async function deleteItemInline(index) {
+    const name = allData[index]['ชื่อขนม'];
     if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${name}" ออกจากเตาอบ?`)) {
         try {
             await fetch(API_URL, {
@@ -1077,18 +1064,16 @@ async function deleteItemInline(name) {
     }
 }
 
-// เปิดฟอร์มแก้ไข
-function openEditForm(btn, oldName, idSafeName) {
+// 🌟 ฟังก์ชันเปิดหน้าแก้ไขโดยใช้ Index แทนชื่อ 🌟
+function openEditForm(btn, index, idSafeName) {
     const card = btn.closest('.menu-card');
-    const safeOldName = oldName.replace(/'/g, "\\'");
-    const item = allData.find(i => String(i['ชื่อขนม']) === oldName);
+    const item = allData[index]; // 👈 ดึงข้อมูลตรงๆ จากลำดับเลย หมดปัญหา!
 
     const displayImgLink = item['Link รูปตัวละคร'] || '';
     const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
     const editContainerId = 'editExtraImgsContainer_' + idSafeName;
     const isWatermarkChecked = item['ลายน้ำภาพหลัก'] === 'Yes' ? 'checked' : '';
 
-    // 🌟 สร้าง ID เฉพาะสำหรับ datalist ในหน้าต่างแก้ไขนี้ 🌟
     const datalistId = `datalist_edit_${idSafeName}`;
 
     let existingExtraImgsHtml = '';
@@ -1096,7 +1081,6 @@ function openEditForm(btn, oldName, idSafeName) {
     extraImgsArray.forEach(line => {
         const parts = line.split('|').map(p => p.trim());
         const exArtistName = parts[1] || '';
-        // 🌟 สร้าง ID เฉพาะสำหรับ datalist ในแต่ละบล็อกรูปเพิ่มเติมในหน้าแก้ไข 🌟
         const exDatalistId = `datalist_edit_ex_${Date.now()}_${Math.random().toString(16).slice(2)}`;
         
         existingExtraImgsHtml += `
@@ -1115,7 +1099,7 @@ function openEditForm(btn, oldName, idSafeName) {
                 </div>
             </div>
             <label class="modal-label">ลิ้งก์นักวาด (ถ้ามี)</label>
-            <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" value="${parts[2] || ''}" list="${exDatalistId}">
+            <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" value="${parts[2] || ''}" list="${exDatalistId}" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี">
             <datalist id="${exDatalistId}"></datalist>
         </div>`;
     });
@@ -1152,8 +1136,7 @@ function openEditForm(btn, oldName, idSafeName) {
             <input type="text" id="edit_artist_${idSafeName}" class="modal-input" value="${item['นักวาด'] || ''}" oninput="populateArtistSuggestions(this.value, '${datalistId}')">
             
             <label class="modal-label">ลิ้งก์นักวาด:</label>
-            <input type="text" id="edit_artistlink_${idSafeName}" class="modal-input" value="${item['Link นักวาด'] || ''}" list="${datalistId}">
-            
+            <input type="text" id="edit_artistlink_${idSafeName}" class="modal-input" value="${item['Link นักวาด'] || ''}" list="${datalistId}" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี">
             <datalist id="${datalistId}"></datalist>
 
             <label class="modal-label">มูลค่า:</label>
@@ -1198,7 +1181,7 @@ function openEditForm(btn, oldName, idSafeName) {
             </div>
 
             <div class="edit-actions">
-                <button class="btn-save-inline" onclick="saveInlineEdit('${safeOldName}', '${idSafeName}', '${editContainerId}')">
+                <button class="btn-save-inline" onclick="saveInlineEdit(${index}, '${idSafeName}', '${editContainerId}')">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                     บันทึก
                 </button>
@@ -1212,11 +1195,9 @@ function openEditForm(btn, oldName, idSafeName) {
     card.innerHTML = formHtml;
 }
 
-// เซฟการแก้ไข
-async function saveInlineEdit(oldName, idSafeName, containerId) {
-    const safeOldName = oldName.replace(/\\'/g, "'");
-    const itemIndex = allData.findIndex(i => String(i['ชื่อขนม']) === safeOldName);
-    if(itemIndex === -1) return;
+// เซฟการแก้ไข (อ้างอิงจาก Index)
+async function saveInlineEdit(index, idSafeName, containerId) {
+    const safeOldName = allData[index]['ชื่อขนม']; // ดึงชื่อเดิมจากฐานข้อมูลตรงๆ เพื่ออ้างอิงส่งไปให้ Sheet ลบหรือแทนที่ได้ถูกต้อง
 
     const newCat = document.getElementById(`edit_cat_${idSafeName}`).value;
     const newName = document.getElementById(`edit_name_${idSafeName}`).value;
