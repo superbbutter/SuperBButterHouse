@@ -91,7 +91,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .menu-card:hover { transform: translateY(-3px); }
 .menu-header { display: block; cursor: pointer; }
 
-/* 🌟 อัปเดตโครงสร้างภาพหลักเพื่อซ่อนลายน้ำและกันเซฟ 🌟 */
+/* 🌟 โครงสร้างภาพหลักเพื่อซ่อนลายน้ำและกันเซฟ 🌟 */
 .menu-img-wrapper { position: relative; width: 100%; background-color: #F7EFFF; border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
 .menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; pointer-events: none; }
 
@@ -112,7 +112,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .btn-accept { font-size: 16px; padding: 15px; margin-top: 15px; animation: pulse 2s infinite; cursor: pointer; width: 100%; background: var(--main); color: #fff; border-radius: 20px; font-weight: 600; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(196, 164, 247, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(176, 132, 245, 0); } 100% { box-shadow: 0 0 0 0 rgba(176, 132, 245, 0); } }
 
-/* 🌟 สไตล์ใหม่สำหรับไอคอนดาวตกแต่ง 🌟 */
+/* 🌟 สไตล์สำหรับไอคอนดาวตกแต่ง 🌟 */
 .floating-star { position: absolute; z-index: 5; filter: drop-shadow(0 4px 6px rgba(196, 164, 247, 0.2)); }
 .star-1 { top: -15px; left: -10px; color: #E2CBFF; width: 28px; animation: floatStar 3.2s ease-in-out infinite; } 
 .star-2 { top: 15px; right: -25px; color: #6B4E90; width: 14px; animation: floatStar 2.5s ease-in-out infinite 0.5s; } 
@@ -173,6 +173,65 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     box-shadow: 0 0 0 4px rgba(196, 164, 247, 0.2);
 }
 .modal-label { display: block; text-align: left; font-size: 13px; font-weight: 600; color: var(--darker); margin-left: 4px; margin-bottom: 4px;}
+
+/* 🌟 CSS สำหรับปุ่ม Toggle Switch เปิด-ปิดลายน้ำ 🌟 */
+.watermark-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(196, 164, 247, 0.15);
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px dashed var(--main);
+    margin-top: -5px;
+    margin-bottom: 18px;
+}
+.watermark-label-text {
+    font-size: 13px;
+    color: var(--dark);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #d1d5db;
+    transition: .4s;
+    border-radius: 24px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+input:checked + .slider {
+    background-color: var(--main);
+}
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
 
 .btn-confirm { background: var(--main); color: #fff; margin-top: 10px; padding: 14px; width: 100%; border-radius: 15px; border: none; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 12px rgba(176, 132, 245, 0.3); display: flex; align-items: center; justify-content: center; gap: 6px;}
 .btn-confirm:hover { transform: translateY(-2px); background: #9B68ED; }
@@ -474,10 +533,16 @@ function acceptRules() {
     <label class="modal-label">ลิ้งก์รูปตัวละคร (ภาพหลัก) *</label>
     <input type="text" id="charImgLink" class="modal-input" placeholder="วางลิ้งก์รูปภาพที่นี่">
 
-    <label class="modal-label" style="display: flex; align-items: center; gap: 8px; margin-top: -10px; margin-bottom: 15px; cursor: pointer; color: var(--dark);">
-        <input type="checkbox" id="charWatermark" style="width: 16px; height: 16px; accent-color: var(--main);">
-        ใส่ลายน้ำให้ภาพหลักเพื่อป้องกันการนำไปใช้
-    </label>
+    <div class="watermark-container">
+        <div class="watermark-label-text">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            ใส่ลายน้ำภาพหลัก (ป้องกันเซฟ)
+        </div>
+        <label class="toggle-switch">
+            <input type="checkbox" id="charWatermark">
+            <span class="slider"></span>
+        </label>
+    </div>
 
     <label class="modal-label">นักวาด (ภาพหลัก) *</label>
     <input type="text" id="charArtist" class="modal-input">
@@ -936,24 +1001,6 @@ async function moveItemInline(name, dir, category) {
     }
 }
 
-// ลบข้อมูล
-async function deleteItemInline(name) {
-    if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${name}" ออกจากเตาอบ?`)) {
-        try {
-            await fetch(API_URL, {
-                method: 'POST',
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify({ action: "delete", name: name })
-            });
-            alert("[ สำเร็จ ] ลบข้อมูลแล้วค่ะ!");
-            fetchData(); 
-        } catch (e) {
-            console.error(e);
-            alert("[ ผิดพลาด ] เกิดข้อผิดพลาดในการเชื่อมต่อเพื่อลบข้อมูลค่ะ");
-        }
-    }
-}
-
 // เปิดฟอร์มแก้ไข
 function openEditForm(btn, oldName, idSafeName) {
     const card = btn.closest('.menu-card');
@@ -1000,10 +1047,16 @@ function openEditForm(btn, oldName, idSafeName) {
             <label class="modal-label">ลิ้งก์รูปตัวละคร (ภาพหลัก):</label>
             <input type="text" id="edit_img_link_${idSafeName}" class="modal-input" value="${displayImgLink}" placeholder="วางลิ้งก์รูปภาพที่นี่">
 
-            <label class="modal-label" style="display: flex; align-items: center; gap: 8px; margin-top: -10px; margin-bottom: 15px; cursor: pointer;">
-                <input type="checkbox" id="edit_watermark_${idSafeName}" style="width: 16px; height: 16px; accent-color: var(--main);" ${isWatermarkChecked}>
-                ใส่ลายน้ำให้ภาพหลักเพื่อป้องกันการนำไปใช้
-            </label>
+            <div class="watermark-container">
+                <div class="watermark-label-text">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                    ใส่ลายน้ำภาพหลัก (ป้องกันเซฟ)
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="edit_watermark_${idSafeName}" ${isWatermarkChecked}>
+                    <span class="slider"></span>
+                </label>
+            </div>
 
             <label class="modal-label">นักวาด (ภาพหลัก):</label>
             <input type="text" id="edit_artist_${idSafeName}" class="modal-input" value="${item['นักวาด'] || ''}">
