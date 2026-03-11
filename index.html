@@ -12,21 +12,22 @@
 
 <style>
 :root {
-  --bg: #FCF9FF; 
-  --main: #A855F7; 
-  --dark: #581C87; 
-  --darker: #3B0764; 
+  /* 🎨 โทนสีครีม - ม่วงพาสเทล 🎨 */
+  --bg: #FFF8EC; 
+  --main: #C4A4F7; 
+  --dark: #6B4E90; 
+  --darker: #4A316A; 
   --white: rgba(255, 255, 255, 0.95);
-  --glass: rgba(255, 255, 255, 0.5); 
-  --glow: rgba(168, 85, 247, 0.25); 
+  --glass: rgba(255, 255, 255, 0.6); 
+  --glow: rgba(196, 164, 247, 0.3); 
   --transition: 0.3s ease;
   
-  /* 🎨 โทนสีสำหรับไอคอนวงกลม (ม่วง-ขาว) 🎨 */
-  --badge-personal: #D8B4FE;   
-  --badge-commercial: #9333EA; 
-  --badge-full: #581C87;       
-  --badge-taken: #C084FC;      
-  --badge-single: #E9D5FF;     
+  /* 🎨 โทนสีสำหรับไอคอนวงกลม 🎨 */
+  --badge-personal: #E2CBFF;   
+  --badge-commercial: #B084F5; 
+  --badge-full: #8963BA;       
+  --badge-taken: #CBB2FF;      
+  --badge-single: #F2E6FF;     
   --badge-none: #9CA3AF;       
 }
 
@@ -37,11 +38,11 @@ button, input, select, textarea {
 }
 
 select {
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234C1D95' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B4E90' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat; background-position: right 15px center; background-size: 16px; padding-right: 40px !important; 
 }
 
-body { background: var(--bg); background-image: linear-gradient(135deg, #FCF9FF 0%, #F3E8FF 100%); display: flex; flex-direction: column; align-items: center; color: var(--dark); min-height: 100vh; }
+body { background: var(--bg); background-image: linear-gradient(135deg, #FFF8EC 0%, #F7EFFF 100%); display: flex; flex-direction: column; align-items: center; color: var(--dark); min-height: 100vh; }
 body.locked { overflow: hidden; }
 
 /* ป้องกันการกดค้างเพื่อเซฟรูป (มือถือ) */
@@ -54,11 +55,11 @@ body.locked { overflow: hidden; }
 /* Admin Bar */
 #admin-bar { display: none; background: var(--darker); color: #fff; padding: 12px; text-align: center; position: sticky; top: 0; z-index: 9999; width: 100%; font-size: 14px; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 .btn-exit-edit { margin-left: 10px; padding: 5px 15px; border-radius: 20px; border: none; background: var(--main); color: #fff; cursor: pointer; font-weight: 600; transition: 0.2s; }
-.btn-exit-edit:hover { background: #9333EA; transform: scale(1.05); }
+.btn-exit-edit:hover { background: #B084F5; transform: scale(1.05); }
 
 #admin-add-bar { display: none; width: 100%; margin-bottom: 15px; animation: fadeIn 0.4s ease; }
-.btn-admin-add { width: 100%; padding: 15px; background: #9333EA; color: #fff; border: none; border-radius: 20px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3); transition: var(--transition); }
-.btn-admin-add:hover { background: #7E22CE; transform: translateY(-2px); }
+.btn-admin-add { width: 100%; padding: 15px; background: #B084F5; color: #fff; border: none; border-radius: 20px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(176, 132, 245, 0.3); transition: var(--transition); }
+.btn-admin-add:hover { background: #9B68ED; transform: translateY(-2px); }
 
 /* Header */
 header { width: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 20px; background: transparent; }
@@ -67,12 +68,12 @@ header { width: 100%; display: flex; flex-direction: column; align-items: center
 .logo img { width: 100%; height: 100%; object-fit: cover; background-color: #fff; }
 h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, var(--darker), var(--dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; }
 
-.nav-bar { width: 95%; max-width: 450px; backdrop-filter: blur(15px); background: rgba(255, 255, 255, 0.9); display: flex; justify-content: space-around; padding: 8px 5px; border-radius: 35px; box-shadow: 0 8px 25px rgba(88, 28, 135, 0.1); z-index: 1000; border: 1px solid rgba(255, 255, 255, 0.8); margin-bottom: 5px; }
+.nav-bar { width: 95%; max-width: 450px; backdrop-filter: blur(15px); background: rgba(255, 255, 255, 0.9); display: flex; justify-content: space-around; padding: 8px 5px; border-radius: 35px; box-shadow: 0 8px 25px rgba(107, 78, 144, 0.1); z-index: 1000; border: 1px solid rgba(255, 255, 255, 0.8); margin-bottom: 5px; }
 .nav-item { text-decoration: none; color: var(--dark); font-size: 12px; font-weight: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); padding: 6px 10px; border-radius: 20px; width: 25%; }
 .nav-item span { line-height: 1.2; }
-.nav-item.active { background: var(--dark); color: #fff; box-shadow: 0 4px 12px rgba(88, 28, 135, 0.2); }
+.nav-item.active { background: var(--dark); color: #fff; box-shadow: 0 4px 12px rgba(107, 78, 144, 0.2); }
 
-#rules-gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); background-image: linear-gradient(135deg, #FCF9FF 0%, #F3E8FF 100%); z-index: 9999; display: flex; flex-direction: column; align-items: center; padding: 40px 15px; overflow-y: auto; transition: opacity 0.5s ease; }
+#rules-gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); background-image: linear-gradient(135deg, #FFF8EC 0%, #F7EFFF 100%); z-index: 9999; display: flex; flex-direction: column; align-items: center; padding: 40px 15px; overflow-y: auto; transition: opacity 0.5s ease; }
 .gate-content { max-width: 500px; width: 100%; animation: fadeIn 0.6s ease; }
 #main-wrapper { display: none; width: 100%; max-width: 500px; opacity: 0; transition: opacity 0.5s ease; }
 .container { width: 100%; padding: 10px 15px 50px; }
@@ -80,50 +81,50 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .page.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.section { backdrop-filter: blur(10px); background: var(--glass); border-radius: 25px; padding: 20px; margin-bottom: 15px; box-shadow: 0 10px 30px rgba(88, 28, 135, 0.05); border: 1px solid rgba(255, 255, 255, 0.6); }
+.section { backdrop-filter: blur(10px); background: var(--glass); border-radius: 25px; padding: 20px; margin-bottom: 15px; box-shadow: 0 10px 30px rgba(107, 78, 144, 0.05); border: 1px solid rgba(255, 255, 255, 0.6); }
 .category-header { display: inline-flex; align-items: center; background: #fff; border: 2px solid var(--main); padding: 8px 25px; border-radius: 50px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 .category-header h2 { font-size: 18px; color: var(--dark); margin: 0; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 .category-desc { font-size: 13px; opacity: 0.8; margin-bottom: 25px; padding-left: 10px; display: flex; align-items: center; gap: 4px;}
 
-.menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; background-color: #F3E8FF; border-bottom: 1px solid rgba(168, 85, 247, 0.3); }
-.menu-card { background: rgba(255, 255, 255, 0.85); border: 1px solid var(--main); border-radius: 20px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(88, 28, 135, 0.05); transition: var(--transition); }
+.menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; background-color: #F7EFFF; border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
+.menu-card { background: rgba(255, 255, 255, 0.85); border: 1px solid var(--main); border-radius: 20px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(107, 78, 144, 0.05); transition: var(--transition); }
 .menu-card:hover { transform: translateY(-3px); }
 .menu-header { display: block; cursor: pointer; }
 .menu-title-row { display: flex; flex-direction: column; align-items: flex-start; padding: 15px; gap: 5px; }
 .menu-title { font-weight: 500; color: var(--dark); font-size: 15px; flex: 1; display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
-.menu-icon { font-size: 12px; color: var(--dark); transition: transform 0.3s ease; padding: 5px; background: #F3E8FF; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 10px; }
+.menu-icon { font-size: 12px; color: var(--dark); transition: transform 0.3s ease; padding: 5px; background: #F7EFFF; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 10px; }
 .menu-card.open .menu-icon { transform: rotate(180deg); background: var(--main); color: #fff; }
 .menu-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: rgba(255, 255, 255, 0.5); padding: 0 15px; }
 .menu-card.open .menu-details { max-height: 6000px; padding: 10px 15px 15px; }
 
 .detail-text { font-size: 14px; margin-bottom: 8px; color: var(--darker); display: flex; align-items: center; gap: 8px; }
-.btn-view { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 5px; background: linear-gradient(135deg, #C084FC, #D8B4FE); color: var(--darker); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-size: 13px; font-weight: 600; width: 100%; border: none; cursor: pointer; transition: 0.3s; }
+.btn-view { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 5px; background: linear-gradient(135deg, #D4BAFF, #E7D5FF); color: var(--darker); padding: 10px 20px; border-radius: 25px; text-decoration: none; font-size: 13px; font-weight: 600; width: 100%; border: none; cursor: pointer; transition: 0.3s; }
 .btn-view:hover { transform: translateY(-2px); }
-.btn-gallery { background: #F3E8FF; border: 1px dashed var(--main); color: var(--dark); margin-top: 10px; }
+.btn-gallery { background: #F7EFFF; border: 1px dashed var(--main); color: var(--dark); margin-top: 10px; }
 
 .rule-box { background: rgba(255, 255, 255, 0.7); padding: 15px; border-radius: 15px; font-size: 13px; line-height: 1.6; border: 1px dashed var(--main); text-align: left; }
-.highlight { color: #7E22CE; font-weight: 500; } 
+.highlight { color: #9B68ED; font-weight: 500; } 
 .btn-accept { font-size: 16px; padding: 15px; margin-top: 15px; animation: pulse 2s infinite; cursor: pointer; width: 100%; background: var(--main); color: #fff; border-radius: 20px; font-weight: 600; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(147, 51, 234, 0); } 100% { box-shadow: 0 0 0 0 rgba(147, 51, 234, 0); } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(196, 164, 247, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(176, 132, 245, 0); } 100% { box-shadow: 0 0 0 0 rgba(176, 132, 245, 0); } }
 
-/* 🌟 สไตล์ใหม่สำหรับไอคอนดาวตกแต่ง (แทนที่อีโมจิ) 🌟 */
-.floating-star { position: absolute; z-index: 5; filter: drop-shadow(0 4px 6px rgba(168, 85, 247, 0.2)); }
-.star-1 { top: -15px; left: -10px; color: #D8B4FE; width: 28px; animation: floatStar 3.2s ease-in-out infinite; } 
-.star-2 { top: 15px; right: -25px; color: #581C87; width: 14px; animation: floatStar 2.5s ease-in-out infinite 0.5s; } 
-.star-3 { top: 55%; left: -30px; color: #C084FC; width: 18px; animation: floatStar 3.5s ease-in-out infinite 1.2s; } 
-.star-4 { bottom: -10px; right: -15px; color: #7E22CE; width: 24px; animation: floatStar 2.8s ease-in-out infinite 0.8s; } 
-.star-5 { bottom: 10px; left: 15px; color: #9333EA; width: 12px; animation: floatStar 3s ease-in-out infinite 2s; } 
+/* 🌟 สไตล์ใหม่สำหรับไอคอนดาวตกแต่ง 🌟 */
+.floating-star { position: absolute; z-index: 5; filter: drop-shadow(0 4px 6px rgba(196, 164, 247, 0.2)); }
+.star-1 { top: -15px; left: -10px; color: #E2CBFF; width: 28px; animation: floatStar 3.2s ease-in-out infinite; } 
+.star-2 { top: 15px; right: -25px; color: #6B4E90; width: 14px; animation: floatStar 2.5s ease-in-out infinite 0.5s; } 
+.star-3 { top: 55%; left: -30px; color: #CBB2FF; width: 18px; animation: floatStar 3.5s ease-in-out infinite 1.2s; } 
+.star-4 { bottom: -10px; right: -15px; color: #9B68ED; width: 24px; animation: floatStar 2.8s ease-in-out infinite 0.8s; } 
+.star-5 { bottom: 10px; left: 15px; color: #B084F5; width: 12px; animation: floatStar 3s ease-in-out infinite 2s; } 
 @keyframes floatStar { 0%, 100% { transform: translateY(0) scale(1) rotate(0deg); } 50% { transform: translateY(-10px) scale(1.1) rotate(5deg); } }
 
-.mini-contact { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px dashed rgba(168, 85, 247, 0.3); }
+.mini-contact { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px dashed rgba(196, 164, 247, 0.3); }
 .socials-mini { display: flex; gap: 10px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
 .socials-mini a { padding: 6px 15px; border-radius: 20px; background: #fff; text-decoration: none; color: var(--dark); font-size: 12px; border: 1px solid var(--main); transition: var(--transition); }
 .copyright { font-size: 10px; opacity: 0.6; }
 
 /* Status Lights */
 .status-light { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 5px; flex-shrink: 0;}
-.status-sp-ota { background: #C084FC; box-shadow: 0 0 8px #C084FC; }
-.status-tent { background: #581C87; box-shadow: 0 0 8px #581C87; }
+.status-sp-ota { background: #CBB2FF; box-shadow: 0 0 8px #CBB2FF; }
+.status-tent { background: #6B4E90; box-shadow: 0 0 8px #6B4E90; }
 .status-forever { background: #9CA3AF; }
 
 /* 🌟 สไตล์สำหรับไอคอนวงกลม 🌟 */
@@ -164,12 +165,12 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .modal-input:focus, .modal-select:focus {
     border-color: var(--main);
     background-color: #ffffff;
-    box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
+    box-shadow: 0 0 0 4px rgba(196, 164, 247, 0.2);
 }
 .modal-label { display: block; text-align: left; font-size: 13px; font-weight: 600; color: var(--darker); margin-left: 4px; margin-bottom: 4px;}
 
-.btn-confirm { background: var(--main); color: #fff; margin-top: 10px; padding: 14px; width: 100%; border-radius: 15px; border: none; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3); display: flex; align-items: center; justify-content: center; gap: 6px;}
-.btn-confirm:hover { transform: translateY(-2px); background: #7E22CE; }
+.btn-confirm { background: var(--main); color: #fff; margin-top: 10px; padding: 14px; width: 100%; border-radius: 15px; border: none; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 12px rgba(176, 132, 245, 0.3); display: flex; align-items: center; justify-content: center; gap: 6px;}
+.btn-confirm:hover { transform: translateY(-2px); background: #9B68ED; }
 .btn-close-modal { color: #6b7280; font-size: 13px; cursor: pointer; text-decoration: underline; margin-top: 15px; display: block; text-align: center; transition: 0.2s; }
 .btn-close-modal:hover { color: var(--darker); }
 
@@ -187,8 +188,8 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .btn-edit-inline { flex: 1; padding: 8px 12px; border-color: var(--main); display: flex; align-items: center; justify-content: center; gap: 4px;}
 .btn-edit-inline:hover { background: var(--main); color: #fff; }
 
-.btn-delete-inline { flex: 0 0 auto; padding: 8px 14px; border-color: #FBCFE8; color: #C026D3; background: #FDF4FF; display: flex; align-items: center; justify-content: center; gap: 4px;}
-.btn-delete-inline:hover { background: #C026D3; color: #fff; }
+.btn-delete-inline { flex: 0 0 auto; padding: 8px 14px; border-color: #FFE1EA; color: #D484B6; background: #FFF5F8; display: flex; align-items: center; justify-content: center; gap: 4px;}
+.btn-delete-inline:hover { background: #D484B6; color: #fff; }
 
 .btn-move-inline { 
     flex: 0 0 auto; 
@@ -207,10 +208,10 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .edit-form-container { padding: 20px 15px; background: rgba(255,255,255,0.95); border-top: 1px dashed var(--main); display: flex; flex-direction: column; cursor: default; }
 .edit-actions { display: flex; gap: 10px; margin-top: 10px; }
 .edit-actions button { flex: 1; padding: 12px; border-radius: 12px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; color: #fff; display: flex; align-items: center; justify-content: center; gap: 4px;}
-.btn-save-inline { background: #9333EA; box-shadow: 0 4px 10px rgba(147, 51, 234, 0.2); }
-.btn-save-inline:hover { background: #7E22CE; transform: translateY(-2px); }
-.btn-cancel-inline { background: #C026D3; box-shadow: 0 4px 10px rgba(192, 38, 211, 0.2); }
-.btn-cancel-inline:hover { background: #A21CAF; transform: translateY(-2px); }
+.btn-save-inline { background: #B084F5; box-shadow: 0 4px 10px rgba(176, 132, 245, 0.2); }
+.btn-save-inline:hover { background: #9B68ED; transform: translateY(-2px); }
+.btn-cancel-inline { background: #D484B6; box-shadow: 0 4px 10px rgba(212, 132, 182, 0.2); }
+.btn-cancel-inline:hover { background: #BA639A; transform: translateY(-2px); }
 </style>
 
 <script>
@@ -260,10 +261,10 @@ function acceptRules() {
       <p>สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน</span>นะคะ</p>
     </div>
 
-    <h2 style="margin-top: 20px; color: #7E22CE;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 5px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Warning</h2>
-    <div class="rule-box" style="background: rgba(255,255,255,0.9); border-color: #7E22CE; box-shadow: 0 4px 15px rgba(126, 34, 206, 0.1);">
+    <h2 style="margin-top: 20px; color: #9B68ED;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 5px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Warning</h2>
+    <div class="rule-box" style="background: rgba(255,255,255,0.9); border-color: #9B68ED; box-shadow: 0 4px 15px rgba(155, 104, 237, 0.1);">
       <p class="highlight" style="font-size: 15px; margin-bottom: 8px;">คำเตือนลิขสิทธิ์และสิทธิ์ส่วนบุคคล</p>
-      <ul style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: #581C87;">
+      <ul style="padding-left: 20px; font-size: 13px; line-height: 1.8; color: #6B4E90;">
         <li><strong>ห้ามเซฟ (Save)</strong> รูปภาพทุกภาพในเว็บไซต์นี้เด็ดขาด</li>
         <li><strong>ห้ามนำไปตัดต่อ</strong> ดัดแปลง แก้ไข หรือลบเครดิตนักวาด</li>
         <li><strong>ห้ามนำไปใช้</strong> โดยไม่ได้รับอนุญาต</li>
@@ -501,7 +502,7 @@ function acceptRules() {
         <option value="3">ไม่มีความรัก</option>
     </select>
 
-    <div style="margin-top: 25px; border-top: 2px dashed rgba(168, 85, 247, 0.5); padding-top: 15px;">
+    <div style="margin-top: 25px; border-top: 2px dashed rgba(196, 164, 247, 0.5); padding-top: 15px;">
         <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--darker); display:flex; justify-content:space-between; align-items:center;">
             <span style="display:flex; align-items:center; gap:4px;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
@@ -536,6 +537,7 @@ function acceptRules() {
 </div>
 
 <script>
+// 📌 ให้นำลิงก์ของ Google Apps Script มาใส่ตรงนี้ 📌
 const API_URL = 'https://script.google.com/macros/s/AKfycbxQf6kADkDT0Xz_LSVyfiGo_z4ntyRUlJzLJ1l5BhMYlEJCVFsaHDbYc9UEu3NPcFo/exec';
 
 let allData = []; 
@@ -582,9 +584,9 @@ function addExtraImgField(containerId, link, artist, artistLink, price) {
     const container = document.getElementById(containerId);
     const block = document.createElement('div');
     block.className = 'extra-img-block';
-    block.style.cssText = 'background: rgba(168, 85, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;';
+    block.style.cssText = 'background: rgba(196, 164, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;';
     block.innerHTML = `
-        <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #C026D3; font-weight: 600; font-size:12px; background:#FDF4FF; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
+        <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #D484B6; font-weight: 600; font-size:12px; background:#FFF5F8; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
         <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
         <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" placeholder="วางลิ้งก์รูปภาพที่นี่" value="${link}">
         
@@ -726,7 +728,7 @@ async function fetchData() {
         displayData(allData);
     } catch (error) { 
         console.error('Error fetching data:', error); 
-        document.getElementById('bread-container').innerHTML = '<div class="loading-text" style="color:#9333EA;">โหลดข้อมูลไม่สำเร็จ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-left:4px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg></div>';
+        document.getElementById('bread-container').innerHTML = '<div class="loading-text" style="color:#B084F5;">โหลดข้อมูลไม่สำเร็จ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-left:4px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg></div>';
     }
 }
 
@@ -820,7 +822,7 @@ function displayData(data) {
                     let separator = (artist && price) ? ' &nbsp;•&nbsp; ' : '';
 
                     captionHtml = `
-                    <div style="background: rgba(255,255,255,0.8); padding: 10px; border: 1px solid rgba(168, 85, 247, 0.5); border-top: none; border-radius: 0 0 15px 15px; font-size: 12px; text-align: center; color: var(--darker);">
+                    <div style="background: rgba(255,255,255,0.8); padding: 10px; border: 1px solid rgba(196, 164, 247, 0.5); border-top: none; border-radius: 0 0 15px 15px; font-size: 12px; text-align: center; color: var(--darker);">
                         ${artistHtml}${separator}${priceHtml}
                     </div>`;
                 }
@@ -829,7 +831,7 @@ function displayData(data) {
 
                 return `
                 <div class="no-save" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
-                    <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(168, 85, 247, 0.5); background-color:#FCF9FF;">
+                    <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(196, 164, 247, 0.5); background-color:#FFF8EC;">
                         <img src="${parsedLink}" style="width:100%; display:block; pointer-events:none;" alt="รูปเพิ่มเติม" oncontextmenu="return false;">
                         <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none;"></div>
                     </div>
@@ -838,13 +840,13 @@ function displayData(data) {
             }).join('');
 
             extraGalleryHtml = `<div id="${galleryId}" style="display:none; margin-top:15px; padding-top:15px; border-top:1px dashed var(--main);">${imagesHtml}</div>`;
-            toggleGalleryBtn = `<button onclick="toggleGallery(event, '${galleryId}')" class="btn-view btn-gallery" style="background:#F3E8FF; border:1px dashed var(--main); color:var(--dark); margin-top:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>ดูรูปเพิ่มเติม (${extraImgsArray.length} รูป)</button>`;
+            toggleGalleryBtn = `<button onclick="toggleGallery(event, '${galleryId}')" class="btn-view btn-gallery" style="background:#F7EFFF; border:1px dashed var(--main); color:var(--dark); margin-top:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>ดูรูปเพิ่มเติม (${extraImgsArray.length} รูป)</button>`;
         }
 
         let adminBtns = '';
         if(isEditMode) {
             adminBtns = `
-            <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(168, 85, 247, 0.5); padding-top: 10px;">
+            <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(196, 164, 247, 0.5); padding-top: 10px;">
                 <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', -1, '${item['หมวดหมู่']}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
                 <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline('${safeName}', 1, '${item['หมวดหมู่']}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg></button>
                 <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, '${safeName}', '${idSafeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> แก้ไข</button>
@@ -941,8 +943,8 @@ function openEditForm(btn, oldName, idSafeName) {
     extraImgsArray.forEach(line => {
         const parts = line.split('|').map(p => p.trim());
         existingExtraImgsHtml += `
-        <div class="extra-img-block" style="background: rgba(168, 85, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;">
-            <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #C026D3; font-weight: 600; font-size:12px; background:#FDF4FF; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
+        <div class="extra-img-block" style="background: rgba(196, 164, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;">
+            <span onclick="this.parentElement.remove()" style="position: absolute; right: 15px; top: 12px; cursor: pointer; color: #D484B6; font-weight: 600; font-size:12px; background:#FFF5F8; padding:2px 8px; border-radius:10px;">ลบทิ้ง</span>
             <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
             <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" value="${parts[0] || ''}">
             <div style="display:flex; gap:10px;">
@@ -1002,7 +1004,7 @@ function openEditForm(btn, oldName, idSafeName) {
                 <option value="3" ${item['สถานะความรัก']=='3'?'selected':''}>ไม่มีความรัก</option>
             </select>
 
-            <div style="margin-top: 15px; border-top: 2px dashed rgba(168, 85, 247, 0.5); padding-top: 15px;">
+            <div style="margin-top: 15px; border-top: 2px dashed rgba(196, 164, 247, 0.5); padding-top: 15px;">
                 <h4 style="font-size: 13px; margin-bottom: 10px; color: var(--darker); display:flex; justify-content:space-between; align-items:center;">
                     <span style="display:flex; align-items:center; gap:4px;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
