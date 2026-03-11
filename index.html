@@ -92,8 +92,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .menu-card:hover { transform: translateY(-3px); }
 .menu-header { display: block; cursor: pointer; }
 
-/* โครงสร้างภาพหลักเพื่อซ่อนลายน้ำและกันเซฟ (สีขาวบริสุทธิ์) */
-.menu-img-wrapper { position: relative; width: 100%; background-color: #ffffff; border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
+.menu-img-wrapper { position: relative; width: 100%; border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
 .menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; pointer-events: none; }
 
 .menu-title-row { display: flex; flex-direction: column; align-items: flex-start; padding: 15px; gap: 5px; }
@@ -109,11 +108,11 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .btn-gallery { background: #F7EFFF; border: 1px dashed var(--main); color: var(--dark); margin-top: 10px; }
 
 /* 🌟 สไตล์สำหรับหน้าโฮม: รวมตู้กระจก (Mini Grid) 🌟 */
-.all-chars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 15px 10px; justify-items: center; margin-top: 10px; }
+.all-chars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 15px 10px; justify-items: center; margin-top: 5px; }
 .mini-char-card { width: 100%; cursor: pointer; transition: transform 0.2s ease; text-align: center; }
 .mini-char-card:hover { transform: translateY(-4px); }
 .mini-char-img-wrapper { 
-    width: 100%; height: 100%; /* เปลี่ยนเป็น 100% เพื่อให้พอดีกรอบนอก */
+    width: 100%; height: 100%;
     border-radius: 18px; 
     overflow: hidden; 
     border: 2px solid var(--main); 
@@ -125,7 +124,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .mini-char-img-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none;}
 .mini-char-name { font-size: 11px; color: var(--darker); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; padding: 0 2px;}
 
-/* 🌟 อัปเดตตำแหน่งจุดไฟสถานะให้เด้งออกมาทับกรอบมุมขวาบน 🌟 */
+/* จุดไฟสถานะเด้งนอกกรอบมุมขวาบน */
 .mini-status-dot { 
     position: absolute; 
     top: -5px; 
@@ -427,16 +426,6 @@ function acceptRules() {
       </div>
 
       <div class="section" style="padding: 15px;">
-        <h3 style="font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; justify-content: center; color: var(--darker);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            ตู้กระจกโชว์ขนม
-        </h3>
-        <div id="all-chars-grid" class="all-chars-grid">
-            <div class="loading-text" style="grid-column: 1 / -1; font-size: 12px; opacity: 0.7;">กำลังจัดเรียงขนมเข้าตู้...</div>
-        </div>
-      </div>
-
-      <div class="section" style="padding: 15px;">
         <h3 style="font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 5px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
             สัญลักษณ์ในครัว
@@ -478,6 +467,28 @@ function acceptRules() {
             </div>
         </div>
       </div>
+
+      <div class="section" style="padding: 15px;">
+        <h3 style="font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; justify-content: center; color: var(--darker);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            ตู้กระจกโชว์ขนม
+        </h3>
+
+        <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--dark); display: flex; align-items: center; gap: 6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M3 8c0-3 3-4 6-4s5 1 9 4"></path></svg> หมวดขนมปัง
+        </h4>
+        <div id="home-bread-grid" class="all-chars-grid"></div>
+
+        <h4 style="font-size: 14px; margin-top: 20px; margin-bottom: 10px; color: var(--dark); display: flex; align-items: center; gap: 6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"></path><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"></path><path d="M12 11v-4"></path><path d="M12 3v1"></path></svg> หมวดเค้ก
+        </h4>
+        <div id="home-cake-grid" class="all-chars-grid"></div>
+
+        <h4 style="font-size: 14px; margin-top: 20px; margin-bottom: 10px; color: var(--dark); display: flex; align-items: center; gap: 6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg> หมวดเครื่องดื่ม
+        </h4>
+        <div id="home-drink-grid" class="all-chars-grid"></div>
+      </div>
     </div>
 
     <div id="bread" class="page">
@@ -490,10 +501,7 @@ function acceptRules() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
         </p>
         <div id="bread-container">
-            <div class="loading-text">
-                กำลังโหลดข้อมูลจากเตาอบ... 
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><path d="M12 2C8.69 2 6 4.69 6 8c0 2.21 1.2 4.14 3 5.19V16h6v-2.81c1.8-1.05 3-2.98 3-5.19 0-3.31-2.69-6-6-6z"></path><path d="M8 22h8"></path><path d="M10 19h4"></path></svg>
-            </div>
+            <div class="loading-text">กำลังโหลดข้อมูล...</div>
         </div>
       </div>
     </div>
@@ -508,10 +516,7 @@ function acceptRules() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
         </p>
         <div id="cake-container">
-            <div class="loading-text">
-                กำลังโหลดข้อมูลจากเตาอบ... 
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><path d="M12 2C8.69 2 6 4.69 6 8c0 2.21 1.2 4.14 3 5.19V16h6v-2.81c1.8-1.05 3-2.98 3-5.19 0-3.31-2.69-6-6-6z"></path><path d="M8 22h8"></path><path d="M10 19h4"></path></svg>
-            </div>
+            <div class="loading-text">กำลังโหลดข้อมูล...</div>
         </div>
       </div>
     </div>
@@ -526,10 +531,7 @@ function acceptRules() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
         </p>
         <div id="drink-container">
-            <div class="loading-text">
-                กำลังโหลดข้อมูลจากเตาอบ... 
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><path d="M12 2C8.69 2 6 4.69 6 8c0 2.21 1.2 4.14 3 5.19V16h6v-2.81c1.8-1.05 3-2.98 3-5.19 0-3.31-2.69-6-6-6z"></path><path d="M8 22h8"></path><path d="M10 19h4"></path></svg>
-            </div>
+            <div class="loading-text">กำลังโหลดข้อมูล...</div>
         </div>
       </div>
     </div>
@@ -661,7 +663,7 @@ let allData = [];
 let isEditMode = false;
 let allUniqueArtistLinks = []; 
 
-// 🌟 ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ 🌟
+// ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ
 function formatURL(url) {
     if(!url) return '';
     let cleanUrl = String(url).trim();
@@ -686,7 +688,6 @@ function showPage(pageId, element) {
   }
 }
 
-// 🌟 ฟังก์ชันวาร์ปจากหน้าโฮมไปการ์ด 🌟
 function jumpToCard(category, cardId) {
     let pageId = '';
     let navId = '';
@@ -838,7 +839,7 @@ async function submitNewCharacter() {
     }
 
     let finalUniqueName = nameInput.trim();
-    while (allData.some(i => i['ชื่อขนม'] === finalUniqueName)) {
+    while (allData.some(i => i && i['ชื่อขนม'] === finalUniqueName)) {
         finalUniqueName += '\u200B'; 
     }
 
@@ -915,9 +916,12 @@ async function fetchData() {
 
 function displayData(data) {
   try {
+      // 🌟 ระบบป้องกัน Null: ตรวจสอบข้อมูลก่อนนำไปประมวลผล 🌟
       const tempMap = new Map(); 
       if(Array.isArray(data)) {
           data.forEach(item => {
+              if(!item || typeof item !== 'object') return; // กันบั๊กบรรทัดว่าง
+
               const name = String(item['นักวาด'] || '').trim();
               const link = String(item['Link นักวาด'] || '').trim();
               if(name && link) tempMap.set(name, link);
@@ -934,29 +938,44 @@ function displayData(data) {
       }
       allUniqueArtistLinks = Array.from(tempMap.entries()).map(([name, link]) => ({ name, link }));
 
-      const containers = { 'ขนมปัง': document.getElementById('bread-container'), 'เค้ก': document.getElementById('cake-container'), 'เครื่องดื่ม': document.getElementById('drink-container') };
-      
-      Object.values(containers).forEach(c => {
-          const cards = c.querySelectorAll('.menu-card, .loading-text');
-          cards.forEach(card => card.remove());
-      });
+      const containers = { 
+          'ขนมปัง': document.getElementById('bread-container'), 
+          'เค้ก': document.getElementById('cake-container'), 
+          'เครื่องดื่ม': document.getElementById('drink-container') 
+      };
 
-      const gridContainer = document.getElementById('all-chars-grid');
-      if (gridContainer) gridContainer.innerHTML = '';
+      const homeGrids = {
+          'ขนมปัง': document.getElementById('home-bread-grid'),
+          'เค้ก': document.getElementById('home-cake-grid'),
+          'เครื่องดื่ม': document.getElementById('home-drink-grid')
+      };
+
+      // เคลียร์การ์ดเก่า
+      Object.values(containers).forEach(c => {
+          if(c) {
+              const cards = c.querySelectorAll('.menu-card, .loading-text');
+              cards.forEach(card => card.remove());
+          }
+      });
+      Object.values(homeGrids).forEach(g => { if(g) g.innerHTML = ''; });
 
       if(!Array.isArray(data) || data.length === 0) {
-          if (gridContainer) gridContainer.innerHTML = '<div class="loading-text" style="grid-column: 1 / -1;">ยังไม่มีขนมในตู้ค่ะ</div>';
+          Object.values(containers).forEach(c => { if (c) c.innerHTML = '<div class="loading-text">ยังไม่มีเมนูในหมวดนี้</div>'; });
+          Object.values(homeGrids).forEach(g => { if (g) g.innerHTML = '<div class="loading-text" style="grid-column: 1 / -1; font-size: 12px; opacity: 0.7;">ว่างเปล่า</div>'; });
           return;
       }
 
       data.forEach((item, index) => {
+        if(!item || typeof item !== 'object') return; // กันบั๊กบรรทัดว่าง
+
         const target = containers[item['หมวดหมู่']];
-        if (!target) return;
+        const gridTarget = homeGrids[item['หมวดหมู่']];
+        if (!target) return; // ข้ามถ้าหมวดหมู่ไม่ถูกต้อง
         
-        // 🌟 แก้ไข: ตัวแปรครบถ้วนแล้ว ไม่พังแน่นอน 🌟
         const name = String(item['ชื่อขนม'] || '');
         const cleanName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
         const safeName = name.replace(/'/g, "\\'");
+        const escapedCleanName = cleanName.replace(/"/g, '&quot;'); // กันบั๊กชื่อมีฟันหนู
         const idSafeName = safeName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + index; 
         const galleryId = 'gallery_' + idSafeName;
         const mainCardId = 'card_' + idSafeName; 
@@ -977,20 +996,19 @@ function displayData(data) {
           if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
         }
 
-        // เพิ่มลงในตู้กระจกหน้าโฮม (จุดไฟสถานะเด้งนอกกรอบ)
-        if (gridContainer) {
+        if (gridTarget) {
             let miniCardHtml = `
             <div class="mini-char-card" onclick="jumpToCard('${item['หมวดหมู่']}', '${mainCardId}')">
                 <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 6px;">
                     <div class="mini-char-img-wrapper no-save" style="width: 100%; height: 100%; margin: 0;">
-                        <img src="${imgUrl}" alt="${cleanName}" oncontextmenu="return false;" draggable="false">
+                        <img src="${imgUrl}" alt="${escapedCleanName}" oncontextmenu="return false;" draggable="false">
                         <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
                     </div>
                     <div class="mini-status-dot ${lightClass}"></div>
                 </div>
                 <div class="mini-char-name">${cleanName}</div>
             </div>`;
-            gridContainer.innerHTML += miniCardHtml;
+            gridTarget.innerHTML += miniCardHtml;
         }
 
         let usageIcon = '';
@@ -1091,7 +1109,8 @@ function displayData(data) {
           <div class="menu-card" id="${mainCardId}">
             <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
               
-              <div class="menu-img-wrapper" style="background-color: #ffffff;"> <img src="${imgUrl}" alt="${cleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
+              <div class="menu-img-wrapper">
+                  <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
                   ${mainWatermarkHtml}
                   <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
               </div>
@@ -1120,9 +1139,14 @@ function displayData(data) {
           </div>`;
       });
       
+      // เติมข้อความถ้าหมวดไหนว่าง
       Object.keys(containers).forEach(key => { 
-          if (containers[key].querySelectorAll('.menu-card').length === 0) 
-              containers[key].innerHTML += `<div class="loading-text">ยังไม่มีเมนูในหมวดนี้ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-left:4px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg></div>`; 
+          if (containers[key] && containers[key].querySelectorAll('.menu-card').length === 0) {
+              containers[key].innerHTML += `<div class="loading-text">ยังไม่มีเมนูในหมวดนี้</div>`;
+          }
+          if (homeGrids[key] && homeGrids[key].querySelectorAll('.mini-char-card').length === 0) {
+              homeGrids[key].innerHTML += `<div class="loading-text" style="grid-column: 1 / -1; font-size:12px; opacity:0.6;">ยังไม่มีขนมในตู้นี้ค่ะ</div>`;
+          }
       });
   } catch (e) {
       console.error(e);
@@ -1318,7 +1342,7 @@ async function saveInlineEdit(index, idSafeName, containerId) {
     if(!newNameInput || !finalImgData) return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
 
     let finalUniqueName = newNameInput.trim();
-    while (allData.some((i, idx) => i['ชื่อขนม'] === finalUniqueName && idx !== index)) {
+    while (allData.some((i, idx) => i && i['ชื่อขนม'] === finalUniqueName && idx !== index)) {
         finalUniqueName += '\u200B'; 
     }
 
