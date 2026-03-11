@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SuperBButter - SuperBButterHouse</title>
+<title>SuperBButter - House</title>
 <link rel="icon" type="image/x-icon" href="https://drive.google.com/thumbnail?id=1aTumT9SN2pzCyOtInZyv85ksTcZyv5g1&sz=w1000">
 
 <link rel="preload" href="https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600" as="image">
@@ -91,8 +91,8 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .menu-card:hover { transform: translateY(-3px); }
 .menu-header { display: block; cursor: pointer; }
 
-/* 🌟 โครงสร้างภาพหลักเพื่อซ่อนลายน้ำและกันเซฟ 🌟 */
-.menu-img-wrapper { position: relative; width: 100%; background-color: #F7EFFF; border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
+/* 🌟 โครงสร้างภาพหลักเพื่อซ่อนลายน้ำและกันเซฟ (ปรับสีพื้นหลังเป็นสีครีม) 🌟 */
+.menu-img-wrapper { position: relative; width: 100%; background-color: var(--bg); border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
 .menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; pointer-events: none; }
 
 .menu-title-row { display: flex; flex-direction: column; align-items: flex-start; padding: 15px; gap: 5px; }
@@ -322,7 +322,7 @@ function acceptRules() {
     <div class="rule-box">
       <p><strong>กรุณาอ่านรายละเอียดให้ครบถ้วน</strong></p>
       <p>ก่อนเข้าสู่ครัวเข้าชมขนมของเรา กรุณาอ่านและทำตามประกาศอย่างเคร่งครัด !</p>
-      <p>สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน </span>นะคะ</p>
+      <p>สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน</span>นะคะ</p>
     </div>
 
     <h2 style="margin-top: 20px; color: #9B68ED;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 5px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Warning</h2>
@@ -545,7 +545,7 @@ function acceptRules() {
     </div>
 
     <label class="modal-label">นักวาด (ภาพหลัก) *</label>
-    <input type="text" id="charArtist" class="modal-input">
+    <input type="text" id="charArtist" class="modal-input" oninput="autoFillArtistLink(this, 'charArtistLink')">
     
     <label class="modal-label">ลิ้งก์นักวาด</label>
     <input type="text" id="charArtistLink" class="modal-input">
@@ -618,6 +618,9 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbxQf6kADkDT0Xz_LSVyfiGo
 let allData = []; 
 let isEditMode = false;
 
+// 🌟 สร้างระบบความจำ (Dictionary) สำหรับเก็บชื่อนักวาดและลิ้งก์ 🌟
+let artistLinksMap = {};
+
 function showPage(pageId, element) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
@@ -633,7 +636,6 @@ function showPage(pageId, element) {
   }
 }
 
-// ปลดล็อคให้กางการ์ดได้ตลอดเวลา
 function toggleMenu(headerElement) { 
     headerElement.parentElement.classList.toggle('open'); 
 }
@@ -649,6 +651,27 @@ function toggleGallery(event, galleryId) {
 }
 
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+// 🌟 ระบบดึงลิ้งก์ออโต้เมื่อพิมพ์ชื่อนักวาด 🌟
+function autoFillArtistLink(inputElem, targetId) {
+    const aName = inputElem.value.trim();
+    const targetElem = document.getElementById(targetId);
+    if (aName && artistLinksMap[aName] && targetElem && !targetElem.value.trim()) {
+        targetElem.value = artistLinksMap[aName];
+    }
+}
+
+// 🌟 ระบบดึงลิ้งก์ออโต้สำหรับรูปเพิ่มเติม 🌟
+function autoFillExtraArtistLink(inputElem) {
+    const aName = inputElem.value.trim();
+    const block = inputElem.closest('.extra-img-block');
+    if (block && aName && artistLinksMap[aName]) {
+        const targetElem = block.querySelector('.ex-artistlink');
+        if (targetElem && !targetElem.value.trim()) {
+            targetElem.value = artistLinksMap[aName];
+        }
+    }
+}
 
 function addExtraImgField(containerId, link, artist, artistLink, price) {
     link = link || '';
@@ -668,7 +691,7 @@ function addExtraImgField(containerId, link, artist, artistLink, price) {
         <div style="display:flex; gap:10px;">
             <div style="flex:1;">
                 <label class="modal-label">นักวาด (ถ้ามี)</label>
-                <input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" placeholder="ชื่อนักวาด" value="${artist}">
+                <input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" placeholder="ชื่อนักวาด" value="${artist}" oninput="autoFillExtraArtistLink(this)">
             </div>
             <div style="flex:1;">
                 <label class="modal-label">มูลค่า (ถ้ามี)</label>
@@ -812,6 +835,27 @@ async function fetchData() {
 
 function displayData(data) {
   try {
+      // 🌟 สร้างคลังความจำนักวาดจากข้อมูลทั้งหมดที่ดึงมาได้ 🌟
+      artistLinksMap = {};
+      if(Array.isArray(data)) {
+          data.forEach(item => {
+              // ดึงนักวาดหลัก
+              let aName = String(item['นักวาด'] || '').trim();
+              let aLink = String(item['Link นักวาด'] || '').trim();
+              if(aName && aLink) artistLinksMap[aName] = aLink;
+              
+              // ดึงนักวาดจากรูปเพิ่มเติม
+              let extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
+              const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
+              extraImgsArray.forEach(line => {
+                  const parts = line.split('|').map(p => p.trim());
+                  let exArtist = parts[1] || '';
+                  let exArtistLink = parts[2] || '';
+                  if (exArtist && exArtistLink) artistLinksMap[exArtist] = exArtistLink;
+              });
+          });
+      }
+
       const containers = { 'ขนมปัง': document.getElementById('bread-container'), 'เค้ก': document.getElementById('cake-container'), 'เครื่องดื่ม': document.getElementById('drink-container') };
       
       Object.values(containers).forEach(c => {
@@ -916,7 +960,7 @@ function displayData(data) {
 
                 return `
                 <div class="no-save" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
-                    <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(196, 164, 247, 0.5); background-color:#FFF8EC;">
+                    <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(196, 164, 247, 0.5); background-color:var(--bg);">
                         <img src="${parsedLink}" style="width:100%; display:block; pointer-events:none;" alt="รูปเพิ่มเติม" oncontextmenu="return false;" draggable="false">
                         <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none;"></div>
                         <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
@@ -1001,6 +1045,24 @@ async function moveItemInline(name, dir, category) {
     }
 }
 
+// ลบข้อมูล
+async function deleteItemInline(name) {
+    if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${name}" ออกจากเตาอบ?`)) {
+        try {
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({ action: "delete", name: name })
+            });
+            alert("[ สำเร็จ ] ลบข้อมูลแล้วค่ะ!");
+            fetchData(); 
+        } catch (e) {
+            console.error(e);
+            alert("[ ผิดพลาด ] เกิดข้อผิดพลาดในการเชื่อมต่อเพื่อลบข้อมูลค่ะ");
+        }
+    }
+}
+
 // เปิดฟอร์มแก้ไข
 function openEditForm(btn, oldName, idSafeName) {
     const card = btn.closest('.menu-card');
@@ -1022,7 +1084,7 @@ function openEditForm(btn, oldName, idSafeName) {
             <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
             <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" value="${parts[0] || ''}">
             <div style="display:flex; gap:10px;">
-                <div style="flex:1;"><label class="modal-label">นักวาด (ถ้ามี)</label><input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" value="${parts[1] || ''}"></div>
+                <div style="flex:1;"><label class="modal-label">นักวาด (ถ้ามี)</label><input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" value="${parts[1] || ''}" oninput="autoFillExtraArtistLink(this)"></div>
                 <div style="flex:1;"><label class="modal-label">มูลค่า (ถ้ามี)</label><input type="text" class="modal-input ex-price" style="margin-bottom:10px; padding:10px;" value="${parts[3] || ''}"></div>
             </div>
             <label class="modal-label">ลิ้งก์นักวาด (ถ้ามี)</label>
@@ -1059,7 +1121,8 @@ function openEditForm(btn, oldName, idSafeName) {
             </div>
 
             <label class="modal-label">นักวาด (ภาพหลัก):</label>
-            <input type="text" id="edit_artist_${idSafeName}" class="modal-input" value="${item['นักวาด'] || ''}">
+            <input type="text" id="edit_artist_${idSafeName}" class="modal-input" value="${item['นักวาด'] || ''}" oninput="autoFillArtistLink(this, 'edit_artistlink_${idSafeName}')">
+            
             <label class="modal-label">ลิ้งก์นักวาด:</label>
             <input type="text" id="edit_artistlink_${idSafeName}" class="modal-input" value="${item['Link นักวาด'] || ''}">
             <label class="modal-label">มูลค่า:</label>
