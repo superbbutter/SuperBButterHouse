@@ -108,7 +108,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .btn-view:hover { transform: translateY(-2px); }
 .btn-gallery { background: #F7EFFF; border: 1px dashed var(--main); color: var(--dark); margin-top: 10px; }
 
-/* สไตล์สำหรับหน้าโฮม: รวมตู้กระจก (Mini Grid) */
+/* 🌟 สไตล์สำหรับหน้าโฮม: รวมตู้กระจก (Mini Grid) 🌟 */
 .all-chars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 15px 10px; justify-items: center; margin-top: 5px; }
 .mini-char-card { width: 100%; cursor: pointer; transition: transform 0.2s ease; text-align: center; }
 .mini-char-card:hover { transform: translateY(-4px); }
@@ -117,7 +117,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     border-radius: 18px; 
     overflow: hidden; 
     border: 2px solid var(--main); 
-    background-color: #ffffff; 
+    background-color: #ffffff; /* พื้นหลังตู้กระจกสีขาว */
     box-shadow: 0 4px 10px rgba(107, 78, 144, 0.15); 
     position: relative;
     margin: 0;
@@ -654,7 +654,7 @@ function acceptRules() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                 รูปเพิ่มเติม (Gallery)
             </span>
-            <button type="button" onclick="addExtraImgField('addExtraImgsContainer')" style="background:var(--main); border:none; padding:5px 10px; border-radius:15px; font-size:12px; font-weight:bold; color:#fff; cursor:pointer; display:flex; align-items:center; gap:4px;">
+            <button type="button" onclick="addExtraImgField('addExtraImgsContainer')" style="background:var(--main); border:none; padding:5px 10px; border-radius:15px; font-size:11px; font-weight:bold; color:#fff; cursor:pointer; display:flex; align-items:center; gap:4px;">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 เพิ่มรูป
             </button>
@@ -692,6 +692,7 @@ let allData = [];
 let isEditMode = false;
 let allUniqueArtistLinks = []; 
 
+// 🌟 ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ 🌟
 function formatURL(url) {
     if(!url) return '';
     let cleanUrl = String(url).trim();
@@ -701,6 +702,7 @@ function formatURL(url) {
     return cleanUrl;
 }
 
+// 🌟 ฟังก์ชันป้องกันหน้าเว็บพังจากอักขระพิเศษ 🌟
 function escapeHTML(str) {
     if(str === null || str === undefined) return '';
     return String(str)
@@ -711,12 +713,15 @@ function escapeHTML(str) {
         .replace(/'/g, '&#039;');
 }
 
-function showPage(pageId, element) {
+// 🌟 ฟังก์ชันสลับหน้า (ปรับปรุงเพื่อรองรับการวาร์ปและปุ่มลอย) 🌟
+function showPage(pageId, element, skipScroll = false) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-  element.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  if(element) {
+      element.classList.add('active');
+  }
 
   // 🌟 ควบคุมปุ่ม Home ลอยตัว 🌟
   const fab = document.getElementById('floating-home-btn');
@@ -728,6 +733,11 @@ function showPage(pageId, element) {
       }
   }
 
+  // 🌟 ถ้าไม่ได้มาจากการวาร์ป ให้เลื่อนจอขึ้นบนสุดตามปกติ 🌟
+  if (!skipScroll) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   if (isEditMode) {
       if (pageId !== 'home') document.getElementById('admin-add-bar').style.display = 'block';
       else document.getElementById('admin-add-bar').style.display = 'none';
@@ -736,27 +746,38 @@ function showPage(pageId, element) {
   }
 }
 
+// 🌟 ฟังก์ชันวาร์ปไปหาการ์ด (แก้บั๊กชื่อหมวดหมู่ไม่ตรง 100%) 🌟
 function jumpToCard(categoryName, cardId) {
     let pageId = '';
     let navId = '';
-    if(categoryName.includes('ปัง')) { pageId = 'bread'; navId = 'nav-bread'; }
-    else if(categoryName.includes('เค้ก')) { pageId = 'cake'; navId = 'nav-cake'; }
-    else if(categoryName.includes('ดื่ม')) { pageId = 'drink'; navId = 'nav-drink'; }
+    
+    // ตรวจจับหมวดหมู่ให้แม่นยำ ไม่ว่าจะส่งเป็นภาษาไทยหรืออังกฤษ
+    if(categoryName === 'bread' || categoryName.includes('ปัง')) { pageId = 'bread'; navId = 'nav-bread'; }
+    else if(categoryName === 'cake' || categoryName.includes('เค้ก')) { pageId = 'cake'; navId = 'nav-cake'; }
+    else if(categoryName === 'drink' || categoryName.includes('ดื่ม')) { pageId = 'drink'; navId = 'nav-drink'; }
 
     if(pageId && navId) {
-        showPage(pageId, document.getElementById(navId));
+        // ส่งคำสั่งให้เปลี่ยนหน้า แต่ 'ห้าม' เลื่อนจอขึ้นบนสุด
+        showPage(pageId, document.getElementById(navId), true);
+        
+        // หน่วงเวลาให้หน้าเว็บโหลดโครงสร้างเสร็จก่อนวาร์ป
         setTimeout(() => {
             const card = document.getElementById(cardId);
             if(card) {
+                // วาร์ปลงมาตรงกลางจอพอดี
                 card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // กางข้อมูลการ์ดออก
                 if(!card.classList.contains('open')) {
                     card.classList.add('open');
                 }
+                
+                // เอฟเฟกต์กระพริบแสงให้รู้ว่าคือการ์ดนี้
                 card.style.transition = 'box-shadow 0.5s ease';
                 card.style.boxShadow = '0 0 25px rgba(196, 164, 247, 0.9)';
                 setTimeout(() => { card.style.boxShadow = '0 4px 12px rgba(107, 78, 144, 0.05)'; }, 2000);
             }
-        }, 300);
+        }, 100); 
     }
 }
 
@@ -1035,7 +1056,6 @@ function displayData(data) {
         const loveStatus = String(item['สถานะความรัก'] || '2');
         const usageRights = String(item['สิทธิ์การใช้งาน'] || ''); 
         
-        // 🌟 ประกาศตัวแปรอาร์เรย์ให้ครบถ้วนแล้ว ไม่พังแน่นอน 🌟
         const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
         const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
         
@@ -1066,6 +1086,7 @@ function displayData(data) {
             if (category === 'เค้ก') catForWarp = 'cake';
             if (category === 'เครื่องดื่ม') catForWarp = 'drink';
 
+            // 🌟 แก้ไข: ห้ามลบตัวแปร ส่งไปให้ฟังก์ชันทำงานได้ชัวร์ 🌟
             let miniCardHtml = `
             <div class="mini-char-card" onclick="jumpToCard('${catForWarp}', '${mainCardId}')">
                 <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 6px;">
@@ -1175,8 +1196,7 @@ function displayData(data) {
           <div class="menu-card" id="${mainCardId}">
             <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
               
-              <div class="menu-img-wrapper" style="background-color: #ffffff;">
-                  <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
+              <div class="menu-img-wrapper" style="background-color: #ffffff;"> <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
                   ${mainWatermarkHtml}
                   <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
               </div>
