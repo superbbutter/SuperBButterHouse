@@ -478,17 +478,17 @@ function acceptRules() {
         <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--dark); display: flex; align-items: center; gap: 6px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M3 8c0-3 3-4 6-4s5 1 9 4"></path></svg> หมวดขนมปัง
         </h4>
-        <div id="home-bread-grid" class="all-chars-grid"></div>
+        <div id="home-bread-grid" class="all-chars-grid"><div class="loading-text" style="grid-column: 1 / -1; font-size: 12px; opacity: 0.7;">กำลังจัดเรียงขนม...</div></div>
 
         <h4 style="font-size: 14px; margin-top: 20px; margin-bottom: 10px; color: var(--dark); display: flex; align-items: center; gap: 6px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"></path><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"></path><path d="M12 11v-4"></path><path d="M12 3v1"></path></svg> หมวดเค้ก
         </h4>
-        <div id="home-cake-grid" class="all-chars-grid"></div>
+        <div id="home-cake-grid" class="all-chars-grid"><div class="loading-text" style="grid-column: 1 / -1; font-size: 12px; opacity: 0.7;">กำลังจัดเรียงขนม...</div></div>
 
         <h4 style="font-size: 14px; margin-top: 20px; margin-bottom: 10px; color: var(--dark); display: flex; align-items: center; gap: 6px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg> หมวดเครื่องดื่ม
         </h4>
-        <div id="home-drink-grid" class="all-chars-grid"></div>
+        <div id="home-drink-grid" class="all-chars-grid"><div class="loading-text" style="grid-column: 1 / -1; font-size: 12px; opacity: 0.7;">กำลังจัดเรียงขนม...</div></div>
       </div>
     </div>
 
@@ -689,7 +689,6 @@ function showPage(pageId, element) {
   }
 }
 
-// 🌟 ฟังก์ชันวาร์ปจากหน้าโฮมไปการ์ด 🌟
 function jumpToCard(category, cardId) {
     let pageId = '';
     let navId = '';
@@ -921,7 +920,7 @@ function displayData(data) {
       const tempMap = new Map(); 
       if(Array.isArray(data)) {
           data.forEach(item => {
-              if(!item || typeof item !== 'object') return; // กันบั๊ก
+              if(!item || typeof item !== 'object') return; // กันบั๊กข้อมูลว่างจาก Google Sheet
 
               const name = String(item['นักวาด'] || '').trim();
               const link = String(item['Link นักวาด'] || '').trim();
@@ -966,7 +965,7 @@ function displayData(data) {
       }
 
       data.forEach((item, index) => {
-        if(!item || typeof item !== 'object') return;
+        if(!item || typeof item !== 'object') return; // กันบั๊กข้อมูลว่างจาก Google Sheet
 
         const target = containers[item['หมวดหมู่']];
         const gridTarget = homeGrids[item['หมวดหมู่']];
@@ -976,7 +975,7 @@ function displayData(data) {
         const cleanName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
         const safeName = name.replace(/'/g, "\\'");
         
-        // 🌟 ประกาศตัวแปรนี้กลับมาแล้ว! ไร้บั๊กแน่นอน 🌟
+        // 🌟 ประกาศตัวแปรนี้แล้ว ไม่มีบั๊กแน่นอน 🌟
         const escapedCleanName = cleanName.replace(/"/g, '&quot;'); 
         
         const idSafeName = safeName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + index; 
@@ -1108,6 +1107,7 @@ function displayData(data) {
             </div>`;
         }
 
+        // 🌟 ใส่ ID ให้กับการ์ดเพื่อใช้ในการวาร์ป 🌟
         target.innerHTML += `
           <div class="menu-card" id="${mainCardId}">
             <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
@@ -1157,7 +1157,7 @@ function displayData(data) {
 
 async function moveItemInline(index, dir) {
     document.querySelectorAll('.btn-move-inline').forEach(b => b.disabled = true);
-    const name = allData[index]['ชื่อขนม']; 
+    const name = allData[index]['ชื่อขนม']; // ส่งชื่อที่มีอักขระล่องหนไปให้หลังบ้านจัดการ
     const category = allData[index]['หมวดหมู่'];
     try {
         await fetch(API_URL, {
@@ -1175,6 +1175,7 @@ async function moveItemInline(index, dir) {
 
 async function deleteItemInline(index) {
     const name = allData[index]['ชื่อขนม']; 
+    // ตัดอักขระล่องหนออกตอนโชว์ Popup ให้ดูสวยงาม
     const showName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
     if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${showName}" ออกจากเตาอบ?`)) {
         try {
@@ -1202,6 +1203,7 @@ function openEditForm(btn, index, idSafeName) {
     const isWatermarkChecked = item['ลายน้ำภาพหลัก'] === 'Yes' ? 'checked' : '';
 
     const datalistId = `datalist_edit_${idSafeName}`;
+    // ตอนแก้ไข ลบอักขระล่องหนออกเพื่อให้ตอนพิมพ์ง่าย
     const cleanEditName = String(item['ชื่อขนม']).replace(/[\u200B-\u200D\uFEFF]/g, '');
 
     let existingExtraImgsHtml = '';
