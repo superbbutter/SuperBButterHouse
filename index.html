@@ -14,7 +14,7 @@
 :root {
   /* 🎨 โทนสีครีม - ม่วงพาสเทล 🎨 */
   --bg: #FFF8EC; 
-  --img-bg-pale: #ffffff; /* สีขาวบริสุทธิ์สำหรับพื้นหลังรูปโปร่งใส */
+  --img-bg-pale: #FFFDF8; /* สีครีมอ่อนพิเศษสำหรับรูปเพิ่มเติม */
   --main: #C4A4F7; 
   --dark: #6B4E90; 
   --darker: #4A316A; 
@@ -92,7 +92,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .menu-card:hover { transform: translateY(-3px); }
 .menu-header { display: block; cursor: pointer; }
 
-/* โครงสร้างภาพหลักเพื่อซ่อนลายน้ำและกันเซฟ (สีขาวบริสุทธิ์) */
+/* 🌟 ภาพหลักสีขาว 🌟 */
 .menu-img-wrapper { position: relative; width: 100%; background-color: #ffffff; border-bottom: 1px solid rgba(196, 164, 247, 0.3); }
 .menu-img { width: 100%; height: auto; aspect-ratio: 879 / 1024; object-fit: cover; display: block; pointer-events: none; }
 
@@ -650,7 +650,7 @@ let allData = [];
 let isEditMode = false;
 let allUniqueArtistLinks = []; 
 
-// ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ (เติม http ให้อัตโนมัติถ้าลืม)
+// 🌟 ฟังก์ชันจัดการลิ้งก์ให้คลิกได้เสมอ (เติม http ให้อัตโนมัติถ้าลืม) 🌟
 function formatURL(url) {
     if(!url) return '';
     let cleanUrl = String(url).trim();
@@ -684,22 +684,14 @@ function jumpToCard(category, cardId) {
     else if(category === 'เครื่องดื่ม') { pageId = 'drink'; navId = 'nav-drink'; }
 
     if(pageId && navId) {
-        // เปลี่ยนหน้า
         showPage(pageId, document.getElementById(navId));
-        
-        // รอให้หน้าต่างเปลี่ยนเสร็จแปปนึง แล้วค่อยเลื่อนลงมา
         setTimeout(() => {
             const card = document.getElementById(cardId);
             if(card) {
-                // วาร์ปมาตรงกลางจอ
                 card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // กางการ์ดออกอัตโนมัติ
                 if(!card.classList.contains('open')) {
                     card.classList.add('open');
                 }
-                
-                // เอฟเฟกต์กระพริบแสงสีม่วงเบาๆ ให้รู้ว่าคือการ์ดนี้
                 card.style.transition = 'box-shadow 0.5s ease';
                 card.style.boxShadow = '0 0 25px rgba(196, 164, 247, 0.9)';
                 setTimeout(() => { card.style.boxShadow = '0 4px 12px rgba(107, 78, 144, 0.05)'; }, 2000);
@@ -834,7 +826,7 @@ async function submitNewCharacter() {
         return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญที่มีสัญลักษณ์ * ให้ครบถ้วนค่ะ");
     }
 
-    // ระบบป้องกันชื่อซ้ำ: เติมอักขระล่องหน (Zero-width space) ให้ชื่อไม่ซ้ำใน Google Sheet
+    // 🌟 ระบบป้องกันชื่อซ้ำ: เติมอักขระล่องหน (Zero-width space) ให้ชื่อไม่ซ้ำใน Google Sheet 🌟
     let finalUniqueName = nameInput.trim();
     while (allData.some(i => i['ชื่อขนม'] === finalUniqueName)) {
         finalUniqueName += '\u200B'; 
@@ -939,7 +931,7 @@ function displayData(data) {
           cards.forEach(card => card.remove());
       });
 
-      // 🌟 เคลียร์ตู้กระจกในหน้าโฮม 🌟
+      // เคลียร์ตู้กระจกในหน้าโฮม
       const gridContainer = document.getElementById('all-chars-grid');
       if (gridContainer) gridContainer.innerHTML = '';
 
@@ -956,9 +948,11 @@ function displayData(data) {
         const name = String(item['ชื่อขนม'] || '');
         const cleanName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
         const safeName = name.replace(/'/g, "\\'");
+        
+        // 🌟 แก้บั๊ก: ต้องแน่ใจว่าตัวแปรพวกนี้ถูกประกาศให้ครบ! 🌟
         const idSafeName = safeName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + index; 
         const galleryId = 'gallery_' + idSafeName;
-        const mainCardId = 'card_' + idSafeName; // สร้าง ID สำหรับกดลิงก์มา
+        const mainCardId = 'card_' + idSafeName; 
         
         const saleStatus = String(item['สถานะบ้าน'] || '1');
         const loveStatus = String(item['สถานะความรัก'] || '2');
@@ -976,7 +970,7 @@ function displayData(data) {
           if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
         }
 
-        // 🌟 เพิ่มลงในตู้กระจกหน้าโฮม 🌟
+        // เพิ่มลงในตู้กระจกหน้าโฮม
         if (gridContainer) {
             let miniCardHtml = `
             <div class="mini-char-card" onclick="jumpToCard('${item['หมวดหมู่']}', '${mainCardId}')">
