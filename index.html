@@ -191,9 +191,9 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 
 /* 🌟 ปุ่มกลับไปบนสุดลอยตัว 🌟 */
 .floating-top-btn {
-    display: none; /* ซ่อนไว้ก่อน จะโชว์เมื่อเลื่อนจอลง */
+    display: none; 
     position: fixed;
-    bottom: 95px; /* วางไว้เหนือปุ่มโฮมเล็กน้อย */
+    bottom: 95px; 
     right: 25px;
     width: 50px;
     height: 50px;
@@ -1122,6 +1122,7 @@ function exitEditMode() {
     displayData(allData); 
 }
 
+// 🌟 ฟังก์ชันเปลี่ยนโหมดจัดเรียงและบันทึกลง Database 🌟
 async function toggleSortMode(mode) {
     globalSortMode = mode;
     
@@ -1144,6 +1145,7 @@ async function toggleSortMode(mode) {
     } catch(e) { console.error("Save config failed"); }
 }
 
+// 🌟 แก้บั๊กจัดเรียงชื่อซ้ำ: ให้ใช้ index เดิมอย่างแม่นยำ เพื่อให้การย้ายขึ้น/ลงทำงานตรงทิศเสมอ 🌟
 function sortItems(items, isHome) {
     return items.slice().sort((a, b) => {
         let sA = parseInt(a['สถานะบ้าน'] || '1');
@@ -1159,10 +1161,12 @@ function sortItems(items, isHome) {
         }
         if (weightStatusA !== weightStatusB) return weightStatusA - weightStatusB;
 
+        // ลบช่องว่างและอักขระพิเศษออก เพื่อเปรียบเทียบชื่อให้ชัวร์ว่า "ซ้ำกัน 100%"
         let nA_clean = String(a['ชื่อขนม'] || '').replace(/[\s\u200B-\u200D\uFEFF]/g, '').toLowerCase();
         let nB_clean = String(b['ชื่อขนม'] || '').replace(/[\s\u200B-\u200D\uFEFF]/g, '').toLowerCase();
         
         if (nA_clean !== nB_clean) {
+            // ถ้าชื่อไม่ซ้ำกัน จัดเรียงตามตัวอักษรตามปกติ
             let nA_show = String(a['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
             let nB_show = String(b['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
             
@@ -1174,6 +1178,7 @@ function sortItems(items, isHome) {
             return nA_show.localeCompare(nB_show, 'th');
         }
 
+        // ถ้าชื่อซ้ำกันเป๊ะ ให้ยึดลำดับของเดิม เพื่อให้ปุ่มลูกศรเลื่อนขึ้นลงได้ตามใจชอบแบบเดียวกับโหมด Manual
         return a.originalIndex - b.originalIndex;
     });
 }
@@ -1196,6 +1201,7 @@ function displayData(data) {
       let configItem = data.find(i => i && i['ชื่อขนม'] === '__SYS_CONFIG_SORT__');
       if (configItem) globalSortMode = configItem['คำบรรยาย'] || 'AUTO';
       
+      // 🌟 อัปเดตสีปุ่มสลับโหมดจัดเรียงให้เห็นชัดๆ 🌟
       const btnAuto = document.getElementById('btn-sort-auto');
       const btnManual = document.getElementById('btn-sort-manual');
       if(btnAuto && btnManual) {
@@ -1421,10 +1427,25 @@ function displayData(data) {
 
                   let adminBtns = '';
                   if(isEditMode) {
-                      adminBtns = `
-                      <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(196, 164, 247, 0.5); padding-top: 10px;">
+                      // 🌟 ในโหมดอัตโนมัติ ถ้าไม่มีชื่อซ้ำ ให้ซ่อนปุ่มสลับที่ 🌟
+                      let showMoveBtns = true;
+                      if (globalSortMode === 'AUTO') {
+                          let dupCount = itemsInCategory.filter(i => {
+                              let n1 = String(i['ชื่อขนม'] || '').replace(/[\s\u200B-\u200D\uFEFF]/g, '').toLowerCase();
+                              let n2 = String(item['ชื่อขนม'] || '').replace(/[\s\u200B-\u200D\uFEFF]/g, '').toLowerCase();
+                              return n1 === n2;
+                          }).length;
+                          if (dupCount <= 1) showMoveBtns = false;
+                      }
+
+                      let moveBtnsHtml = showMoveBtns ? `
                           <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline(${origIndex}, -1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
                           <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline(${origIndex}, 1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg></button>
+                      ` : '';
+
+                      adminBtns = `
+                      <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(196, 164, 247, 0.5); padding-top: 10px;">
+                          ${moveBtnsHtml}
                           <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, ${origIndex}, '${idSafeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> แก้ไข</button>
                           <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline(${origIndex})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> ลบ</button>
                       </div>`;
@@ -1684,7 +1705,9 @@ async function saveInlineEdit(origIndex, idSafeName, containerId) {
     const newWatermark = document.getElementById(`edit_watermark_${idSafeName}`).checked ? 'Yes' : 'No';
     const newExtraImgs = getExtraImgsData(containerId); 
 
-    if(!newNameInput || !finalImgData) return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
+    if(!newNameInput || !finalImgData || !newArtist || !newPrice) {
+        return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก, นักวาด, มูลค่า) ให้ครบถ้วนค่ะ");
+    }
 
     let finalUniqueName = newNameInput.trim();
     while (allData.some((i, idx) => i && i['ชื่อขนม'] === finalUniqueName && idx !== origIndex)) {
