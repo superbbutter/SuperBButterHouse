@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SuperBButter - House</title>
+<title>SuperBButter - SuperBButterHouse</title>
 <link rel="icon" type="image/x-icon" href="https://drive.google.com/thumbnail?id=1aTumT9SN2pzCyOtInZyv85ksTcZyv5g1&sz=w1000">
 
 <link rel="preload" href="https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600" as="image">
@@ -58,6 +58,22 @@ body.locked { overflow: hidden; }
 #admin-bar { display: none; background: var(--darker); color: #fff; padding: 12px; text-align: center; position: sticky; top: 0; z-index: 9999; width: 100%; font-size: 14px; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 .btn-exit-edit { margin-left: 10px; padding: 5px 15px; border-radius: 20px; border: none; background: var(--main); color: #fff; cursor: pointer; font-weight: 600; transition: 0.2s; }
 .btn-exit-edit:hover { background: #B084F5; transform: scale(1.05); }
+
+/* 🌟 สไตล์ปุ่มเลือกโหมดการจัดเรียง 🌟 */
+.sort-btn {
+    padding: 4px 12px; 
+    border-radius: 16px; 
+    cursor: pointer; 
+    transition: 0.3s ease; 
+    font-weight: 500; 
+    color: #fff;
+}
+.sort-btn:hover { background: rgba(255,255,255,0.2); }
+.sort-btn.active {
+    background: #fff; 
+    color: var(--darker); 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
 #admin-add-bar { display: none; width: 100%; margin-bottom: 15px; animation: fadeIn 0.4s ease; }
 .btn-admin-add { width: 100%; padding: 15px; background: #B084F5; color: #fff; border: none; border-radius: 20px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(176, 132, 245, 0.3); transition: var(--transition); }
@@ -173,6 +189,31 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
     box-shadow: 0 8px 25px rgba(155, 104, 237, 0.6);
 }
 
+/* 🌟 ปุ่มกลับไปบนสุดลอยตัว 🌟 */
+.floating-top-btn {
+    display: none; /* ซ่อนไว้ก่อน จะโชว์เมื่อเลื่อนจอลง */
+    position: fixed;
+    bottom: 95px; /* วางไว้เหนือปุ่มโฮมเล็กน้อย */
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    color: var(--main);
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(107, 78, 144, 0.15);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2000;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid var(--main);
+}
+.floating-top-btn:hover {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 6px 20px rgba(155, 104, 237, 0.3);
+    background: #F7EFFF;
+}
+
 .rule-box { background: rgba(255, 255, 255, 0.7); padding: 15px; border-radius: 15px; font-size: 13px; line-height: 1.6; border: 1px dashed var(--main); text-align: left; }
 .highlight { color: #9B68ED; font-weight: 500; } 
 .btn-accept { font-size: 16px; padding: 15px; margin-top: 15px; animation: pulse 2s infinite; cursor: pointer; width: 100%; background: var(--main); color: #fff; border-radius: 20px; font-weight: 600; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; }
@@ -195,7 +236,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 /* Status Lights */
 .status-light { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 5px; flex-shrink: 0;}
 .status-sp-ota { background: #CBB2FF; box-shadow: 0 0 8px #CBB2FF; }
-.status-tent { background: #6B4E90; box-shadow: 0 0 8px #6B4E90; }
+.status-eo { background: #6B4E90; box-shadow: 0 0 8px #6B4E90; }
 .status-forever { background: #9CA3AF; }
 
 /* ไอคอนวงกลม */
@@ -215,6 +256,11 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 .love-taken { background: var(--badge-taken); } 
 .love-single { background: var(--badge-single); } 
 .love-none { background: var(--badge-none); } 
+
+/* 🌟 ปุ่มวาปหมวดหมู่ 🌟 */
+.jump-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.jump-btn { background: #fff; border: 1px dashed var(--main); padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; color: var(--dark); font-weight: 500; transition: 0.2s; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(107, 78, 144, 0.05); }
+.jump-btn:hover { background: #F7EFFF; border-color: var(--dark); transform: translateY(-2px); }
 
 /* Modals */
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); overflow-y: auto; }
@@ -313,6 +359,23 @@ input:checked + .slider:before { transform: translateX(20px); }
     display: block;
     object-fit: contain;
 }
+
+/* 🌟 เช็คบ็อกซ์ฟิลเตอร์ (ใหม่) 🌟 */
+.filter-container {
+    display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; width: 100%;
+}
+.filter-btn {
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--darker); background: rgba(255, 255, 255, 0.7); padding: 8px 16px; border-radius: 12px; border: 2px solid rgba(196, 164, 247, 0.4); transition: all 0.2s ease; box-shadow: 0 4px 10px rgba(107, 78, 144, 0.05);
+}
+.filter-btn:hover { border-color: var(--main); background: rgba(255,255,255,0.9); }
+.filter-btn input {
+    appearance: none; -webkit-appearance: none; margin: 0; width: 22px; height: 22px; border: 2px solid #cbd5e1; border-radius: 6px; background-color: #fff; display: grid; place-content: center; cursor: pointer; transition: 0.2s ease; flex-shrink: 0;
+}
+.filter-btn input::before {
+    content: ""; width: 12px; height: 12px; transform: scale(0); transition: 120ms transform ease-in-out; background-color: var(--main); clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.filter-btn input:checked { border-color: var(--main); background-color: #F7EFFF; }
+.filter-btn input:checked::before { transform: scale(1); }
 </style>
 
 <script>
@@ -344,9 +407,19 @@ function acceptRules() {
 <body class="locked">
 
 <div id="admin-bar">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right:4px;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg> 
-    โหมดแก้ไขกำลังทำงาน 
-    <button class="btn-exit-edit" onclick="exitEditMode()">ออกจากการแก้ไข</button>
+    <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px;">
+        <div style="font-weight: 600;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right:4px;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg> 
+            โหมดแก้ไข
+        </div>
+        
+        <div style="background: rgba(0,0,0,0.2); padding: 4px; border-radius: 20px; font-size: 13px; display: flex; align-items: center; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);">
+            <div id="btn-sort-auto" class="sort-btn" onclick="toggleSortMode('AUTO')">จัดเรียงอัตโนมัติ</div>
+            <div id="btn-sort-manual" class="sort-btn" onclick="toggleSortMode('MANUAL')">จัดเรียงเอง</div>
+        </div>
+
+        <button class="btn-exit-edit" onclick="exitEditMode()">ออก</button>
+    </div>
 </div>
 
 <div id="rules-gate">
@@ -359,7 +432,7 @@ function acceptRules() {
     <div class="rule-box">
       <p><strong>กรุณาอ่านรายละเอียดให้ครบถ้วน</strong></p>
       <p>ก่อนเข้าสู่ครัวเข้าชมขนมของเรา กรุณาอ่านและทำตามประกาศอย่างเคร่งครัด !</p>
-      <p>สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน</span>นะคะ</p>
+      <p>สามารถชื่นชมเด็ก ๆ และอุ้มไปวาดได้แต่ขอความร่วมมือ <span style="text-decoration: underline;">แจ้งให้ทางร้านทราบก่อน</span> นะคะ</p>
     </div>
 
     <h2 style="margin-top: 20px; color: #9B68ED;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 5px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Warning</h2>
@@ -440,7 +513,7 @@ function acceptRules() {
         </h3>
         <div style="font-size: 13px; line-height: 1.8;">
             <div><span class="status-light status-sp-ota"></span> <strong>SP / OTA :</strong> พร้อมสำหรับการย้ายบ้าน</div>
-            <div><span class="status-light status-tent"></span> <strong>TENT :</strong> ยังลังเลใจ (พิจารณาอยู่ค่ะ)</div>
+            <div><span class="status-light status-eo"></span> <strong>EO :</strong> ยังลังเลใจ (พิจารณาอยู่ค่ะ)</div>
             <div><span class="status-light status-forever"></span> <strong>Forever Home :</strong> ไม่ปล่อยแน่นอน ถ้าโสดอยู่จีบได้</div>
             <div style="border-top: 1px dashed var(--main); margin: 8px 0;"></div>
             
@@ -481,6 +554,21 @@ function acceptRules() {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
             ตู้กระจกโชว์ขนม
         </h3>
+
+        <div class="filter-container">
+            <label class="filter-btn">
+                <input type="checkbox" id="filter-sp" checked onchange="applyHomeFilter()">
+                <span style="display:flex; align-items:center; gap:4px;"><span class="status-light status-sp-ota" style="margin:0;"></span> SP/OTA</span>
+            </label>
+            <label class="filter-btn">
+                <input type="checkbox" id="filter-eo" checked onchange="applyHomeFilter()">
+                <span style="display:flex; align-items:center; gap:4px;"><span class="status-light status-eo" style="margin:0;"></span> EO</span>
+            </label>
+            <label class="filter-btn">
+                <input type="checkbox" id="filter-fh" checked onchange="applyHomeFilter()">
+                <span style="display:flex; align-items:center; gap:4px;"><span class="status-light status-forever" style="margin:0;"></span> Forever Home</span>
+            </label>
+        </div>
 
         <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--dark); display: flex; align-items: center; gap: 6px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M3 8c0-3 3-4 6-4s5 1 9 4"></path></svg> หมวดขนมปัง
@@ -564,6 +652,10 @@ function acceptRules() {
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
 </div>
 
+<div id="floating-top-btn" class="floating-top-btn" onclick="scrollToTop()" title="เลื่อนขึ้นบนสุด">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</div>
+
 <div id="addCharModal" class="modal">
   <div class="modal-content" style="text-align: left;">
     <h3 style="text-align: center; margin-bottom: 20px; display:flex; justify-content:center; align-items:center; gap:6px;">
@@ -603,13 +695,14 @@ function acceptRules() {
     </div>
 
     <label class="modal-label">นักวาด (ภาพหลัก) *</label>
-    <input type="text" id="charArtist" class="modal-input" oninput="populateArtistSuggestions(this.value, 'addArtistLinksDatalist')">
+    <input type="text" id="charArtist" class="modal-input" oninput="populateArtistSuggestions(this.value, 'addArtistLinksDatalist')" placeholder="พิมพ์เพื่อค้นหา...">
     
     <label class="modal-label">ลิ้งก์นักวาด</label>
     <input type="text" id="charArtistLink" class="modal-input" list="addArtistLinksDatalist" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี">
-    
+    <datalist id="addArtistLinksDatalist"></datalist>
+
     <label class="modal-label">มูลค่า *</label>
-    <input type="text" id="charPrice" class="modal-input">
+    <input type="text" id="charPrice" class="modal-input" placeholder="ตัวอย่าง: 500, 10$, Free">
     
     <label class="modal-label">ลิ้งก์เพิ่มเติม (เพจ/เว็บตัวละคร)</label>
     <input type="text" id="charMore" class="modal-input" placeholder="ถ้าไม่มีให้เว้นว่างไว้">
@@ -617,7 +710,7 @@ function acceptRules() {
     <label class="modal-label">สถานะบ้าน *</label>
     <select id="charSale" class="modal-select">
         <option value="1">Forever Home</option>
-        <option value="2">TENT</option>
+        <option value="2">EO</option>
         <option value="3">OTA/SP</option>
     </select>
 
@@ -669,16 +762,28 @@ function acceptRules() {
   </div>
 </div>
 
-<datalist id="addArtistLinksDatalist"></datalist>
-
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbxQf6kADkDT0Xz_LSVyfiGo_z4ntyRUlJzLJ1l5BhMYlEJCVFsaHDbYc9UEu3NPcFo/exec';
 
 let allData = []; 
 let isEditMode = false;
 let allUniqueArtistLinks = []; 
+let globalSortMode = 'AUTO'; 
 
-// 🌟 ฟังก์ชันแปลงลิ้งก์ให้แสดงผลได้ (รองรับ Google Drive) 🌟
+// 🌟 ฟังก์ชันจัดการแสดงปุ่มเลื่อนขึ้นบนสุด 🌟
+window.onscroll = function() {
+    const topBtn = document.getElementById("floating-top-btn");
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        topBtn.style.display = "flex";
+    } else {
+        topBtn.style.display = "none";
+    }
+};
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function parseImageUrlForPreview(url) {
     if(!url) return '';
     let parsedLink = String(url).trim();
@@ -689,7 +794,6 @@ function parseImageUrlForPreview(url) {
     return parsedLink;
 }
 
-// 🌟 ฟังก์ชันอัปเดตพรีวิวรูป 🌟
 function updateImgPreview(inputElement, previewContainerId) {
     const url = inputElement.value;
     const previewContainer = document.getElementById(previewContainerId);
@@ -699,7 +803,7 @@ function updateImgPreview(inputElement, previewContainerId) {
         const finalUrl = parseImageUrlForPreview(url);
         previewContainer.innerHTML = `<img src="${finalUrl}" alt="Preview" onerror="this.parentElement.innerText='โหลดรูปไม่สำเร็จ กรุณาตรวจสอบลิ้งก์'; this.parentElement.style.padding='15px'; this.parentElement.style.color='#D484B6';">`;
         previewContainer.style.display = 'block';
-        previewContainer.style.padding = '0'; // reset padding if it was previously set by error
+        previewContainer.style.padding = '0'; 
     } else {
         previewContainer.innerHTML = '';
         previewContainer.style.display = 'none';
@@ -723,6 +827,15 @@ function escapeHTML(str) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
+}
+
+function formatPrice(val) {
+    let p = String(val).trim();
+    if (!p || p === '-') return p;
+    if (/^[\d,\.]+$/.test(p)) {
+        return p + ' ฿';
+    }
+    return p;
 }
 
 function showPage(pageId, element, skipScroll = false) {
@@ -800,7 +913,7 @@ function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 function populateArtistSuggestions(typedName, datalistId) {
     const listElem = document.getElementById(datalistId);
     if(!listElem) return;
-    listElem.innerHTML = ''; 
+    listElem.innerHTML = '';
     typedName = typedName.trim().toLowerCase();
     if(!typedName) return;
 
@@ -808,9 +921,23 @@ function populateArtistSuggestions(typedName, datalistId) {
         if(pair.name.toLowerCase().includes(typedName)) {
             const option = document.createElement('option');
             option.value = pair.link;
-            option.textContent = `ใช้ล่าสุดกับนักวาด: ${pair.name}`;
+            option.textContent = `ลิงก์ของ: ${pair.name}`;
             listElem.appendChild(option);
         }
+    });
+}
+
+function applyHomeFilter() {
+    const showSp = document.getElementById('filter-sp').checked;
+    const showEo = document.getElementById('filter-eo').checked;
+    const showFh = document.getElementById('filter-fh').checked;
+    
+    document.querySelectorAll('.mini-char-card').forEach(card => {
+        const s = card.getAttribute('data-status');
+        if (s === '3' && showSp) card.style.display = 'block';
+        else if (s === '2' && showEo) card.style.display = 'block';
+        else if (s === '1' && showFh) card.style.display = 'block';
+        else card.style.display = 'none';
     });
 }
 
@@ -836,6 +963,7 @@ function addExtraImgField(containerId, link, artist, artistLink, price) {
     block.style.cssText = 'background: rgba(196, 164, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;';
     
     const datalistId = `datalist_ex_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+    const previewId = `preview_new_ex_${Date.now()}_${Math.random().toString(16).slice(2)}`;
     
     block.innerHTML = `
         <div style="position: absolute; right: 15px; top: 12px; display: flex; gap: 5px; z-index: 10;">
@@ -844,15 +972,15 @@ function addExtraImgField(containerId, link, artist, artistLink, price) {
             <span onclick="this.closest('.extra-img-block').remove()" style="cursor: pointer; color: #D484B6; font-weight: 600; font-size:12px; background:#FFF5F8; padding:2px 8px; border-radius:10px; display:flex; align-items:center;">ลบทิ้ง</span>
         </div>
         <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
-        <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" placeholder="วางลิ้งก์รูปภาพที่นี่" value="${escapeHTML(link)}" oninput="updateImgPreview(this, 'preview_new_ex_${datalistId}')">
-        <div id="preview_new_ex_${datalistId}" class="image-preview-container" style="display: ${link ? 'block' : 'none'}; margin-bottom:10px;">
+        <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" placeholder="วางลิ้งก์รูปภาพที่นี่" value="${escapeHTML(link)}" oninput="updateImgPreview(this, '${previewId}')">
+        <div id="${previewId}" class="image-preview-container" style="display: ${link ? 'block' : 'none'}; margin-bottom:10px;">
             ${link ? `<img src="${parseImageUrlForPreview(link)}" onerror="this.parentElement.innerText='โหลดรูปไม่สำเร็จ กรุณาตรวจสอบลิ้งก์'; this.parentElement.style.padding='15px'; this.parentElement.style.color='#D484B6';">` : ''}
         </div>
         
         <div style="display:flex; gap:10px;">
             <div style="flex:1;">
                 <label class="modal-label">นักวาด (ถ้ามี)</label>
-                <input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" placeholder="ชื่อนักวาด" value="${escapeHTML(artist)}" oninput="populateArtistSuggestions(this.value, '${datalistId}')">
+                <input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" placeholder="พิมพ์ค้นหา..." value="${escapeHTML(artist)}" oninput="populateArtistSuggestions(this.value, '${datalistId}')">
             </div>
             <div style="flex:1;">
                 <label class="modal-label">มูลค่า (ถ้ามี)</label>
@@ -994,6 +1122,62 @@ function exitEditMode() {
     displayData(allData); 
 }
 
+async function toggleSortMode(mode) {
+    globalSortMode = mode;
+    
+    let configItem = allData.find(i => i && i['ชื่อขนม'] === '__SYS_CONFIG_SORT__');
+    if (configItem) {
+        configItem['คำบรรยาย'] = mode;
+    } else {
+        allData.push({ "หมวดหมู่": "SYSTEM", "ชื่อขนม": "__SYS_CONFIG_SORT__", "คำบรรยาย": mode });
+    }
+
+    displayData(allData); 
+    
+    const dataObj = { "หมวดหมู่": "SYSTEM", "ชื่อขนม": "__SYS_CONFIG_SORT__", "คำบรรยาย": mode };
+    try {
+        if (configItem) {
+            await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "edit", oldName: "__SYS_CONFIG_SORT__", data: dataObj }) });
+        } else {
+            await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "add", data: dataObj }) });
+        }
+    } catch(e) { console.error("Save config failed"); }
+}
+
+function sortItems(items, isHome) {
+    return items.slice().sort((a, b) => {
+        let sA = parseInt(a['สถานะบ้าน'] || '1');
+        let sB = parseInt(b['สถานะบ้าน'] || '1');
+        
+        let weightStatusA, weightStatusB;
+        if (isHome) {
+            weightStatusA = sA === 3 ? 1 : (sA === 2 ? 2 : 3);
+            weightStatusB = sB === 3 ? 1 : (sB === 2 ? 2 : 3);
+        } else {
+            weightStatusA = sA;
+            weightStatusB = sB;
+        }
+        if (weightStatusA !== weightStatusB) return weightStatusA - weightStatusB;
+
+        let nA_clean = String(a['ชื่อขนม'] || '').replace(/[\s\u200B-\u200D\uFEFF]/g, '').toLowerCase();
+        let nB_clean = String(b['ชื่อขนม'] || '').replace(/[\s\u200B-\u200D\uFEFF]/g, '').toLowerCase();
+        
+        if (nA_clean !== nB_clean) {
+            let nA_show = String(a['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
+            let nB_show = String(b['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
+            
+            let weightLangA = nA_clean === 'tba' ? 3 : (/^[a-z]/.test(nA_clean) ? 1 : 2);
+            let weightLangB = nB_clean === 'tba' ? 3 : (/^[a-z]/.test(nB_clean) ? 1 : 2);
+            
+            if (weightLangA !== weightLangB) return weightLangA - weightLangB;
+            
+            return nA_show.localeCompare(nB_show, 'th');
+        }
+
+        return a.originalIndex - b.originalIndex;
+    });
+}
+
 async function fetchData() { 
     try {
         const response = await fetch(API_URL);
@@ -1007,25 +1191,43 @@ async function fetchData() {
 
 function displayData(data) {
   try {
-      const tempMap = new Map(); 
-      if(Array.isArray(data)) {
-          data.forEach(item => {
-              if(!item || typeof item !== 'object') return; 
+      if(!Array.isArray(data)) return;
 
-              const name = String(item['นักวาด'] || '').trim();
-              const link = String(item['Link นักวาด'] || '').trim();
-              if(name && link) tempMap.set(name, link);
-
-              const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
-              const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
-              extraImgsArray.forEach(line => {
-                  const parts = line.split('|').map(p => p.trim());
-                  const exName = parts[1] || '';
-                  const exLink = parts[2] || '';
-                  if(exName && exLink) tempMap.set(exName, exLink);
-              });
-          });
+      let configItem = data.find(i => i && i['ชื่อขนม'] === '__SYS_CONFIG_SORT__');
+      if (configItem) globalSortMode = configItem['คำบรรยาย'] || 'AUTO';
+      
+      const btnAuto = document.getElementById('btn-sort-auto');
+      const btnManual = document.getElementById('btn-sort-manual');
+      if(btnAuto && btnManual) {
+          if(globalSortMode === 'AUTO') {
+              btnAuto.classList.add('active');
+              btnManual.classList.remove('active');
+          } else {
+              btnManual.classList.add('active');
+              btnAuto.classList.remove('active');
+          }
       }
+
+      let validData = data.map((item, index) => { 
+          if(item) item.originalIndex = index; 
+            return item; 
+      }).filter(item => item && item['ชื่อขนม'] !== '__SYS_CONFIG_SORT__');
+
+      const tempMap = new Map(); 
+      validData.forEach(item => {
+          const name = String(item['นักวาด'] || '').trim();
+          const link = String(item['Link นักวาด'] || '').trim();
+          if(name && link) tempMap.set(name, link);
+
+          const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
+          const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
+          extraImgsArray.forEach(line => {
+              const parts = line.split('|').map(p => p.trim());
+              const exName = parts[1] || '';
+              const exLink = parts[2] || '';
+              if(exName && exLink) tempMap.set(exName, exLink);
+          });
+      });
       allUniqueArtistLinks = Array.from(tempMap.entries()).map(([name, link]) => ({ name, link }));
 
       const containers = { 
@@ -1040,220 +1242,229 @@ function displayData(data) {
           'เครื่องดื่ม': document.getElementById('home-drink-grid')
       };
 
-      Object.values(containers).forEach(c => {
-          if(c) {
-              const cards = c.querySelectorAll('.menu-card, .loading-text');
-              cards.forEach(card => card.remove());
-          }
-      });
+      Object.values(containers).forEach(c => { if(c) c.innerHTML = ''; });
       Object.values(homeGrids).forEach(g => { if(g) g.innerHTML = ''; });
 
-      if(!Array.isArray(data) || data.length === 0) {
+      if(validData.length === 0) {
           Object.values(containers).forEach(c => { if (c) c.innerHTML = '<div class="loading-text">ยังไม่มีเมนูในหมวดนี้</div>'; });
           Object.values(homeGrids).forEach(g => { if (g) g.innerHTML = '<div class="loading-text" style="grid-column: 1 / -1; font-size: 12px; opacity: 0.7;">ว่างเปล่า</div>'; });
           return;
       }
 
-      data.forEach((item, index) => {
-        if(!item || typeof item !== 'object') return; 
+      Object.keys(containers).forEach(category => {
+          let itemsInCategory = validData.filter(item => {
+              let cat = String(item['หมวดหมู่'] || '').trim();
+              if (cat.includes('ปัง') && category === 'ขนมปัง') return true;
+              if (cat.includes('เค้ก') && category === 'เค้ก') return true;
+              if (cat.includes('ดื่ม') && category === 'เครื่องดื่ม') return true;
+              return false;
+          });
 
-        let category = String(item['หมวดหมู่'] || '').trim();
-        if (category.includes('ปัง')) category = 'ขนมปัง';
-        else if (category.includes('เค้ก')) category = 'เค้ก';
-        else if (category.includes('ดื่ม')) category = 'เครื่องดื่ม';
+          let renderItemsHome = globalSortMode === 'AUTO' ? sortItems(itemsInCategory, true) : itemsInCategory;
+          let renderItemsPage = globalSortMode === 'AUTO' ? sortItems(itemsInCategory, false) : itemsInCategory;
 
-        const target = containers[category];
-        const gridTarget = homeGrids[category];
-        if (!target) return; 
-        
-        const name = String(item['ชื่อขนม'] || '');
-        const cleanName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
-        const escapedCleanName = escapeHTML(cleanName); 
-        
-        const idSafeName = "char_" + index; 
-        const galleryId = 'gallery_' + idSafeName;
-        const mainCardId = 'card_' + idSafeName; 
-        
-        const saleStatus = String(item['สถานะบ้าน'] || '1');
-        const loveStatus = String(item['สถานะความรัก'] || '2');
-        const usageRights = String(item['สิทธิ์การใช้งาน'] || ''); 
-        
-        const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
-        const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
-        
-        const mainImageWatermark = String(item['ลายน้ำภาพหลัก'] || 'No'); 
-        
-        const additionalInfoStr = String(item['ข้อมูลเพิ่มเติม'] || '').trim();
+          // หน้าโฮม
+          let gridTarget = homeGrids[category];
+          if (gridTarget && renderItemsHome.length > 0) {
+              let catForWarp = category === 'เค้ก' ? 'cake' : (category === 'เครื่องดื่ม' ? 'drink' : 'bread');
+              renderItemsHome.forEach(item => {
+                  let name = String(item['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '');
+                  let escapedName = escapeHTML(name);
+                  let saleStatus = String(item['สถานะบ้าน'] || '1');
+                  let mainCardId = 'card_char_' + item.originalIndex; 
+                  
+                  let lightClass = 'status-forever';
+                  if(saleStatus == '2') lightClass = 'status-eo';
+                  if(saleStatus == '3') lightClass = 'status-sp-ota';
 
-        let lightClass = 'status-forever';
-        if(saleStatus == '2') lightClass = 'status-tent';
-        if(saleStatus == '3') lightClass = 'status-sp-ota';
+                  let imgUrl = String(item['Link รูปตัวละคร'] || ''); 
+                  if (imgUrl.includes('drive.google.com/file/d/')) {
+                      const id = imgUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                      if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
+                  }
+                  
+                  let isWatermarked = (item['ลายน้ำภาพหลัก'] === 'Yes' || item['ลายน้ำภาพหลัก'] === 'true' || item['ลายน้ำภาพหลัก'] === 'TRUE');
+                  let miniWatermarkHtml = isWatermarked ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:150px; pointer-events:none; z-index:2;"></div>` : '';
 
-        let imgUrl = String(item['Link รูปตัวละคร'] || ''); 
-        if (imgUrl.includes('drive.google.com/file/d/')) {
-          const id = imgUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-          if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
-        }
+                  gridTarget.innerHTML += `
+                  <div class="mini-char-card" data-status="${saleStatus}" onclick="jumpToCard('${catForWarp}', '${mainCardId}')">
+                      <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 6px;">
+                          <div class="mini-char-img-wrapper no-save" style="width: 100%; height: 100%; margin: 0;">
+                              <img src="${imgUrl}" alt="${escapedName}" oncontextmenu="return false;" draggable="false">
+                              ${miniWatermarkHtml}
+                              <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
+                          </div>
+                          <div class="mini-status-dot ${lightClass}"></div>
+                      </div>
+                      <div class="mini-char-name">${escapedName}</div>
+                  </div>`;
+              });
+          }
 
-        const isWatermarked = (mainImageWatermark === 'Yes' || mainImageWatermark === 'true' || mainImageWatermark === 'TRUE');
-        
-        const mainWatermarkHtml = isWatermarked 
-            ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` 
-            : '';
-            
-        const miniWatermarkHtml = isWatermarked 
-            ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:150px; pointer-events:none; z-index:2;"></div>` 
-            : '';
+          // หน้าหมวดหมู่
+          let target = containers[category];
+          if (target && renderItemsPage.length > 0) {
+              
+              if (globalSortMode === 'AUTO') {
+                  let existingStatuses = [...new Set(renderItemsPage.map(i => String(i['สถานะบ้าน'] || '1')))];
+                  let jumpBtnsHtml = '<div class="jump-bar">';
+                  if(existingStatuses.includes('1')) jumpBtnsHtml += `<button class="jump-btn" onclick="document.getElementById('div-${category}-1').scrollIntoView({behavior: 'smooth', block: 'start'})"><span class="status-light status-forever" style="margin:0;"></span>Forever Home</button>`;
+                  if(existingStatuses.includes('2')) jumpBtnsHtml += `<button class="jump-btn" onclick="document.getElementById('div-${category}-2').scrollIntoView({behavior: 'smooth', block: 'start'})"><span class="status-light status-eo" style="margin:0;"></span>EO</button>`;
+                  if(existingStatuses.includes('3')) jumpBtnsHtml += `<button class="jump-btn" onclick="document.getElementById('div-${category}-3').scrollIntoView({behavior: 'smooth', block: 'start'})"><span class="status-light status-sp-ota" style="margin:0;"></span>SP/OTA</button>`;
+                  jumpBtnsHtml += '</div>';
+                  target.innerHTML += jumpBtnsHtml;
+              }
 
-        if (gridTarget) {
-            let catForWarp = 'bread';
-            if (category === 'เค้ก') catForWarp = 'cake';
-            if (category === 'เครื่องดื่ม') catForWarp = 'drink';
+              let lastStatus = null;
 
-            let miniCardHtml = `
-            <div class="mini-char-card" onclick="jumpToCard('${catForWarp}', '${mainCardId}')">
-                <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 6px;">
-                    <div class="mini-char-img-wrapper no-save" style="width: 100%; height: 100%; margin: 0;">
-                        <img src="${imgUrl}" alt="${escapedCleanName}" oncontextmenu="return false;" draggable="false">
-                        ${miniWatermarkHtml}
-                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
-                    </div>
-                    <div class="mini-status-dot ${lightClass}"></div>
-                </div>
-                <div class="mini-char-name">${escapedCleanName}</div>
-            </div>`;
-            gridTarget.innerHTML += miniCardHtml;
-        }
+              renderItemsPage.forEach(item => {
+                  let currentStatus = String(item['สถานะบ้าน'] || '1');
+                  
+                  if (globalSortMode === 'AUTO' && lastStatus !== currentStatus) {
+                      let statusName = currentStatus == '1' ? 'Forever Home' : (currentStatus == '2' ? 'EO' : 'SP / OTA');
+                      target.innerHTML += `
+                      <div id="div-${category}-${currentStatus}" style="width:100%; text-align:center; margin: 30px 0 20px; position:relative; scroll-margin-top: 60px;">
+                          <hr style="border:none; border-top:2px dashed var(--main); position:absolute; top:50%; left:0; right:0; transform:translateY(-50%); z-index:1; margin:0;">
+                          <span style="background:var(--bg); background-image:linear-gradient(135deg, #FFF8EC 0%, #F7EFFF 100%); padding:0 15px; color:var(--darker); font-size:14px; font-weight:600; position:relative; z-index:2; border-radius:15px; border:1px solid rgba(196, 164, 247, 0.4);">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 12 12 14 14"></polyline></svg> ${statusName}
+                          </span>
+                      </div>`;
+                      lastStatus = currentStatus;
+                  }
 
-        let usageIcon = '';
-        if(usageRights === 'Personal') {
-            usageIcon = `<span class="usage-badge usage-personal" title="Personal (ส่วนตัว)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>`;
-        } else if(usageRights === 'Commercial') {
-            usageIcon = `<span class="usage-badge usage-commercial" title="Commercial (เชิงพาณิชย์)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span>`;
-        } else if(usageRights === 'สิทธิ์ขาด') {
-            usageIcon = `<span class="usage-badge usage-full" title="สิทธิ์ขาด (Full Rights)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>`;
-        }
+                  const name = String(item['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '');
+                  const escapedCleanName = escapeHTML(name); 
+                  const origIndex = item.originalIndex;
+                  const idSafeName = "char_" + origIndex; 
+                  const galleryId = 'gallery_' + idSafeName;
+                  const mainCardId = 'card_' + idSafeName; 
+                  
+                  const loveStatus = String(item['สถานะความรัก'] || '2');
+                  const usageRights = String(item['สิทธิ์การใช้งาน'] || ''); 
+                  const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
+                  const extraImgsArray = extraImgsStr.split('\n').map(link => link.trim()).filter(link => link !== '');
+                  const mainImageWatermark = String(item['ลายน้ำภาพหลัก'] || 'No'); 
+                  const additionalInfoStr = String(item['ข้อมูลเพิ่มเติม'] || '').trim();
 
-        let loveIcon = '';
-        if(loveStatus == '1') {
-            loveIcon = `<span class="usage-badge love-taken" title="มีคู่"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>`;
-        } else if(loveStatus == '2') {
-            loveIcon = `<span class="usage-badge love-single" title="โสด"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>`;
-        } else if(loveStatus == '3') {
-            loveIcon = `<span class="usage-badge love-none" title="ไม่มีความรัก"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg></span>`;
-        }
+                  let lightClass = currentStatus == '2' ? 'status-eo' : (currentStatus == '3' ? 'status-sp-ota' : 'status-forever');
 
-        let safeArtistLink = formatURL(item['Link นักวาด']);
-        const artistDisplay = safeArtistLink ? `<a href="${safeArtistLink}" target="_blank" style="color:var(--darker); text-decoration:underline; position:relative; z-index:10;">${escapeHTML(item['นักวาด'])}</a>` : escapeHTML(item['นักวาด'] || '');
-        const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3; width:100%;">${escapeHTML(item['คำบรรยาย'])}</div>` : '';
+                  let imgUrl = String(item['Link รูปตัวละคร'] || ''); 
+                  if (imgUrl.includes('drive.google.com/file/d/')) {
+                      const id = imgUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                      if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
+                  }
 
-        // กล่องข้อมูลเพิ่มเติม
-        let additionalInfoHtml = '';
-        if(additionalInfoStr) {
-            additionalInfoHtml = `<div class="extra-info-box">${escapeHTML(additionalInfoStr).replace(/\n/g, '<br>')}</div>`;
-        }
+                  const isWatermarked = (mainImageWatermark === 'Yes' || mainImageWatermark === 'true' || mainImageWatermark === 'TRUE');
+                  const mainWatermarkHtml = isWatermarked ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` : '';
 
-        const moreLinkUrl = formatURL(item['Link เพื่อดูเพิ่มเติม']);
-        let moreLinkHtml = '';
-        if(moreLinkUrl) {
-            moreLinkHtml = `<a href="${moreLinkUrl}" class="btn-view" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>ดูข้อมูลตัวละครทั้งหมด</a>`;
-        }
+                  let usageIcon = '';
+                  if(usageRights === 'Personal') usageIcon = `<span class="usage-badge usage-personal" title="Personal (ส่วนตัว)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>`;
+                  else if(usageRights === 'Commercial') usageIcon = `<span class="usage-badge usage-commercial" title="Commercial (เชิงพาณิชย์)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span>`;
+                  else if(usageRights === 'สิทธิ์ขาด') usageIcon = `<span class="usage-badge usage-full" title="สิทธิ์ขาด (Full Rights)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>`;
 
-        let extraGalleryHtml = '';
-        let toggleGalleryBtn = '';
-        
-        if (extraImgsArray.length > 0) {
-            let imagesHtml = extraImgsArray.map(line => {
-                const parts = line.split('|').map(p => p.trim());
-                let link = parts[0] || '';
-                let artist = parts[1] || '';
-                let artistLink = parts[2] || '';
-                let price = parts[3] || '';
+                  let loveIcon = '';
+                  if(loveStatus == '1') loveIcon = `<span class="usage-badge love-taken" title="มีคู่"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>`;
+                  else if(loveStatus == '2') loveIcon = `<span class="usage-badge love-single" title="โสด"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>`;
+                  else if(loveStatus == '3') loveIcon = `<span class="usage-badge love-none" title="ไม่มีความรัก"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg></span>`;
 
-                let parsedLink = link;
-                if (link.includes('drive.google.com/file/d/')) {
-                    const matchId = link.match(/\/d\/([a-zA-Z0-9_-]+)/);
-                    if (matchId) parsedLink = `https://drive.google.com/thumbnail?id=${matchId[1]}&sz=w1000`;
-                }
-                
-                let captionHtml = '';
-                if (artist || price) {
-                    let artistDisplayExtra = escapeHTML(artist);
-                    let safeExLink = formatURL(artistLink);
-                    if (artist && safeExLink) {
-                        artistDisplayExtra = `<a href="${safeExLink}" target="_blank" style="color:var(--dark); text-decoration:underline; font-weight:500; position:relative; z-index:10;">${artistDisplayExtra}</a>`;
-                    }
-                    let artistHtml = artist ? `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.628-1.628H18c2.21 0 4-1.79 4-4 0-3.86-4.48-8-10-8z"></path></svg> นักวาด: ${artistDisplayExtra}</span>` : '';
-                    let priceHtml = price ? `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> มูลค่า: ${escapeHTML(price)}</span>` : '';
-                    let separator = (artist && price) ? ' &nbsp;•&nbsp; ' : '';
+                  let safeArtistLink = formatURL(item['Link นักวาด']);
+                  const artistDisplay = safeArtistLink ? `<a href="${safeArtistLink}" target="_blank" style="color:var(--darker); text-decoration:underline; position:relative; z-index:10;">${escapeHTML(item['นักวาด'])}</a>` : escapeHTML(item['นักวาด'] || '');
+                  const introText = item['คำบรรยาย'] ? `<div style="font-size: 11px; font-weight: normal; opacity: 0.7; margin-top: 2px; line-height: 1.3; width:100%;">${escapeHTML(item['คำบรรยาย'])}</div>` : '';
 
-                    captionHtml = `
-                    <div style="background: rgba(255,255,255,0.8); padding: 10px; border: 1px solid rgba(196, 164, 247, 0.5); border-top: none; border-radius: 0 0 15px 15px; font-size: 12px; text-align: center; color: var(--darker);">
-                        ${artistHtml}${separator}${priceHtml}
+                  let additionalInfoHtml = additionalInfoStr ? `<div class="extra-info-box">${escapeHTML(additionalInfoStr).replace(/\n/g, '<br>')}</div>` : '';
+
+                  const moreLinkUrl = formatURL(item['Link เพื่อดูเพิ่มเติม']);
+                  let moreLinkHtml = moreLinkUrl ? `<a href="${moreLinkUrl}" class="btn-view" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>ดูข้อมูลตัวละครทั้งหมด</a>` : '';
+
+                  let extraGalleryHtml = '';
+                  let toggleGalleryBtn = '';
+                  if (extraImgsArray.length > 0) {
+                      let imagesHtml = extraImgsArray.map(line => {
+                          const parts = line.split('|').map(p => p.trim());
+                          let link = parts[0] || ''; let artist = parts[1] || ''; let artistLink = parts[2] || ''; let price = parts[3] || '';
+
+                          let parsedLink = link;
+                          if (link.includes('drive.google.com/file/d/')) {
+                              const matchId = link.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                              if (matchId) parsedLink = `https://drive.google.com/thumbnail?id=${matchId[1]}&sz=w1000`;
+                          }
+                          
+                          let captionHtml = '';
+                          if (artist || price) {
+                              let artistDisplayExtra = escapeHTML(artist);
+                              let safeExLink = formatURL(artistLink);
+                              if (artist && safeExLink) artistDisplayExtra = `<a href="${safeExLink}" target="_blank" style="color:var(--dark); text-decoration:underline; font-weight:500; position:relative; z-index:10;">${artistDisplayExtra}</a>`;
+                              
+                              let artistHtml = artist ? `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.628-1.628H18c2.21 0 4-1.79 4-4 0-3.86-4.48-8-10-8z"></path></svg> นักวาด: ${artistDisplayExtra}</span>` : '';
+                              let priceHtml = price ? `<span style="display:inline-flex;align-items:center;gap:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> มูลค่า: ${escapeHTML(formatPrice(price))}</span>` : '';
+                              let separator = (artist && price) ? ' &nbsp;•&nbsp; ' : '';
+
+                              captionHtml = `<div style="background: rgba(255,255,255,0.8); padding: 10px; border: 1px solid rgba(196, 164, 247, 0.5); border-top: none; border-radius: 0 0 15px 15px; font-size: 12px; text-align: center; color: var(--darker);">${artistHtml}${separator}${priceHtml}</div>`;
+                          }
+
+                          let imgRadiusStyle = captionHtml ? 'border-radius: 15px 15px 0 0; border-bottom: none;' : 'border-radius: 15px;';
+
+                          return `
+                          <div class="no-save" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
+                              <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(196, 164, 247, 0.5); background-color:var(--img-bg-pale);">
+                                  <img src="${parsedLink}" style="width:100%; display:block; pointer-events:none;" alt="รูปเพิ่มเติม" oncontextmenu="return false;" draggable="false">
+                                  <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none;"></div>
+                                  <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
+                              </div>
+                              ${captionHtml}
+                          </div>`;
+                      }).join('');
+
+                      extraGalleryHtml = `<div id="${galleryId}" style="display:none; margin-top:15px; padding-top:15px; border-top:1px dashed var(--main);">${imagesHtml}</div>`;
+                      toggleGalleryBtn = `<button onclick="toggleGallery(event, '${galleryId}')" class="btn-view btn-gallery" style="background:#F7EFFF; border:1px dashed var(--main); color:var(--dark); margin-top:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>ดูรูปเพิ่มเติม (${extraImgsArray.length} รูป)</button>`;
+                  }
+
+                  let adminBtns = '';
+                  if(isEditMode) {
+                      adminBtns = `
+                      <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(196, 164, 247, 0.5); padding-top: 10px;">
+                          <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline(${origIndex}, -1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
+                          <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline(${origIndex}, 1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg></button>
+                          <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, ${origIndex}, '${idSafeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> แก้ไข</button>
+                          <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline(${origIndex})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> ลบ</button>
+                      </div>`;
+                  }
+
+                  target.innerHTML += `
+                    <div class="menu-card" id="${mainCardId}">
+                      <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
+                        
+                        <div class="menu-img-wrapper" style="background-color: #ffffff;">
+                            <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
+                            ${mainWatermarkHtml}
+                            <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
+                        </div>
+                        
+                        <div class="menu-title-row">
+                          <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+                              <div class="menu-title" style="align-items:center;">
+                                  <span class="status-light ${lightClass}"></span>
+                                  <span>${escapedCleanName}</span>
+                                  <span style="display:inline-flex; align-items:center; gap: 6px; margin-left: 6px;">${usageIcon}${loveIcon}</span>
+                              </div>
+                              <div class="menu-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+                          </div>
+                          ${introText}
+                          ${adminBtns}
+                        </div>
+
+                      </div>
+                      <div class="menu-details">
+                        ${additionalInfoHtml}
+                        <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.628-1.628H18c2.21 0 4-1.79 4-4 0-3.86-4.48-8-10-8z"></path></svg> <strong>นักวาด:</strong> ${artistDisplay}</div>
+                        <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> <strong>มูลค่า:</strong> ${escapeHTML(formatPrice(item['มูลค่า']))}</div>
+                        ${moreLinkHtml}
+                        ${toggleGalleryBtn}
+                        ${extraGalleryHtml}
+                      </div>
                     </div>`;
-                }
-
-                let imgRadiusStyle = captionHtml ? 'border-radius: 15px 15px 0 0; border-bottom: none;' : 'border-radius: 15px;';
-
-                return `
-                <div class="no-save" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
-                    <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(196, 164, 247, 0.5); background-color:var(--img-bg-pale);">
-                        <img src="${parsedLink}" style="width:100%; display:block; pointer-events:none;" alt="รูปเพิ่มเติม" oncontextmenu="return false;" draggable="false">
-                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none;"></div>
-                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
-                    </div>
-                    ${captionHtml}
-                </div>`;
-            }).join('');
-
-            extraGalleryHtml = `<div id="${galleryId}" style="display:none; margin-top:15px; padding-top:15px; border-top:1px dashed var(--main);">${imagesHtml}</div>`;
-            toggleGalleryBtn = `<button onclick="toggleGallery(event, '${galleryId}')" class="btn-view btn-gallery" style="background:#F7EFFF; border:1px dashed var(--main); color:var(--dark); margin-top:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>ดูรูปเพิ่มเติม (${extraImgsArray.length} รูป)</button>`;
-        }
-
-        let adminBtns = '';
-        if(isEditMode) {
-            adminBtns = `
-            <div style="display:flex; flex-wrap:nowrap; align-items:center; gap:6px; margin-top:10px; width: 100%; border-top: 1px dashed rgba(196, 164, 247, 0.5); padding-top: 10px;">
-                <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline(${index}, -1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></button>
-                <button class="btn-move-inline" onclick="event.stopPropagation(); moveItemInline(${index}, 1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg></button>
-                <button class="btn-edit-inline" onclick="event.stopPropagation(); openEditForm(this, ${index}, '${idSafeName}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> แก้ไข</button>
-                <button class="btn-delete-inline" onclick="event.stopPropagation(); deleteItemInline(${index})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> ลบ</button>
-            </div>`;
-        }
-
-        target.innerHTML += `
-          <div class="menu-card" id="${mainCardId}">
-            <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
-              
-              <div class="menu-img-wrapper" style="background-color: #ffffff;">
-                  <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
-                  ${mainWatermarkHtml}
-                  <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
-              </div>
-              
-              <div class="menu-title-row">
-                <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
-                    <div class="menu-title" style="align-items:center;">
-                        <span class="status-light ${lightClass}"></span>
-                        <span>${escapedCleanName}</span>
-                        <span style="display:inline-flex; align-items:center; gap: 6px; margin-left: 6px;">${usageIcon}${loveIcon}</span>
-                    </div>
-                    <div class="menu-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
-                </div>
-                ${introText}
-                ${adminBtns}
-              </div>
-
-            </div>
-            <div class="menu-details">
-              ${additionalInfoHtml}
-              <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.628-1.628H18c2.21 0 4-1.79 4-4 0-3.86-4.48-8-10-8z"></path></svg> <strong>นักวาด:</strong> ${artistDisplay}</div>
-              <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> <strong>มูลค่า:</strong> ${escapeHTML(item['มูลค่า'])}</div>
-              ${moreLinkHtml}
-              ${toggleGalleryBtn}
-              ${extraGalleryHtml}
-            </div>
-          </div>`;
+              });
+          }
       });
       
       Object.keys(containers).forEach(key => { 
@@ -1264,16 +1475,19 @@ function displayData(data) {
               homeGrids[key].innerHTML += `<div class="loading-text" style="grid-column: 1 / -1; font-size:12px; opacity:0.6;">ยังไม่มีขนมในตู้นี้ค่ะ</div>`;
           }
       });
+
+      applyHomeFilter(); 
+
   } catch (e) {
       console.error(e);
       alert("[ ผิดพลาด ] มีข้อผิดพลาดในการโหลดหน้าเว็บ: " + e.message);
   }
 }
 
-async function moveItemInline(index, dir) {
+async function moveItemInline(origIndex, dir) {
     document.querySelectorAll('.btn-move-inline').forEach(b => b.disabled = true);
-    const name = allData[index]['ชื่อขนม']; 
-    const category = allData[index]['หมวดหมู่'];
+    const name = allData[origIndex]['ชื่อขนม']; 
+    const category = allData[origIndex]['หมวดหมู่'];
     try {
         await fetch(API_URL, {
             method: 'POST',
@@ -1288,8 +1502,8 @@ async function moveItemInline(index, dir) {
     }
 }
 
-async function deleteItemInline(index) {
-    const name = allData[index]['ชื่อขนม']; 
+async function deleteItemInline(origIndex) {
+    const name = allData[origIndex]['ชื่อขนม']; 
     const showName = name.replace(/[\u200B-\u200D\uFEFF]/g, '');
     if(confirm(`คุณแน่ใจนะคะว่าจะลบ "${showName}" ออกจากเตาอบ?`)) {
         try {
@@ -1307,9 +1521,9 @@ async function deleteItemInline(index) {
     }
 }
 
-function openEditForm(btn, index, idSafeName) {
+function openEditForm(btn, origIndex, idSafeName) {
     const card = btn.closest('.menu-card');
-    const item = allData[index]; 
+    const item = allData[origIndex]; 
 
     const displayImgLink = item['Link รูปตัวละคร'] || '';
     const extraImgsStr = String(item['รูปเพิ่มเติม'] || '');
@@ -1325,7 +1539,7 @@ function openEditForm(btn, index, idSafeName) {
     extraImgsArray.forEach(line => {
         const parts = line.split('|').map(p => p.trim());
         const exArtistName = parts[1] || '';
-        const exDatalistId = `datalist_edit_ex_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+        const previewId = `preview_edit_ex_${Date.now()}_${Math.random().toString(16).slice(2)}`;
         
         existingExtraImgsHtml += `
         <div class="extra-img-block" style="background: rgba(196, 164, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;">
@@ -1335,14 +1549,14 @@ function openEditForm(btn, index, idSafeName) {
                 <span onclick="this.closest('.extra-img-block').remove()" style="cursor: pointer; color: #D484B6; font-weight: 600; font-size:12px; background:#FFF5F8; padding:2px 8px; border-radius:10px; display:flex; align-items:center;">ลบทิ้ง</span>
             </div>
             <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
-            <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" value="${escapeHTML(parts[0] || '')}" oninput="updateImgPreview(this, 'preview_edit_ex_${exDatalistId}')">
-            <div id="preview_edit_ex_${exDatalistId}" class="image-preview-container" style="display: ${parts[0] ? 'block' : 'none'}; margin-bottom:10px;">
+            <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" value="${escapeHTML(parts[0] || '')}" oninput="updateImgPreview(this, '${previewId}')">
+            <div id="${previewId}" class="image-preview-container" style="display: ${parts[0] ? 'block' : 'none'}; margin-bottom:10px;">
                 ${parts[0] ? `<img src="${parseImageUrlForPreview(parts[0])}" onerror="this.parentElement.innerText='โหลดรูปไม่สำเร็จ กรุณาตรวจสอบลิ้งก์'; this.parentElement.style.padding='15px'; this.parentElement.style.color='#D484B6';">` : ''}
             </div>
             <div style="display:flex; gap:10px;">
                 <div style="flex:1;">
                     <label class="modal-label">นักวาด (ถ้ามี)</label>
-                    <input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" value="${escapeHTML(exArtistName)}" oninput="populateArtistSuggestions(this.value, '${exDatalistId}')">
+                    <input type="text" class="modal-input ex-artist" style="margin-bottom:10px; padding:10px;" value="${escapeHTML(exArtistName)}" oninput="populateArtistSuggestions(this.value, '${datalistId}')" placeholder="พิมพ์ชื่อค้นหา...">
                 </div>
                 <div style="flex:1;">
                     <label class="modal-label">มูลค่า (ถ้ามี)</label>
@@ -1350,8 +1564,7 @@ function openEditForm(btn, index, idSafeName) {
                 </div>
             </div>
             <label class="modal-label">ลิ้งก์นักวาด (ถ้ามี)</label>
-            <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" value="${escapeHTML(parts[2] || '')}" list="${exDatalistId}" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี">
-            <datalist id="${exDatalistId}"></datalist>
+            <input type="text" class="modal-input ex-artistlink" style="margin-bottom:0; padding:10px;" value="${escapeHTML(parts[2] || '')}" list="${datalistId}" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี">
         </div>`;
     });
 
@@ -1391,14 +1604,14 @@ function openEditForm(btn, index, idSafeName) {
             </div>
 
             <label class="modal-label">นักวาด (ภาพหลัก):</label>
-            <input type="text" id="edit_artist_${idSafeName}" class="modal-input" value="${escapeHTML(item['นักวาด'] || '')}" oninput="populateArtistSuggestions(this.value, '${datalistId}')">
+            <input type="text" id="edit_artist_${idSafeName}" class="modal-input" value="${escapeHTML(item['นักวาด'] || '')}" oninput="populateArtistSuggestions(this.value, '${datalistId}')" placeholder="พิมพ์ชื่อนักวาด">
             
             <label class="modal-label">ลิ้งก์นักวาด:</label>
             <input type="text" id="edit_artistlink_${idSafeName}" class="modal-input" value="${escapeHTML(item['Link นักวาด'] || '')}" list="${datalistId}" placeholder="ใส่ลิ้งก์ใหม่ หรือเลือกจากที่เคยมี">
             <datalist id="${datalistId}"></datalist>
 
             <label class="modal-label">มูลค่า:</label>
-            <input type="text" id="edit_price_${idSafeName}" class="modal-input" value="${escapeHTML(item['มูลค่า'] || '')}">
+            <input type="text" id="edit_price_${idSafeName}" class="modal-input" value="${escapeHTML(item['มูลค่า'] || '')}" placeholder="ตัวอย่าง: 500, 10$, Free">
             
             <label class="modal-label">ลิ้งก์เพิ่มเติม (เพจ/ข้อมูลตัวละคร):</label>
             <input type="text" id="edit_more_${idSafeName}" class="modal-input" placeholder="ถ้าไม่มีให้เว้นว่างไว้" value="${escapeHTML(item['Link เพื่อดูเพิ่มเติม'] || '')}">
@@ -1406,7 +1619,7 @@ function openEditForm(btn, index, idSafeName) {
             <label class="modal-label">สถานะบ้าน (Sale):</label>
             <select id="edit_sale_${idSafeName}" class="modal-select">
                 <option value="1" ${item['สถานะบ้าน']=='1'?'selected':''}>Forever Home</option>
-                <option value="2" ${item['สถานะบ้าน']=='2'?'selected':''}>TENT</option>
+                <option value="2" ${item['สถานะบ้าน']=='2'?'selected':''}>EO</option>
                 <option value="3" ${item['สถานะบ้าน']=='3'?'selected':''}>OTA/SP</option>
             </select>
 
@@ -1439,7 +1652,7 @@ function openEditForm(btn, index, idSafeName) {
             </div>
 
             <div class="edit-actions">
-                <button class="btn-save-inline" onclick="saveInlineEdit(${index}, '${idSafeName}', '${editContainerId}')">
+                <button class="btn-save-inline" onclick="saveInlineEdit(${origIndex}, '${idSafeName}', '${editContainerId}')">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                     บันทึก
                 </button>
@@ -1453,8 +1666,8 @@ function openEditForm(btn, index, idSafeName) {
     card.innerHTML = formHtml;
 }
 
-async function saveInlineEdit(index, idSafeName, containerId) {
-    const safeOldName = allData[index]['ชื่อขนม']; 
+async function saveInlineEdit(origIndex, idSafeName, containerId) {
+    const safeOldName = allData[origIndex]['ชื่อขนม']; 
 
     const newCat = document.getElementById(`edit_cat_${idSafeName}`).value;
     const newNameInput = document.getElementById(`edit_name_${idSafeName}`).value;
@@ -1474,7 +1687,7 @@ async function saveInlineEdit(index, idSafeName, containerId) {
     if(!newNameInput || !finalImgData) return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
 
     let finalUniqueName = newNameInput.trim();
-    while (allData.some((i, idx) => i && i['ชื่อขนม'] === finalUniqueName && idx !== index)) {
+    while (allData.some((i, idx) => i && i['ชื่อขนม'] === finalUniqueName && idx !== origIndex)) {
         finalUniqueName += '\u200B'; 
     }
 
