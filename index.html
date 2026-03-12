@@ -303,7 +303,7 @@ input:checked + .slider:before { transform: translateX(20px); }
     overflow: hidden;
     border: 2px dashed var(--main);
     background-color: var(--img-bg-pale);
-    display: none; 
+    display: none;
     text-align: center;
     box-shadow: 0 4px 10px rgba(107, 78, 144, 0.05);
 }
@@ -680,6 +680,7 @@ let allUniqueArtistLinks = [];
 
 // 🌟 ฟังก์ชันแปลงลิ้งก์ให้แสดงผลได้ (รองรับ Google Drive) 🌟
 function parseImageUrlForPreview(url) {
+    if(!url) return '';
     let parsedLink = String(url).trim();
     if (parsedLink.includes('drive.google.com/file/d/')) {
         const matchId = parsedLink.match(/\/d\/([a-zA-Z0-9_-]+)/);
@@ -696,11 +697,12 @@ function updateImgPreview(inputElement, previewContainerId) {
 
     if (url.trim() !== '') {
         const finalUrl = parseImageUrlForPreview(url);
-        previewContainer.innerHTML = `<img src="${finalUrl}" alt="Preview" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px; color:#D484B6; font-size:12px;\\'>โหลดรูปภาพไม่สำเร็จ ตรวจสอบลิ้งก์อีกครั้งค่ะ</div>'">`;
+        previewContainer.innerHTML = `<img src="${finalUrl}" alt="Preview" onerror="this.parentElement.innerText='โหลดรูปไม่สำเร็จ กรุณาตรวจสอบลิ้งก์'; this.parentElement.style.padding='15px'; this.parentElement.style.color='#D484B6';">`;
         previewContainer.style.display = 'block';
+        previewContainer.style.padding = '0'; // reset padding if it was previously set by error
     } else {
         previewContainer.innerHTML = '';
-        previewContainer.style.display = 'none'; 
+        previewContainer.style.display = 'none';
     }
 }
 
@@ -834,7 +836,6 @@ function addExtraImgField(containerId, link, artist, artistLink, price) {
     block.style.cssText = 'background: rgba(196, 164, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;';
     
     const datalistId = `datalist_ex_${Date.now()}_${Math.random().toString(16).slice(2)}`;
-    const previewId = `preview_new_ex_${datalistId}`;
     
     block.innerHTML = `
         <div style="position: absolute; right: 15px; top: 12px; display: flex; gap: 5px; z-index: 10;">
@@ -843,12 +844,11 @@ function addExtraImgField(containerId, link, artist, artistLink, price) {
             <span onclick="this.closest('.extra-img-block').remove()" style="cursor: pointer; color: #D484B6; font-weight: 600; font-size:12px; background:#FFF5F8; padding:2px 8px; border-radius:10px; display:flex; align-items:center;">ลบทิ้ง</span>
         </div>
         <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
-        <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" placeholder="วางลิ้งก์รูปภาพที่นี่" value="${escapeHTML(link)}" oninput="updateImgPreview(this, '${previewId}')">
-        
-        <div id="${previewId}" class="image-preview-container" style="display: ${link ? 'block' : 'none'}; margin-bottom:10px;">
-            ${link ? `<img src="${parseImageUrlForPreview(link)}" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px; color:#D484B6; font-size:12px;\\'>โหลดรูปภาพไม่สำเร็จ</div>'">` : ''}
+        <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" placeholder="วางลิ้งก์รูปภาพที่นี่" value="${escapeHTML(link)}" oninput="updateImgPreview(this, 'preview_new_ex_${datalistId}')">
+        <div id="preview_new_ex_${datalistId}" class="image-preview-container" style="display: ${link ? 'block' : 'none'}; margin-bottom:10px;">
+            ${link ? `<img src="${parseImageUrlForPreview(link)}" onerror="this.parentElement.innerText='โหลดรูปไม่สำเร็จ กรุณาตรวจสอบลิ้งก์'; this.parentElement.style.padding='15px'; this.parentElement.style.color='#D484B6';">` : ''}
         </div>
-
+        
         <div style="display:flex; gap:10px;">
             <div style="flex:1;">
                 <label class="modal-label">นักวาด (ถ้ามี)</label>
@@ -895,6 +895,8 @@ function openAddCharModal() {
     document.getElementById('charDesc').value = '';
     document.getElementById('charAdditionalInfo').value = ''; 
     document.getElementById('charImgLink').value = ''; 
+    document.getElementById('preview_add_main').style.display = 'none'; 
+    document.getElementById('preview_add_main').innerHTML = '';
     document.getElementById('charWatermark').checked = false; 
     document.getElementById('charArtist').value = '';
     document.getElementById('charArtistLink').value = '';
@@ -904,13 +906,6 @@ function openAddCharModal() {
     document.getElementById('charLove').value = '2';
     document.getElementById('charUsage').value = 'Personal';
     document.getElementById('addExtraImgsContainer').innerHTML = ''; 
-
-    // ล้างกล่องพรีวิว
-    const previewMain = document.getElementById('preview_add_main');
-    if (previewMain) {
-        previewMain.style.display = 'none';
-        previewMain.innerHTML = '';
-    }
 
     const activePageId = document.querySelector('.page.active').id;
     const categorySelect = document.getElementById('charCategory');
@@ -1331,7 +1326,6 @@ function openEditForm(btn, index, idSafeName) {
         const parts = line.split('|').map(p => p.trim());
         const exArtistName = parts[1] || '';
         const exDatalistId = `datalist_edit_ex_${Date.now()}_${Math.random().toString(16).slice(2)}`;
-        const previewExId = `preview_edit_ex_${exDatalistId}`;
         
         existingExtraImgsHtml += `
         <div class="extra-img-block" style="background: rgba(196, 164, 247, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 12px; border: 1px dashed var(--main); position: relative;">
@@ -1341,12 +1335,10 @@ function openEditForm(btn, index, idSafeName) {
                 <span onclick="this.closest('.extra-img-block').remove()" style="cursor: pointer; color: #D484B6; font-weight: 600; font-size:12px; background:#FFF5F8; padding:2px 8px; border-radius:10px; display:flex; align-items:center;">ลบทิ้ง</span>
             </div>
             <label class="modal-label" style="margin-top:0;">ลิ้งก์รูปเพิ่มเติม</label>
-            <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" value="${escapeHTML(parts[0] || '')}" oninput="updateImgPreview(this, '${previewExId}')">
-            
-            <div id="${previewExId}" class="image-preview-container" style="display: ${parts[0] ? 'block' : 'none'}; margin-bottom:10px;">
-                ${parts[0] ? `<img src="${parseImageUrlForPreview(parts[0])}" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px; color:#D484B6; font-size:12px;\\'>โหลดรูปภาพไม่สำเร็จ</div>'">` : ''}
+            <input type="text" class="modal-input ex-img" style="margin-bottom:10px; padding:10px;" value="${escapeHTML(parts[0] || '')}" oninput="updateImgPreview(this, 'preview_edit_ex_${exDatalistId}')">
+            <div id="preview_edit_ex_${exDatalistId}" class="image-preview-container" style="display: ${parts[0] ? 'block' : 'none'}; margin-bottom:10px;">
+                ${parts[0] ? `<img src="${parseImageUrlForPreview(parts[0])}" onerror="this.parentElement.innerText='โหลดรูปไม่สำเร็จ กรุณาตรวจสอบลิ้งก์'; this.parentElement.style.padding='15px'; this.parentElement.style.color='#D484B6';">` : ''}
             </div>
-
             <div style="display:flex; gap:10px;">
                 <div style="flex:1;">
                     <label class="modal-label">นักวาด (ถ้ามี)</label>
@@ -1383,9 +1375,8 @@ function openEditForm(btn, index, idSafeName) {
 
             <label class="modal-label">ลิ้งก์รูปตัวละคร (ภาพหลัก):</label>
             <input type="text" id="edit_img_link_${idSafeName}" class="modal-input" value="${escapeHTML(displayImgLink)}" placeholder="วางลิ้งก์รูปภาพที่นี่" oninput="updateImgPreview(this, 'preview_edit_main_${idSafeName}')">
-            
             <div id="preview_edit_main_${idSafeName}" class="image-preview-container" style="display: ${displayImgLink ? 'block' : 'none'};">
-                ${displayImgLink ? `<img src="${parseImageUrlForPreview(displayImgLink)}" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px; color:#D484B6; font-size:12px;\\'>โหลดรูปภาพไม่สำเร็จ</div>'">` : ''}
+                ${displayImgLink ? `<img src="${parseImageUrlForPreview(displayImgLink)}" onerror="this.parentElement.innerText='โหลดรูปไม่สำเร็จ กรุณาตรวจสอบลิ้งก์'; this.parentElement.style.padding='15px'; this.parentElement.style.color='#D484B6';">` : ''}
             </div>
 
             <div class="watermark-container">
@@ -1473,4 +1464,52 @@ async function saveInlineEdit(index, idSafeName, containerId) {
     const newPrice = document.getElementById(`edit_price_${idSafeName}`).value;
     const newAdditionalInfo = document.getElementById(`edit_additionalInfo_${idSafeName}`).value;
     const newMore = document.getElementById(`edit_more_${idSafeName}`).value;
-    const
+    const newSale = document.getElementById(`edit_sale_${idSafeName}`).value;
+    const newLove = document.getElementById(`edit_love_${idSafeName}`).value;
+    const newUsage = document.getElementById(`edit_usage_${idSafeName}`).value; 
+    const finalImgData = document.getElementById(`edit_img_link_${idSafeName}`).value;
+    const newWatermark = document.getElementById(`edit_watermark_${idSafeName}`).checked ? 'Yes' : 'No';
+    const newExtraImgs = getExtraImgsData(containerId); 
+
+    if(!newNameInput || !finalImgData) return alert("[ ผิดพลาด ] กรุณากรอกข้อมูลสำคัญ (ชื่อ, ลิ้งก์รูปปก) ให้ครบถ้วนค่ะ");
+
+    let finalUniqueName = newNameInput.trim();
+    while (allData.some((i, idx) => i && i['ชื่อขนม'] === finalUniqueName && idx !== index)) {
+        finalUniqueName += '\u200B'; 
+    }
+
+    const newItemData = {
+        "หมวดหมู่": newCat,
+        "ชื่อขนม": finalUniqueName,
+        "คำบรรยาย": newDesc,
+        "ข้อมูลเพิ่มเติม": newAdditionalInfo,
+        "Link รูปตัวละคร": finalImgData,
+        "ลายน้ำภาพหลัก": newWatermark, 
+        "นักวาด": newArtist,
+        "Link นักวาด": newArtistLink,
+        "มูลค่า": newPrice,
+        "Link เพื่อดูเพิ่มเติม": newMore,
+        "สถานะบ้าน": newSale,
+        "สถานะความรัก": newLove,
+        "สิทธิ์การใช้งาน": newUsage,
+        "รูปเพิ่มเติม": newExtraImgs 
+    };
+    
+    try {
+        await fetch(API_URL, {
+            method: 'POST',
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action: "edit", oldName: safeOldName, data: newItemData })
+        });
+        alert("[ สำเร็จ ] บันทึกข้อมูลเรียบร้อยค่ะ!");
+        fetchData();
+    } catch (e) {
+        console.error(e);
+        alert("[ ผิดพลาด ] บันทึกไม่สำเร็จ! กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตค่ะ");
+    }
+}
+
+fetchData();
+</script>
+</body>
+</html>
