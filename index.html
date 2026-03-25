@@ -46,12 +46,19 @@ select {
 body { background: var(--bg); background-image: linear-gradient(135deg, #FFF8EC 0%, #F7EFFF 100%); display: flex; flex-direction: column; align-items: center; color: var(--dark); min-height: 100vh; }
 body.locked { overflow: hidden; }
 
-/* ป้องกันการกดค้างเพื่อเซฟรูป */
+/* ป้องกันการกดค้างเพื่อเซฟรูป (ค่าตั้งต้น) */
 .no-save {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
     -webkit-user-drag: none;
+}
+/* 🌟 คลาสใหม่สำหรับอนุญาตให้เซฟภาพเฉพาะที่ติ๊กไว้ 🌟 */
+.allow-save {
+    pointer-events: auto !important; 
+    -webkit-touch-callout: default !important; 
+    user-select: auto !important; 
+    -webkit-user-drag: auto !important;
 }
 
 /* Admin Bar */
@@ -400,6 +407,8 @@ input:checked + .slider:before { transform: translateX(20px); }
 .search-container { width: 100%; margin-bottom: 15px; padding: 0 15px; }
 .search-input { width: 100%; padding: 12px 15px 12px 40px; border-radius: 20px; border: 1px solid rgba(196, 164, 247, 0.5); background: rgba(255, 255, 255, 0.8); font-size: 14px; color: var(--dark); transition: var(--transition); box-shadow: 0 4px 10px rgba(107, 78, 144, 0.05); }
 .search-input:focus { background: #fff; border-color: var(--main); box-shadow: 0 0 0 4px rgba(196, 164, 247, 0.2); }
+.clear-search-btn { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: #e5e7eb; color: var(--dark); border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; font-weight: bold; cursor: pointer; display: none; align-items: center; justify-content: center; transition: 0.2s; padding: 0;}
+.clear-search-btn:hover { background: #d1d5db; }
 
 /* 🌟 สไตล์ปุ่มก๊อปลิ้งก์มินิ 🌟 */
 .copy-btn-mini { background: #F7EFFF; border: 1px solid var(--main); color: var(--dark); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; padding: 0; flex-shrink: 0; }
@@ -534,6 +543,7 @@ function acceptRules() {
         <div style="position: relative; max-width: 450px; margin: 0 auto;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--dark); opacity: 0.6;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <input type="text" id="globalSearch" class="search-input" placeholder="ค้นหาชื่อขนม หรือนักวาด..." oninput="applySearchAndFilter()">
+            <button id="clearSearchBtn" class="clear-search-btn" onclick="clearSearch()">✕</button>
         </div>
     </div>
 
@@ -813,13 +823,11 @@ let isEditMode = false;
 let allUniqueArtistLinks = []; 
 let globalSortMode = 'AUTO'; 
 
-// 🌟 ฟังก์ชันแปลงชื่อให้เป็น ID ที่ปลอดภัยสำหรับการทำลิ้งก์ 🌟
 function getSafeId(str) {
     if(!str) return 'unknown';
     return encodeURIComponent(str).replace(/%/g, '_');
 }
 
-// 🌟 ฟังก์ชันจัดการแสดงปุ่มเลื่อนขึ้นบนสุด 🌟
 window.onscroll = function() {
     const topBtn = document.getElementById("floating-top-btn");
     if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -939,7 +947,6 @@ function jumpToCard(categoryName, cardId) {
                 card.style.boxShadow = '0 0 25px rgba(196, 164, 247, 0.9)';
                 setTimeout(() => { card.style.boxShadow = '0 4px 12px rgba(107, 78, 144, 0.05)'; }, 2000);
             } else {
-                // 🌟 โค้ดที่เพิ่มใหม่: แจ้งเตือนเมื่อหาตัวละครไม่เจอ 🌟
                 showToast("ไม่พบตัวละครนี้ อาจถูกเปลี่ยนชื่อหรือย้ายบ้านไปแล้วค่ะ 🥲");
             }
         }, 100); 
@@ -962,7 +969,6 @@ function toggleGallery(event, galleryId) {
 
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-// 🌟 ฟังก์ชันสำหรับโชว์ข้อความแจ้งเตือนแบบ Toast 🌟
 function showToast(msg) {
     let toast = document.getElementById('custom-toast');
     if (!toast) {
@@ -975,7 +981,6 @@ function showToast(msg) {
     setTimeout(() => { toast.style.bottom = '-100px'; }, 3000); 
 }
 
-// 🌟 ฟังก์ชันคัดลอกลิ้งก์วาร์ป 🌟
 function copyCardLink(event, url) {
     if(event) event.stopPropagation();
     navigator.clipboard.writeText(url).then(() => {
@@ -1003,10 +1008,13 @@ function populateArtistSuggestions(typedName, datalistId) {
     });
 }
 
-// 🌟 ฟังก์ชันสำหรับช่องค้นหาและตัวกรอง 🌟
+// 🌟 ฟังก์ชันการค้นหาและฟิลเตอร์ 🌟
 function applySearchAndFilter() {
     const searchInput = document.getElementById('globalSearch');
     const searchTxt = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    
+    const clearBtn = document.getElementById('clearSearchBtn');
+    if (clearBtn) clearBtn.style.display = searchTxt.length > 0 ? 'flex' : 'none';
     
     const filterSp = document.getElementById('filter-sp');
     const filterEo = document.getElementById('filter-eo');
@@ -1042,6 +1050,14 @@ function applySearchAndFilter() {
             card.style.display = 'none';
         }
     });
+}
+
+function clearSearch() {
+    const searchInput = document.getElementById('globalSearch');
+    if (searchInput) {
+        searchInput.value = '';
+        applySearchAndFilter();
+    }
 }
 
 function moveExtraImgBlock(btn, direction) {
@@ -1304,7 +1320,6 @@ function displayData(data) {
       let configItem = data.find(i => i && i['ชื่อขนม'] === '__SYS_CONFIG_SORT__');
       if (configItem) globalSortMode = configItem['คำบรรยาย'] || 'AUTO';
       
-      // 🌟 อัปเดตสีปุ่มสลับโหมดจัดเรียงให้เห็นชัดๆ 🌟
       const btnAuto = document.getElementById('btn-sort-auto');
       const btnManual = document.getElementById('btn-sort-manual');
       if(btnAuto && btnManual) {
@@ -1392,16 +1407,21 @@ function displayData(data) {
                       if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
                   }
                   
+                  // 🌟 ตรวจสอบลายน้ำและปลดบล็อกการเซฟสำหรับหน้าโฮม 🌟
                   let isWatermarked = (item['ลายน้ำภาพหลัก'] === 'Yes' || item['ลายน้ำภาพหลัก'] === 'true' || item['ลายน้ำภาพหลัก'] === 'TRUE');
                   let miniWatermarkHtml = isWatermarked ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:150px; pointer-events:none; z-index:2;"></div>` : '';
+                  let wrapperSaveClass = isWatermarked ? '' : 'no-save';
+                  let imgSaveClass = isWatermarked ? 'allow-save' : '';
+                  let contextAttr = isWatermarked ? '' : 'oncontextmenu="return false;" draggable="false"';
+                  let blockerDiv = isWatermarked ? '' : '<div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>';
 
                   gridTarget.innerHTML += `
                   <div class="mini-char-card" data-status="${saleStatus}" onclick="jumpToCard('${catForWarp}', '${mainCardId}')">
                       <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 6px;">
-                          <div class="mini-char-img-wrapper no-save" style="width: 100%; height: 100%; margin: 0;">
-                              <img src="${imgUrl}" alt="${escapedName}" oncontextmenu="return false;" draggable="false">
+                          <div class="mini-char-img-wrapper ${wrapperSaveClass}" style="width: 100%; height: 100%; margin: 0;">
+                              <img src="${imgUrl}" alt="${escapedName}" class="${imgSaveClass}" ${contextAttr}>
                               ${miniWatermarkHtml}
-                              <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
+                              ${blockerDiv}
                           </div>
                           <div class="mini-status-dot ${lightClass}"></div>
                       </div>
@@ -1463,8 +1483,13 @@ function displayData(data) {
                       if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
                   }
 
+                  // 🌟 ตรวจสอบลายน้ำและปลดบล็อกการเซฟสำหรับหน้าหมวดหมู่ 🌟
                   const isWatermarked = (mainImageWatermark === 'Yes' || mainImageWatermark === 'true' || mainImageWatermark === 'TRUE');
                   const mainWatermarkHtml = isWatermarked ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` : '';
+                  const wrapperSaveClass = isWatermarked ? '' : 'no-save';
+                  const imgSaveClass = isWatermarked ? 'allow-save' : '';
+                  const contextAttr = isWatermarked ? '' : 'oncontextmenu="return false;" draggable="false"';
+                  const blockerDiv = isWatermarked ? '' : '<div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>';
 
                   let usageIcon = '';
                   if(usageRights === 'Personal') usageIcon = `<span class="usage-badge usage-personal" title="Personal (ส่วนตัว)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>`;
@@ -1514,11 +1539,11 @@ function displayData(data) {
                           let imgRadiusStyle = captionHtml ? 'border-radius: 15px 15px 0 0; border-bottom: none;' : 'border-radius: 15px;';
 
                           return `
-                          <div class="no-save" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
+                          <div class="${wrapperSaveClass}" style="margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius:15px;">
                               <div style="position:relative; width:100%; ${imgRadiusStyle} overflow:hidden; border:1px solid rgba(196, 164, 247, 0.5); background-color:var(--img-bg-pale);">
-                                  <img src="${parsedLink}" style="width:100%; display:block; pointer-events:none;" alt="รูปเพิ่มเติม" oncontextmenu="return false;" draggable="false">
+                                  <img src="${parsedLink}" style="width:100%; display:block;" alt="รูปเพิ่มเติม" class="${imgSaveClass}" ${contextAttr}>
                                   <div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none;"></div>
-                                  <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
+                                  ${blockerDiv}
                               </div>
                               ${captionHtml}
                           </div>`;
@@ -1528,17 +1553,14 @@ function displayData(data) {
                       toggleGalleryBtn = `<button onclick="toggleGallery(event, '${galleryId}')" class="btn-view btn-gallery" style="background:#F7EFFF; border:1px dashed var(--main); color:var(--dark); margin-top:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>ดูรูปเพิ่มเติม (${extraImgsArray.length} รูป)</button>`;
                   }
 
-                  // 🌟 โค้ดสร้างปุ่ม Copy Link วาร์ปที่ต้องเพิ่มเข้ามา 🌟
                   let catForWarp = category === 'เค้ก' ? 'cake' : (category === 'เครื่องดื่ม' ? 'drink' : 'bread');
                   let shareUrl = API_URL + "?cat=" + catForWarp + "&card=" + mainCardId;
                   let copyLinkBtnHtml = `<button onclick="copyCardLink(event, '${shareUrl}')" class="copy-btn-mini" title="คัดลอกลิ้งก์ส่งให้เพื่อน">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                   </button>`;
-                  // 🌟 สิ้นสุดโค้ดที่เพิ่ม 🌟
 
                   let adminBtns = '';
                   if(isEditMode) {
-                      // 🌟 ในโหมดอัตโนมัติ ถ้าไม่มีชื่อซ้ำ ให้ซ่อนปุ่มสลับที่ 🌟
                       let showMoveBtns = true;
                       if (globalSortMode === 'AUTO') {
                           let dupCount = itemsInCategory.filter(i => {
@@ -1567,9 +1589,9 @@ function displayData(data) {
                       <div class="menu-header" onclick="toggleMenu(this)" style="cursor:pointer;">
                         
                         <div class="menu-img-wrapper" style="background-color: #ffffff;">
-                            <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img no-save" oncontextmenu="return false;" draggable="false">
+                            <img src="${imgUrl}" alt="${escapedCleanName}" class="menu-img ${imgSaveClass}" ${contextAttr}>
                             ${mainWatermarkHtml}
-                            <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>
+                            ${blockerDiv}
                         </div>
                         
                         <div class="menu-title-row">
