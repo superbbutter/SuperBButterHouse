@@ -61,6 +61,15 @@ body.locked { overflow: hidden; }
     -webkit-user-drag: auto !important;
 }
 
+/* 🌟 เพิ่ม: คลาสสำหรับปิดตายไม่ให้กดค้างเซฟรูปได้ 100% 🌟 */
+.prevent-save-img {
+    pointer-events: none !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+}
+
 /* Admin Bar */
 #admin-bar { display: none; background: var(--darker); color: #fff; padding: 12px; text-align: center; position: sticky; top: 0; z-index: 9999; width: 100%; font-size: 14px; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 .btn-exit-edit { margin-left: 10px; padding: 5px 15px; border-radius: 20px; border: none; background: var(--main); color: #fff; cursor: pointer; font-weight: 600; transition: 0.2s; }
@@ -1264,7 +1273,6 @@ async function toggleSortMode(mode) {
     } catch(e) { console.error("Save config failed"); }
 }
 
-// 🌟 แก้บั๊กจัดเรียงชื่อซ้ำ: ให้ใช้ index เดิมอย่างแม่นยำ เพื่อให้การย้ายขึ้น/ลงทำงานตรงทิศเสมอ 🌟
 function sortItems(items, isHome) {
     return items.slice().sort((a, b) => {
         let sA = parseInt(a['สถานะบ้าน'] || '1');
@@ -1280,12 +1288,10 @@ function sortItems(items, isHome) {
         }
         if (weightStatusA !== weightStatusB) return weightStatusA - weightStatusB;
 
-        // ลบช่องว่างและอักขระพิเศษออก เพื่อเปรียบเทียบชื่อให้ชัวร์ว่า "ซ้ำกัน 100%"
         let nA_clean = String(a['ชื่อขนม'] || '').replace(/[\s\u200B-\u200D\uFEFF]/g, '').toLowerCase();
         let nB_clean = String(b['ชื่อขนม'] || '').replace(/[\s\u200B-\u200D\uFEFF]/g, '').toLowerCase();
         
         if (nA_clean !== nB_clean) {
-            // ถ้าชื่อไม่ซ้ำกัน จัดเรียงตามตัวอักษรตามปกติ
             let nA_show = String(a['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
             let nB_show = String(b['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
             
@@ -1297,7 +1303,6 @@ function sortItems(items, isHome) {
             return nA_show.localeCompare(nB_show, 'th');
         }
 
-        // ถ้าชื่อซ้ำกันเป๊ะ ให้ยึดลำดับของเดิม เพื่อให้ปุ่มลูกศรเลื่อนขึ้นลงได้ตามใจชอบแบบเดียวกับโหมด Manual
         return a.originalIndex - b.originalIndex;
     });
 }
@@ -1407,13 +1412,13 @@ function displayData(data) {
                       if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
                   }
                   
-                  // 🌟 ตรวจสอบลายน้ำและปลดบล็อกการเซฟสำหรับหน้าโฮม 🌟
+                  // 🌟 แก้ 1: เปลี่ยนคลาสบล็อกและตัวบล็อกทัชชิ่งสำหรับหน้าโฮม 🌟
                   let isWatermarked = (item['ลายน้ำภาพหลัก'] === 'Yes' || item['ลายน้ำภาพหลัก'] === 'true' || item['ลายน้ำภาพหลัก'] === 'TRUE');
                   let miniWatermarkHtml = isWatermarked ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:150px; pointer-events:none; z-index:2;"></div>` : '';
                   let wrapperSaveClass = isWatermarked ? '' : 'no-save';
-                  let imgSaveClass = isWatermarked ? 'allow-save' : '';
+                  let imgSaveClass = isWatermarked ? 'allow-save' : 'prevent-save-img';
                   let contextAttr = isWatermarked ? '' : 'oncontextmenu="return false;" draggable="false"';
-                  let blockerDiv = isWatermarked ? '' : '<div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>';
+                  let blockerDiv = isWatermarked ? '' : '<div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5; background:transparent; -webkit-touch-callout:none; pointer-events:auto;" oncontextmenu="return false;"></div>';
 
                   gridTarget.innerHTML += `
                   <div class="mini-char-card" data-status="${saleStatus}" onclick="jumpToCard('${catForWarp}', '${mainCardId}')">
@@ -1483,13 +1488,13 @@ function displayData(data) {
                       if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
                   }
 
-                  // 🌟 ตรวจสอบลายน้ำและปลดบล็อกการเซฟสำหรับหน้าหมวดหมู่ 🌟
+                  // 🌟 แก้ 2: เปลี่ยนคลาสบล็อกและตัวบล็อกทัชชิ่งสำหรับหน้าหมวดหมู่ 🌟
                   const isWatermarked = (mainImageWatermark === 'Yes' || mainImageWatermark === 'true' || mainImageWatermark === 'TRUE');
                   const mainWatermarkHtml = isWatermarked ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` : '';
                   const wrapperSaveClass = isWatermarked ? '' : 'no-save';
-                  const imgSaveClass = isWatermarked ? 'allow-save' : '';
+                  const imgSaveClass = isWatermarked ? 'allow-save' : 'prevent-save-img';
                   const contextAttr = isWatermarked ? '' : 'oncontextmenu="return false;" draggable="false"';
-                  const blockerDiv = isWatermarked ? '' : '<div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5;" oncontextmenu="return false;"></div>';
+                  const blockerDiv = isWatermarked ? '' : '<div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5; background:transparent; -webkit-touch-callout:none; pointer-events:auto;" oncontextmenu="return false;"></div>';
 
                   let usageIcon = '';
                   if(usageRights === 'Personal') usageIcon = `<span class="usage-badge usage-personal" title="Personal (ส่วนตัว)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>`;
@@ -1554,7 +1559,10 @@ function displayData(data) {
                   }
 
                   let catForWarp = category === 'เค้ก' ? 'cake' : (category === 'เครื่องดื่ม' ? 'drink' : 'bread');
-                  let shareUrl = API_URL + "?cat=" + catForWarp + "&card=" + mainCardId;
+                  
+                  // 🌟 แก้ 3: เปลี่ยนจาก API_URL มาใช้ URL หน้าเว็บแทน 🌟
+                  let shareUrl = window.location.origin + window.location.pathname + "?cat=" + catForWarp + "&card=" + mainCardId;
+                  
                   let copyLinkBtnHtml = `<button onclick="copyCardLink(event, '${shareUrl}')" class="copy-btn-mini" title="คัดลอกลิ้งก์ส่งให้เพื่อน">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                   </button>`;
