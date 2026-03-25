@@ -843,9 +843,15 @@ let isEditMode = false;
 let allUniqueArtistLinks = []; 
 let globalSortMode = 'AUTO'; 
 
-function getSafeId(str) {
-    if(!str) return 'unknown';
-    return encodeURIComponent(str).replace(/%/g, '_');
+// 🌟 ฟังก์ชันใหม่สำหรับสร้าง ID เฉพาะตัว (Hash) ไม่ให้ซ้ำกันแม้ชื่อเหมือนกัน
+function generateStableId(item) {
+    const baseString = String(item['ชื่อขนม'] || '') + String(item['Link รูปตัวละคร'] || '') + String(item['นักวาด'] || '');
+    let hash = 0;
+    for (let i = 0; i < baseString.length; i++) {
+        hash = ((hash << 5) - hash) + baseString.charCodeAt(i);
+        hash |= 0; 
+    }
+    return 'id_' + Math.abs(hash).toString(36);
 }
 
 window.onscroll = function() {
@@ -1411,7 +1417,7 @@ function displayData(data) {
                   let name = String(item['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '');
                   let escapedName = escapeHTML(name);
                   let saleStatus = String(item['สถานะบ้าน'] || '1');
-                  let mainCardId = 'card_' + getSafeId(item['ชื่อขนม']); 
+                  let mainCardId = 'card_' + generateStableId(item); 
                   
                   let lightClass = 'status-forever';
                   if(saleStatus == '2') lightClass = 'status-eo';
@@ -1480,7 +1486,7 @@ function displayData(data) {
                   const name = String(item['ชื่อขนม'] || '').replace(/[\u200B-\u200D\uFEFF]/g, '');
                   const escapedCleanName = escapeHTML(name); 
                   const origIndex = item.originalIndex;
-                  const idSafeName = getSafeId(item['ชื่อขนม']); 
+                  const idSafeName = generateStableId(item); 
                   const galleryId = 'gallery_' + idSafeName;
                   const mainCardId = 'card_' + idSafeName; 
                   
