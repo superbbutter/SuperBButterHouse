@@ -448,7 +448,18 @@ function acceptRules() {
             const card = urlParams.get('card');
             
             if (cat && card) {
-                setTimeout(() => jumpToCard(cat, card), 300);
+                // 🌟 แก้โค้ดการวาร์ป: วนเช็คว่าการ์ดโหลดเสร็จหรือยังแทนการฟิกเวลาตายตัว
+                let waitDataInterval = setInterval(() => {
+                    if (document.getElementById(card)) {
+                        clearInterval(waitDataInterval); // ยกเลิกการวนเช็ค
+                        jumpToCard(cat, card); // สั่งวาร์ป
+                    }
+                }, 500); // เช็คทุกๆ ครึ่งวินาที
+                
+                // ป้องกันเว็บค้างเช็คไปเรื่อยๆ ถ้าหาการ์ดนั้นไม่เจอ ให้หยุดเช็คเมื่อผ่านไป 10 วินาที
+                setTimeout(() => {
+                    clearInterval(waitDataInterval);
+                }, 10000);
             }
         }, 500);
     } catch (e) {
@@ -1412,13 +1423,13 @@ function displayData(data) {
                       if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
                   }
                   
-                  // 🌟 แก้ 1: เปลี่ยนคลาสบล็อกและตัวบล็อกทัชชิ่งสำหรับหน้าโฮม 🌟
+                  // 🌟 บล็อกการเซฟ 100% หน้าโฮม
                   let isWatermarked = (item['ลายน้ำภาพหลัก'] === 'Yes' || item['ลายน้ำภาพหลัก'] === 'true' || item['ลายน้ำภาพหลัก'] === 'TRUE');
                   let miniWatermarkHtml = isWatermarked ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:150px; pointer-events:none; z-index:2;"></div>` : '';
                   let wrapperSaveClass = isWatermarked ? '' : 'no-save';
-                  let imgSaveClass = isWatermarked ? 'allow-save' : 'prevent-save-img';
-                  let contextAttr = isWatermarked ? '' : 'oncontextmenu="return false;" draggable="false"';
-                  let blockerDiv = isWatermarked ? '' : '<div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5; background:transparent; -webkit-touch-callout:none; pointer-events:auto;" oncontextmenu="return false;"></div>';
+                  let imgSaveClass = 'prevent-save-img';
+                  let contextAttr = 'oncontextmenu="return false;" draggable="false"';
+                  let blockerDiv = '<div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5; background:transparent; -webkit-touch-callout:none; pointer-events:auto;" oncontextmenu="return false;"></div>';
 
                   gridTarget.innerHTML += `
                   <div class="mini-char-card" data-status="${saleStatus}" onclick="jumpToCard('${catForWarp}', '${mainCardId}')">
@@ -1488,13 +1499,13 @@ function displayData(data) {
                       if (id) imgUrl = `https://drive.google.com/thumbnail?id=${id[1]}&sz=w1000`;
                   }
 
-                  // 🌟 แก้ 2: เปลี่ยนคลาสบล็อกและตัวบล็อกทัชชิ่งสำหรับหน้าหมวดหมู่ 🌟
+                  // 🌟 บล็อกการเซฟ 100% หน้าหมวดหมู่
                   const isWatermarked = (mainImageWatermark === 'Yes' || mainImageWatermark === 'true' || mainImageWatermark === 'TRUE');
                   const mainWatermarkHtml = isWatermarked ? `<div style="position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://drive.google.com/thumbnail?id=1e3zyO1VT4FCB020UAEmq5fOThW2R38SL&sz=w1600'); background-repeat:repeat; background-size:400px; pointer-events:none; z-index:2;"></div>` : '';
                   const wrapperSaveClass = isWatermarked ? '' : 'no-save';
-                  const imgSaveClass = isWatermarked ? 'allow-save' : 'prevent-save-img';
-                  const contextAttr = isWatermarked ? '' : 'oncontextmenu="return false;" draggable="false"';
-                  const blockerDiv = isWatermarked ? '' : '<div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5; background:transparent; -webkit-touch-callout:none; pointer-events:auto;" oncontextmenu="return false;"></div>';
+                  const imgSaveClass = 'prevent-save-img';
+                  const contextAttr = 'oncontextmenu="return false;" draggable="false"';
+                  const blockerDiv = '<div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:5; background:transparent; -webkit-touch-callout:none; pointer-events:auto;" oncontextmenu="return false;"></div>';
 
                   let usageIcon = '';
                   if(usageRights === 'Personal') usageIcon = `<span class="usage-badge usage-personal" title="Personal (ส่วนตัว)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>`;
@@ -1560,7 +1571,6 @@ function displayData(data) {
 
                   let catForWarp = category === 'เค้ก' ? 'cake' : (category === 'เครื่องดื่ม' ? 'drink' : 'bread');
                   
-                  // 🌟 แก้ 3: เปลี่ยนจาก API_URL มาใช้ URL หน้าเว็บแทน 🌟
                   let shareUrl = window.location.origin + window.location.pathname + "?cat=" + catForWarp + "&card=" + mainCardId;
                   
                   let copyLinkBtnHtml = `<button onclick="copyCardLink(event, '${shareUrl}')" class="copy-btn-mini" title="คัดลอกลิ้งก์ส่งให้เพื่อน">
