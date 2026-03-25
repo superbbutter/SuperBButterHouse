@@ -114,7 +114,7 @@ h1 { font-size: 28px; margin-bottom: 10px; background: linear-gradient(90deg, va
 
 .menu-title-row { display: flex; flex-direction: column; align-items: flex-start; padding: 15px; gap: 5px; }
 .menu-title { font-weight: 500; color: var(--dark); font-size: 15px; flex: 1; display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
-.menu-icon { font-size: 12px; color: var(--dark); transition: transform 0.3s ease; padding: 5px; background: #F7EFFF; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 10px; }
+.menu-icon { font-size: 12px; color: var(--dark); transition: transform 0.3s ease; padding: 5px; background: #F7EFFF; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; margin-left: 6px; }
 .menu-card.open .menu-icon { transform: rotate(180deg); background: var(--main); color: #fff; }
 .menu-details { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: rgba(255, 255, 255, 0.5); padding: 0 15px; }
 .menu-card.open .menu-details { max-height: 6000px; padding: 10px 15px 15px; }
@@ -360,7 +360,7 @@ input:checked + .slider:before { transform: translateX(20px); }
     object-fit: contain;
 }
 
-/* 🌟 เช็คบ็อกซ์ฟิลเตอร์ (ใหม่) 🌟 */
+/* 🌟 เช็คบ็อกซ์ฟิลเตอร์ 🌟 */
 .filter-container {
     display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; width: 100%;
 }
@@ -395,6 +395,15 @@ input:checked + .slider:before { transform: translateX(20px); }
     pointer-events: none;
     text-align: center;
 }
+
+/* 🌟 สไตล์ช่องค้นหา (Search Bar) 🌟 */
+.search-container { width: 100%; margin-bottom: 15px; padding: 0 15px; }
+.search-input { width: 100%; padding: 12px 15px 12px 40px; border-radius: 20px; border: 1px solid rgba(196, 164, 247, 0.5); background: rgba(255, 255, 255, 0.8); font-size: 14px; color: var(--dark); transition: var(--transition); box-shadow: 0 4px 10px rgba(107, 78, 144, 0.05); }
+.search-input:focus { background: #fff; border-color: var(--main); box-shadow: 0 0 0 4px rgba(196, 164, 247, 0.2); }
+
+/* 🌟 สไตล์ปุ่มก๊อปลิ้งก์มินิ 🌟 */
+.copy-btn-mini { background: #F7EFFF; border: 1px solid var(--main); color: var(--dark); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; padding: 0; flex-shrink: 0; }
+.copy-btn-mini:hover { background: var(--main); color: #fff; transform: scale(1.1); }
 </style>
 
 <script>
@@ -521,6 +530,13 @@ function acceptRules() {
         </button>
     </div>
 
+    <div class="search-container">
+        <div style="position: relative; max-width: 450px; margin: 0 auto;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--dark); opacity: 0.6;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="globalSearch" class="search-input" placeholder="ค้นหาชื่อขนม หรือนักวาด..." oninput="applySearchAndFilter()">
+        </div>
+    </div>
+
     <div id="home" class="page active">
       <div class="rule-box" style="text-align: center; border-color: var(--main); margin-bottom: 15px;">
         <p style="font-size: 14px; font-weight: 500;">
@@ -584,15 +600,15 @@ function acceptRules() {
 
         <div class="filter-container">
             <label class="filter-btn">
-                <input type="checkbox" id="filter-sp" checked onchange="applyHomeFilter()">
+                <input type="checkbox" id="filter-sp" checked onchange="applySearchAndFilter()">
                 <span style="display:flex; align-items:center; gap:4px;"><span class="status-light status-sp-ota" style="margin:0;"></span> SP/OTA</span>
             </label>
             <label class="filter-btn">
-                <input type="checkbox" id="filter-eo" checked onchange="applyHomeFilter()">
+                <input type="checkbox" id="filter-eo" checked onchange="applySearchAndFilter()">
                 <span style="display:flex; align-items:center; gap:4px;"><span class="status-light status-eo" style="margin:0;"></span> EO</span>
             </label>
             <label class="filter-btn">
-                <input type="checkbox" id="filter-fh" checked onchange="applyHomeFilter()">
+                <input type="checkbox" id="filter-fh" checked onchange="applySearchAndFilter()">
                 <span style="display:flex; align-items:center; gap:4px;"><span class="status-light status-forever" style="margin:0;"></span> Forever Home</span>
             </label>
         </div>
@@ -955,27 +971,15 @@ function showToast(msg) {
         document.body.appendChild(toast);
     }
     toast.innerHTML = msg;
-    toast.style.bottom = '30px'; // เด้งขึ้นมา
-    setTimeout(() => { toast.style.bottom = '-100px'; }, 3000); // กลับลงไป
+    toast.style.bottom = '30px'; 
+    setTimeout(() => { toast.style.bottom = '-100px'; }, 3000); 
 }
 
-// 🌟 ฟังก์ชันคัดลอกลิ้งก์วาร์ป (แก้ไขให้เปลี่ยนปุ่มแบบสมูท) 🌟
-function copyCardLink(btn, event, url) {
+// 🌟 ฟังก์ชันคัดลอกลิ้งก์วาร์ป 🌟
+function copyCardLink(event, url) {
     if(event) event.stopPropagation();
     navigator.clipboard.writeText(url).then(() => {
-        const originalHtml = btn.innerHTML;
-        const originalBg = btn.style.background;
-        const originalColor = btn.style.color;
-
-        btn.innerHTML = '✨ คัดลอกลิ้งก์เรียบร้อย!';
-        btn.style.background = 'var(--main)';
-        btn.style.color = '#fff';
-
-        setTimeout(() => {
-            btn.innerHTML = originalHtml;
-            btn.style.background = originalBg;
-            btn.style.color = originalColor;
-        }, 2000);
+        showToast('✨ คัดลอกลิ้งก์วาร์ปเรียบร้อยแล้วค่ะ!');
     }).catch(err => {
         console.error('Copy failed', err);
         showToast('คัดลอกลิ้งก์ไม่สำเร็จ กรุณาคัดลอกด้วยตัวเองค่ะ');
@@ -999,17 +1003,44 @@ function populateArtistSuggestions(typedName, datalistId) {
     });
 }
 
-function applyHomeFilter() {
-    const showSp = document.getElementById('filter-sp').checked;
-    const showEo = document.getElementById('filter-eo').checked;
-    const showFh = document.getElementById('filter-fh').checked;
+// 🌟 ฟังก์ชันสำหรับช่องค้นหาและตัวกรอง 🌟
+function applySearchAndFilter() {
+    const searchInput = document.getElementById('globalSearch');
+    const searchTxt = searchInput ? searchInput.value.toLowerCase().trim() : '';
     
+    const filterSp = document.getElementById('filter-sp');
+    const filterEo = document.getElementById('filter-eo');
+    const filterFh = document.getElementById('filter-fh');
+    
+    const showSp = filterSp ? filterSp.checked : true;
+    const showEo = filterEo ? filterEo.checked : true;
+    const showFh = filterFh ? filterFh.checked : true;
+
+    // กรองการ์ดเล็ก (หน้าโฮม)
     document.querySelectorAll('.mini-char-card').forEach(card => {
         const s = card.getAttribute('data-status');
-        if (s === '3' && showSp) card.style.display = 'block';
-        else if (s === '2' && showEo) card.style.display = 'block';
-        else if (s === '1' && showFh) card.style.display = 'block';
+        const name = card.querySelector('.mini-char-name').innerText.toLowerCase();
+        
+        let statusMatch = false;
+        if (s === '3' && showSp) statusMatch = true;
+        else if (s === '2' && showEo) statusMatch = true;
+        else if (s === '1' && showFh) statusMatch = true;
+
+        let searchMatch = name.includes(searchTxt);
+        if (statusMatch && searchMatch) card.style.display = 'block';
         else card.style.display = 'none';
+    });
+
+    // กรองการ์ดใหญ่ (หน้าหมวดหมู่)
+    document.querySelectorAll('.menu-card').forEach(card => {
+        const titleText = card.querySelector('.menu-title').innerText.toLowerCase();
+        const detailsText = card.querySelector('.menu-details').innerText.toLowerCase();
+        
+        if (titleText.includes(searchTxt) || detailsText.includes(searchTxt)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
     });
 }
 
@@ -1500,8 +1531,8 @@ function displayData(data) {
                   // 🌟 โค้ดสร้างปุ่ม Copy Link วาร์ปที่ต้องเพิ่มเข้ามา 🌟
                   let catForWarp = category === 'เค้ก' ? 'cake' : (category === 'เครื่องดื่ม' ? 'drink' : 'bread');
                   let shareUrl = API_URL + "?cat=" + catForWarp + "&card=" + mainCardId;
-                  let copyLinkBtnHtml = `<button onclick="copyCardLink(this, event, '${shareUrl}')" class="btn-view" style="background:#F2E6FF; border:1px dashed var(--main); color:var(--dark); margin-top:10px; transition: 0.3s;">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg> คัดลอกลิ้งก์ส่งให้เพื่อน
+                  let copyLinkBtnHtml = `<button onclick="copyCardLink(event, '${shareUrl}')" class="copy-btn-mini" title="คัดลอกลิ้งก์ส่งให้เพื่อน">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                   </button>`;
                   // 🌟 สิ้นสุดโค้ดที่เพิ่ม 🌟
 
@@ -1548,7 +1579,10 @@ function displayData(data) {
                                   <span>${escapedCleanName}</span>
                                   <span style="display:inline-flex; align-items:center; gap: 6px; margin-left: 6px;">${usageIcon}${loveIcon}</span>
                               </div>
-                              <div class="menu-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+                              <div style="display:flex; align-items:center; gap:6px;">
+                                  ${copyLinkBtnHtml}
+                                  <div class="menu-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+                              </div>
                           </div>
                           ${introText}
                           ${adminBtns}
@@ -1561,7 +1595,6 @@ function displayData(data) {
                         <div class="detail-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="22"></line><line x1="12" y1="2" x2="12" y2="6"></line></svg> <strong>มูลค่า:</strong> ${escapeHTML(formatPrice(item['มูลค่า']))}</div>
                         ${moreLinkHtml}
                         ${toggleGalleryBtn}
-                        ${copyLinkBtnHtml}
                         ${extraGalleryHtml}
                       </div>
                     </div>`;
@@ -1578,7 +1611,7 @@ function displayData(data) {
           }
       });
 
-      applyHomeFilter(); 
+      applySearchAndFilter(); 
 
   } catch (e) {
       console.error(e);
